@@ -1,17 +1,16 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from "expo-router";
-    import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
 
-
-export default function TabsLayout() {
-
+export default function MainLayout() {
   return (
     <Tabs>
       <Tabs.Screen
         name="menu"
         options={{
           title: "Menu",
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons 
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
               name="menu"
               size={size}
               color={color}
