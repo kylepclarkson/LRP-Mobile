@@ -16,8 +16,8 @@ function AuthenticatedUserRouteGuard(
   useEffect(() => {
     console.info("AuthenticatedUserRouteGuard", user)
     if (!user && !isLoadingUser) {
-      console.info("Redirecting to home")
-      router.replace("/");
+      console.info("Redirecting to login")
+      router.replace("/(auth)/login");
     }
   }, [user]);
 

@@ -22,7 +22,6 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
       {user === undefined ? (
         <Text>Please sign in</Text>
       ) : (
