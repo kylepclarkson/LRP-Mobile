@@ -1,4 +1,4 @@
-import { AuthProvider, useAuth } from "@/lib/context/auth";
+import { AuthProvider, useAuthSession } from "@/lib/context/auth";
 import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
@@ -11,7 +11,7 @@ function AuthenticatedUserRouteGuard(
   { children }: { children: React.ReactNode }
 ) {
   const router = useRouter();
-  const { user, isLoadingUser } = useAuth();
+  const { user, isLoadingUser } = useAuthSession();
 
   useEffect(() => {
     console.info("AuthenticatedUserRouteGuard", user)
@@ -28,11 +28,11 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <PaperProvider>
-        <AuthenticatedUserRouteGuard>
-          <Stack>
-            <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          </Stack>
-        </AuthenticatedUserRouteGuard>
+        {/* <AuthenticatedUserRouteGuard> */}
+        <Stack>
+          <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+        </Stack>
+        {/* </AuthenticatedUserRouteGuard> */}
       </PaperProvider>
     </AuthProvider>
   );

@@ -1,10 +1,10 @@
-import { useAuth } from "@/lib/context/auth";
+import { useAuthSession } from "@/lib/context/auth";
 import { Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 export default function Index() {
 
-  const { user, isLoadingUser, login, logout } = useAuth();
+  const { user, isLoadingUser, login, logout } = useAuthSession();
 
   const handleClick = async () => {
     if (!user) {

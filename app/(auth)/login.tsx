@@ -1,3 +1,4 @@
+import { useAuthSession } from "@/lib/context/auth";
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -15,6 +16,13 @@ export default function LoginScreen() {
   const [error, setError] = useState<string | null>("");
 
   const theme = useTheme();
+
+  const { login } = useAuthSession();
+
+  const handleSignIn = async () => {
+    console.debug("handleSignIn:", { email, password });
+    await login();
+  }
 
   return (
     <KeyboardAvoidingView
@@ -45,7 +53,7 @@ export default function LoginScreen() {
 
         <Button
           mode="contained"
-          // onPress={handleAuth}
+          onPress={handleSignIn}
           style={styles.button}>
           Sign In
         </Button>
