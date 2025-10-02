@@ -1,38 +1,62 @@
-import { useAuthSession } from "@/lib/context/auth";
-import { Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import LoginForm from "@/components/forms/login";
+import { useRouter } from "expo-router";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
+import { Text } from "react-native-paper";
 
 export default function Index() {
 
-  const { user, isLoadingUser, login, logout } = useAuthSession();
+  const router = useRouter();
 
-  const handleClick = async () => {
-    if (!user) {
-      await login();
-    } else {
-      await logout();
-    }
+  const handleRegisterRedirect = () => {
+    router.replace('/register');
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      {user === undefined ? (
-        <Text>Please sign in</Text>
-      ) : (
-        <Text>Welcome {user.first_name}</Text>
-      )}
-      <Button
-        mode="contained"
-        onPress={handleClick}
-      >
-        {user === undefined ? "Sign in" : "Sign out"}
-      </Button>
-    </View>
+      <View style={styles.content}>
+        <Text style={styles.title} variant="headlineMedium">Welcome to Aandeg</Text>
+        <LoginForm />
+        <Text style={styles.redirectText}>
+          Want to start collecting rewards?{' '}
+          <Text
+            onPress={handleRegisterRedirect}
+            style={styles.redirectLink}
+          >Register now!</Text>
+        </Text>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5"
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  redirectText: {
+    textAlign: "center",
+    marginTop: 16
+  },
+  redirectLink: {
+    textDecorationLine: "underline",
+    color: 'blue'
+  }
+})
+
