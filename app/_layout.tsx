@@ -1,38 +1,28 @@
 import { AuthProvider, useAuthSession } from "@/lib/context/auth";
-import { Stack, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { Stack } from "expo-router";
 import { PaperProvider } from "react-native-paper";
 
-/**
- * A route guard that checks user is authenticated.
- * If not authenticated, redirect to home page. 
- */
-function AuthenticatedUserRouteGuard(
-  { children }: { children: React.ReactNode }
-) {
-  const router = useRouter();
-  const { user, isLoadingUser } = useAuthSession();
+function InitialLayout() {
 
-  useEffect(() => {
-    console.info("AuthenticatedUserRouteGuard", user)
-    if (!user && !isLoadingUser) {
-      console.info("Redirecting to login")
-      router.replace("/(auth)/login");
-    }
-  }, [user]);
+  const { user } = useAuthSession();
 
-  return <>{children}</>
+  return (
+    <Stack>
+      <Stack.Protected guard={user === undefined}>
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={!!user}>
+        <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+      </Stack.Protected>
+    </Stack>
+  );
 }
 
 export default function RootLayout() {
   return (
     <AuthProvider>
       <PaperProvider>
-        {/* <AuthenticatedUserRouteGuard> */}
-        <Stack>
-          <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
-        </Stack>
-        {/* </AuthenticatedUserRouteGuard> */}
+        <InitialLayout />
       </PaperProvider>
     </AuthProvider>
   );
