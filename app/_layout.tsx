@@ -10,7 +10,7 @@ function InitialLayout() {
     <Stack>
       <Stack.Protected guard={user === undefined}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="register" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="register" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Protected guard={!!user}>
         <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
