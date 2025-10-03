@@ -1,15 +1,24 @@
 import { getToken } from "./token.service";
 
 
+export interface ApiError extends Error {
+  status?: number;
+  data?: any;
+}
 
 /** 
  * Core request method that wraps the fetch API call.
+ * As backend is powered by Django REST Framework we expect JSON responses.
  */
-async function request(path: string, options: RequestInit = {}) {
+async function request<T>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
   const url = `${getBaseUrl()}/${path}`;
   const authToken = await getToken();
-
   const method = options.method || "GET";
+
+  console.debug(`Performing fetch request: url=${url}, method=${method}`);
 
   const response = await fetch(url, {
     method,
@@ -20,17 +29,23 @@ async function request(path: string, options: RequestInit = {}) {
     },
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
-
+  // handle response
+  const payload = response.status !== 204 ? await response.json() : null;
   if (!response.ok) {
-    // TOD track this error
-    const errorText = await response.text();
-    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    const message = typeof payload === 'object' && 'detail' in payload
+      ? payload.detail
+      : JSON.stringify(payload);
+
+    const error = new Error(message) as ApiError;
+    error.status = response.status;
+    error.data = payload;
+    throw error;
   }
-  return response.json();
+  return payload as T;
 }
 
 function getBaseUrl() {
-  const baseUrl = process.env.API_BASE_URL;
+  const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
   if (!baseUrl) {
     throw new Error("API_BASE_URL is not defined in environment variables.");
   }
@@ -38,5 +53,10 @@ function getBaseUrl() {
 }
 
 // Wrapper methods for common HTTP verbs
-export const get = (path: string) => request(path, { method: "GET" });
-export const post = (path: string, body: any) => request(path, { method: "POST", body });
+export const get = <T>(path: string) => request<T>(path, { method: "GET" });
+export const post = <T>(path: string, body: any) => request<T>(path, { method: "POST", body });
+
+// Utility function for checking error type
+export function isApiError(error: any): error is ApiError {
+  return error instanceof Error && 'data' in error && typeof (error as ApiError).status === 'number';
+}

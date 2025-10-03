@@ -1,4 +1,5 @@
 import { useAuthSession } from "@/lib/context/auth";
+import { post } from "@/lib/services/api";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -17,9 +18,21 @@ export default function LoginForm() {
 
   const { login } = useAuthSession();
 
+  // TODO move functionality to an auth service file
   const handleSignIn = async () => {
-    console.debug("handleSignIn:", { email, password });
-    await login();
+    console.info("handleSignIn:", { email, password });
+    try {
+      const res = await post("user/api/login/", {
+        email: email,
+        password: password
+      });
+      console.debug("login response:", res);
+      await login();
+    } catch (error: any) {
+      // todo handle error
+      console.error("Login error:", error);
+      return;
+    }
   }
 
   return (
