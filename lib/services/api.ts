@@ -1,4 +1,4 @@
-import { getToken } from "./token.service";
+import { getAccessToken } from "./token.service";
 
 
 export interface ApiError extends Error {
@@ -15,10 +15,11 @@ async function request<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${getBaseUrl()}/${path}`;
-  const authToken = await getToken();
+  const authToken = await getAccessToken();
   const method = options.method || "GET";
 
   console.debug(`Performing fetch request: url=${url}, method=${method}`);
+  console.debug(`Options=`, options);
 
   const response = await fetch(url, {
     method,

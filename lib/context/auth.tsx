@@ -1,18 +1,21 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthenticatedUser } from "../../types/User";
+import { getUser, LoginCredentials, login as signIn, logout as signOut } from "../services/auth.service";
+import { getAccessToken } from "../services/token.service";
 
 
 const PLACEHOLDER_USER = {
   id: "1",
+  email: "michael-wilbert@email.com",
   first_name: "Michael",
   last_name: "Wilbert"
 }
 
 type AuthContextType = {
-  user: AuthenticatedUser | undefined;
-  isLoadingUser: boolean
-  login: () => {}
-  logout: () => {}
+  user: AuthenticatedUser | null;
+  isLoadingUser: boolean;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,20 +29,53 @@ export function AuthProvider(
 ) {
 
   // An authenticated user, null if not authenticated
-  const [user, setUser] = useState<AuthenticatedUser | undefined>(undefined);
+  const [user, setUser] = useState<AuthenticatedUser | null>(null);
   // If fetching user is in a loading state
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(false);
 
-  const login = async () => {
-    // TODO implement backend call
-    console.info("login called")
-    setUser(PLACEHOLDER_USER);
+  useEffect(() => {
+    setIsLoadingUser(true);
+    // Fetches user details using access token, if one exists
+    const initialUserLoad = async () => {
+      const accessToken = await getAccessToken();
+      if (!accessToken) {
+        setIsLoadingUser(false);
+        return;
+      }
+      try {
+        const user = await getUser();
+        console.debug("Fetched user on initial load:", user);
+        setUser(user);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setIsLoadingUser(false);
+      }
+    };
+    initialUserLoad();
+  }, []);
+
+  const login = async (credentials: LoginCredentials) => {
+    setIsLoadingUser(true);
+    try {
+      await signIn(credentials);
+      const user = await getUser();
+      console.debug("Fetched user after login:", user);
+      setUser(user);
+    } finally {
+      setIsLoadingUser(false);
+    }
   }
 
   const logout = async () => {
-    // TODO implement backend call
-    console.info("logout called")
-    setUser(undefined);
+    console.debug("Logging out user...");
+    setIsLoadingUser(true);
+    try {
+      await signOut();
+      setUser(null);
+    } finally {
+      setIsLoadingUser(false);
+    }
   }
 
   return (

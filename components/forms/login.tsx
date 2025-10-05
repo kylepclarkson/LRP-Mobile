@@ -1,5 +1,4 @@
 import { useAuthSession } from "@/lib/context/auth";
-import { post } from "@/lib/services/api";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -15,24 +14,33 @@ export default function LoginForm() {
   const [error, setError] = useState<string | null>("");
 
   const theme = useTheme();
+  const { user, isLoadingUser, login, logout } = useAuthSession();
 
-  const { login } = useAuthSession();
 
-  // TODO move functionality to an auth service file
-  const handleSignIn = async () => {
-    console.info("handleSignIn:", { email, password });
-    try {
-      const res = await post("user/api/login/", {
-        email: email,
-        password: password
-      });
-      console.debug("login response:", res);
-      await login();
-    } catch (error: any) {
-      // todo handle error
-      console.error("Login error:", error);
-      return;
+  const isFormValid = () => {
+    if (!email || email.trim().length === 0) {
+      setError("Email is required");
+      return false;
     }
+    if (!password || password.trim().length === 0) {
+      setError("Password is required");
+      return false;
+    }
+    setError(null);
+    return true;
+  }
+
+  const handleSignIn = async () => {
+    if (!isFormValid()) return;
+    console.debug("Calling login");
+    await login({ email: email!, password: password! });
+    // try {
+    //   await login({ email: email!, password: password! });
+    // } catch (error: any) {
+    //   console.error("Login error:", error);
+    //   setError(error.message || "An error occurred during login");
+    //   return;
+    // }
   }
 
   return (
