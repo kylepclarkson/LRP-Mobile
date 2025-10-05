@@ -4,17 +4,24 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { Button, Text, TextInput, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  Text,
+  TextInput,
+  useTheme
+} from "react-native-paper";
 
 
 export default function LoginForm() {
 
-  const [email, setEmail] = useState<string | null>("");
-  const [password, setPassword] = useState<string | null>("");
-  const [error, setError] = useState<string | null>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const theme = useTheme();
-  const { user, isLoadingUser, login, logout } = useAuthSession();
+  const { login, isLoadingUser, setIsLoadingUser } = useAuthSession();
 
 
   const isFormValid = () => {
@@ -26,21 +33,30 @@ export default function LoginForm() {
       setError("Password is required");
       return false;
     }
-    setError(null);
+    setError("");
     return true;
   }
 
   const handleSignIn = async () => {
     if (!isFormValid()) return;
     console.debug("Calling login");
-    await login({ email: email!, password: password! });
-    // try {
-    //   await login({ email: email!, password: password! });
-    // } catch (error: any) {
-    //   console.error("Login error:", error);
-    //   setError(error.message || "An error occurred during login");
-    //   return;
-    // }
+    setIsLoadingUser(true);
+    try {
+      await login({ email: email!, password: password! });
+    } catch (err) {
+      console.error("Caught login error");
+      setError("Invalid email or password");
+    } finally {
+      setIsLoadingUser(false);
+    }
+  }
+
+  if (isLoadingUser) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   return (
@@ -53,6 +69,7 @@ export default function LoginForm() {
         placeholder='email@gmail.com'
         mode="outlined"
         onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         style={styles.input}
@@ -61,6 +78,7 @@ export default function LoginForm() {
         placeholder='password'
         mode="outlined"
         onChangeText={setPassword}
+        value={password}
       />
 
       {error && <Text style={{ color: theme.colors.error }}>{error}</Text>}

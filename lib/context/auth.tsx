@@ -14,6 +14,7 @@ const PLACEHOLDER_USER = {
 type AuthContextType = {
   user: AuthenticatedUser | null;
   isLoadingUser: boolean;
+  setIsLoadingUser: React.Dispatch<React.SetStateAction<boolean>>;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
 };
@@ -60,15 +61,16 @@ export function AuthProvider(
     try {
       await signIn(credentials);
       const user = await getUser();
-      console.debug("Fetched user after login:", user);
       setUser(user);
+    } catch (error) {
+      // Re-throw the error so it can be caught by the caller
+      throw error;
     } finally {
       setIsLoadingUser(false);
     }
   }
 
   const logout = async () => {
-    console.debug("Logging out user...");
     setIsLoadingUser(true);
     try {
       await signOut();
@@ -82,6 +84,7 @@ export function AuthProvider(
     <AuthContext.Provider value={{
       user,
       isLoadingUser,
+      setIsLoadingUser,
       login,
       logout
     }}>
@@ -98,4 +101,3 @@ export function useAuthSession() {
   }
   return context;
 }
-

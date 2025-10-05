@@ -19,7 +19,6 @@ async function request<T>(
   const method = options.method || "GET";
 
   console.debug(`Performing fetch request: url=${url}, method=${method}`);
-  console.debug(`Options=`, options);
 
   const response = await fetch(url, {
     method,
@@ -36,7 +35,6 @@ async function request<T>(
     const message = typeof payload === 'object' && 'detail' in payload
       ? payload.detail
       : JSON.stringify(payload);
-
     const error = new Error(message) as ApiError;
     error.status = response.status;
     error.data = payload;
