@@ -1,61 +1,54 @@
-import { useAuthSession } from "@/lib/context/auth";
 import { useState } from "react";
 import {
   StyleSheet,
   View
 } from "react-native";
 import {
-  ActivityIndicator,
   Button,
   Text,
   TextInput,
   useTheme
 } from "react-native-paper";
 
-
-export default function LoginForm() {
+export default function RegisterForm() {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const theme = useTheme();
-  const { login, isLoadingUser, setIsLoadingUser } = useAuthSession();
 
-
-  const isFormValid = () => {
+  const isFormValid = (): boolean => {
     if (!email || email.trim().length === 0) {
       setError("Email is required");
+      return false;
+    }
+    if (email.indexOf('@') === -1) {
+      setError("Email is invalid");
       return false;
     }
     if (!password || password.trim().length === 0) {
       setError("Password is required");
       return false;
     }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
     setError("");
     return true;
   }
 
-  const handleSignIn = async () => {
+  const handleRegistration = async () => {
     if (!isFormValid()) return;
-    console.debug("Calling login");
-    setIsLoadingUser(true);
-    try {
-      await login({ email: email!, password: password! });
-    } catch (err) {
-      console.error("Caught login error");
-      setError("Invalid email or password");
-    } finally {
-      setIsLoadingUser(false);
-    }
-  }
-
-  if (isLoadingUser) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
+    // TODO call backend, check response
   }
 
   return (
@@ -77,16 +70,24 @@ export default function LoginForm() {
         mode="outlined"
         onChangeText={setPassword}
       />
+      <TextInput
+        style={styles.input}
+        label="Confirm password"
+        secureTextEntry
+        placeholder='confirm password'
+        mode="outlined"
+        onChangeText={setConfirmPassword}
+      />
       {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
       <Button
         mode="contained"
-        onPress={handleSignIn}
+        onPress={handleRegistration}
         style={styles.button}>
-        Sign In
+        Create account
       </Button>
     </View>
-  );
-}
+  )
+};
 
 const styles = StyleSheet.create({
   title: {
@@ -107,5 +108,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 8
   }
-})
-
+});
