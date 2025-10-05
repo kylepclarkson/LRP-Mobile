@@ -35,7 +35,7 @@ export interface TokenPair {
  */
 export async function login(credentials: LoginCredentials): Promise<TokenPair> {
   try {
-    const data = await post<TokenPair>("user/api/login/", credentials);
+    const data = await post<TokenPair>("user/login/", credentials);
     // Store tokens
     await saveTokens(data.access, data.refresh);
     return data;
@@ -47,7 +47,7 @@ export async function login(credentials: LoginCredentials): Promise<TokenPair> {
 export async function getUser(): Promise<AuthenticatedUser> {
   console.debug("Fetching authenticated user details...");
   try {
-    const data = await get<AuthenticatedUser>("user/api/user/");
+    const data = await get<AuthenticatedUser>("user/");
     // Set user data in context
     console.debug("Fetched user data:", data);
     return data;
@@ -74,7 +74,7 @@ export async function refreshTokens(): Promise<TokenPair> {
     throw new Error("No refresh token available");
   }
   // Call the API to refresh tokens
-  const data = await post<TokenPair>("user/api/login/refresh/", { refreshToken });
+  const data = await post<TokenPair>("user/login/refresh/", { refreshToken });
   await saveTokens(data.access, data.refresh);
   return data;
 }
