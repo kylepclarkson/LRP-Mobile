@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View
@@ -9,12 +9,18 @@ import {
   TextInput,
   useTheme
 } from "react-native-paper";
+import { DatePickerInput } from 'react-native-paper-dates';
 
 export default function RegisterForm() {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [dateOfBirth, setDateOfBirth] = useState(undefined);
+
+  const [dateModalIsOpen, setDateModalIsOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,6 +48,7 @@ export default function RegisterForm() {
       setError("Passwords do not match");
       return false;
     }
+    // TODO add name validation
     setError("");
     return true;
   }
@@ -77,6 +84,30 @@ export default function RegisterForm() {
         placeholder='confirm password'
         mode="outlined"
         onChangeText={setConfirmPassword}
+      />
+      <TextInput
+        label="First name"
+        style={styles.input}
+        autoCapitalize="words"
+        mode="outlined"
+        onChangeText={setFirstName}
+      />
+      <TextInput
+        label="Last name"
+        style={styles.input}
+        autoCapitalize="words"
+        mode="outlined"
+        onChangeText={setLastName}
+      />
+      {/* TODO complete date input */}
+      <DatePickerInput
+        locale="en"
+        label="Date of birth"
+        value={dateOfBirth}
+        onChange={setDateOfBirth}
+        inputMode="start"
+        style={{ width: '100%', marginTop: 8 }
+        }
       />
       {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
       <Button

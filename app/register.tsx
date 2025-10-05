@@ -17,16 +17,6 @@ export default function RegisterScreen() {
   }
 
   return (
-    // <View>
-    //   <Text>Register screen</Text>
-    //   <Text>
-    //     Already collecting rewards?{' '}
-    //     <Text
-    //       onPress={handleLoginRedirect}
-    //     >log in</Text>
-    //   </Text>
-    // </View>
-
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -40,7 +30,7 @@ export default function RegisterScreen() {
           <Text
             onPress={handleLoginRedirect}
             style={styles.redirectLink}
-          >Register now!</Text>
+          >Login here</Text>
         </Text>
       </View>
     </KeyboardAvoidingView>
