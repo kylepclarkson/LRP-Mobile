@@ -18,7 +18,6 @@ export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const theme = useTheme();
   const { login, isLoadingUser, setIsLoadingUser } = useAuthSession();
@@ -69,7 +68,6 @@ export default function LoginForm() {
         placeholder='email@gmail.com'
         mode="outlined"
         onChangeText={setEmail}
-        value={email}
       />
       <TextInput
         style={styles.input}
@@ -78,10 +76,9 @@ export default function LoginForm() {
         placeholder='password'
         mode="outlined"
         onChangeText={setPassword}
-        value={password}
       />
 
-      {error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
+      {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
 
       <Button
         mode="contained"
@@ -107,6 +104,11 @@ const styles = StyleSheet.create({
   },
   switchModeButton: {
     marginTop: 16
+  },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'center',
+    margin: 8
   }
 })
 
