@@ -1,6 +1,10 @@
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import {
+  Platform,
+  Pressable,
   StyleSheet,
+  TouchableOpacity,
   View
 } from "react-native";
 import {
@@ -9,7 +13,7 @@ import {
   TextInput,
   useTheme
 } from "react-native-paper";
-import { DatePickerInput } from 'react-native-paper-dates';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RegisterForm() {
 
@@ -18,11 +22,14 @@ export default function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [dateOfBirth, setDateOfBirth] = useState(undefined);
+  // The user's date of birth as string
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  // The user's date of birth as Date
+  const [date, setDate] = useState(new Date());
+  // Wether the date picker modal is open
+  const [showDateOfBirthPicker, setShowDateOfBirthPicker] = useState<boolean>(false);
 
-  const [dateModalIsOpen, setDateModalIsOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const theme = useTheme();
@@ -58,8 +65,33 @@ export default function RegisterForm() {
     // TODO call backend, check response
   }
 
+  const toggleDateOfBirthPicker = () => {
+    setShowDateOfBirthPicker(!showDateOfBirthPicker);
+  }
+
+  const onDateOfBirthChange = (event: DateTimePickerEvent, selectedDate?: Date | undefined) => {
+    if (event.type === "set") {
+      setDate(selectedDate!!);
+      if (Platform.OS === 'android') {
+        // Prevent retoggling
+        toggleDateOfBirthPicker();
+        setDateOfBirth(formatDate(selectedDate!!));
+      }
+    } else {
+      toggleDateOfBirthPicker();
+    }
+  }
+
+  const formatDate = (rawDate: Date): string => {
+    let date = new Date(rawDate);
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+    return month + '-' + day + '-' + year;
+  }
+
   return (
-    <View>
+    <SafeAreaProvider>
       <TextInput
         label="Email"
         style={styles.input}
@@ -99,16 +131,55 @@ export default function RegisterForm() {
         mode="outlined"
         onChangeText={setLastName}
       />
-      {/* TODO complete date input */}
-      <DatePickerInput
-        locale="en"
-        label="Date of birth"
-        value={dateOfBirth}
-        onChange={setDateOfBirth}
-        inputMode="start"
-        style={{ width: '100%', marginTop: 8 }
-        }
-      />
+
+      {showDateOfBirthPicker && (
+        <DateTimePicker
+          mode="date"
+          display="spinner"
+          value={date}
+          onChange={onDateOfBirthChange}
+          style={styles.datePicker} // iOS styling
+          maximumDate={new Date()} // Prevent future dates
+          minimumDate={new Date(1920, 0, 1)} // Prevent dates too far in the past
+        />
+      )}
+      {showDateOfBirthPicker && Platform.OS === 'ios' && (
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity
+            style={styles.pickerButton}
+            onPress={toggleDateOfBirthPicker}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.pickerButton}
+            onPress={() => {
+              // iOS 
+              setDateOfBirth(formatDate(date));
+              toggleDateOfBirthPicker();
+            }}
+          >
+            <Text style={styles.buttonText}>Confirm</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {!showDateOfBirthPicker && (
+        <Pressable
+          onPress={toggleDateOfBirthPicker}
+        >
+          <TextInput
+            style={styles.input}
+            label="Date of birth"
+            value={dateOfBirth}
+            mode="outlined"
+            onChange={setDateOfBirth}
+            editable={false}
+            onPressIn={toggleDateOfBirthPicker}
+          />
+        </Pressable>
+      )}
+
       {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
       <Button
         mode="contained"
@@ -116,7 +187,7 @@ export default function RegisterForm() {
         style={styles.button}>
         Create account
       </Button>
-    </View>
+    </SafeAreaProvider >
   )
 };
 
@@ -131,6 +202,11 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 8,
   },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff'
+  },
   switchModeButton: {
     marginTop: 16
   },
@@ -138,5 +214,12 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     margin: 8
+  },
+  datePicker: {
+    height: 120,
+    marginTop: -10
+  },
+  pickerButton: {
+    paddingHorizontal: 20
   }
 });

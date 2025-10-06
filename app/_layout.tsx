@@ -1,6 +1,7 @@
 import { AuthProvider, useAuthSession } from "@/lib/context/auth";
 import { Stack } from "expo-router";
 import { PaperProvider } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function InitialLayout() {
 
@@ -23,10 +24,14 @@ function InitialLayout() {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <PaperProvider>
-        <InitialLayout />
-      </PaperProvider>
-    </AuthProvider>
+    <SafeAreaProvider>
+      {/* <ScrollView> */}
+      <AuthProvider>
+        <PaperProvider>
+          <InitialLayout />
+        </PaperProvider>
+      </AuthProvider>
+      {/* </ScrollView> */}
+    // </SafeAreaProvider>
   );
 }
