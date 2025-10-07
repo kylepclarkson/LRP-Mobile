@@ -16,7 +16,10 @@ export interface LoginCredentials {
 /** Credentials required for registering a new account. */
 export interface RegisterCredentials {
   email: string,
-  password: string
+  password: string,
+  dateOfBirth: string,
+  firstName: string,
+  lastName: string,
 }
 
 /**
@@ -25,6 +28,11 @@ export interface RegisterCredentials {
 export interface TokenPair {
   access: string,
   refresh: string,
+}
+
+export interface RegisterResponse {
+  user: AuthenticatedUser,
+  tokens: TokenPair,
 }
 
 // ====================================================================
@@ -59,6 +67,16 @@ export async function getUser(): Promise<AuthenticatedUser> {
 export async function logout(): Promise<void> {
   // TODO - implement logout API call
   await deleteTokens();
+}
+
+export async function register(credentials: RegisterCredentials): Promise<void> {
+  try {
+    const data = await post<RegisterResponse>("user/register/", credentials);
+    console.debug("Registration successful:", data);
+    // TODO set user and tokens. 
+  } catch (error) {
+    throw error; 
+  }
 }
 
 /**
