@@ -17,9 +17,9 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   email: string,
   password: string,
-  dateOfBirth: string,
-  firstName: string,
-  lastName: string,
+  date_of_birth: string,
+  first_name: string,
+  last_name: string,
 }
 
 /**
@@ -69,13 +69,14 @@ export async function logout(): Promise<void> {
   await deleteTokens();
 }
 
-export async function register(credentials: RegisterCredentials): Promise<void> {
+export async function register(credentials: RegisterCredentials): Promise<RegisterResponse> {
   try {
     const data = await post<RegisterResponse>("user/register/", credentials);
     console.debug("Registration successful:", data);
+    return data;
     // TODO set user and tokens. 
   } catch (error) {
-    throw error; 
+    throw error;
   }
 }
 

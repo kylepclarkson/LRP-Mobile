@@ -1,7 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthenticatedUser } from "../../types/User";
-import { getUser, LoginCredentials, login as signIn, logout as signOut } from "../services/auth.service";
+import { 
+  getUser, 
+  LoginCredentials, 
+  login as signIn, 
+  logout as signOut,
+  register as registerUser, 
+  RegisterCredentials
+} from "../services/auth.service";
 import { getAccessToken } from "../services/token.service";
+import { saveTokens } from '../services/token.service';
 
 
 const PLACEHOLDER_USER = {
@@ -17,6 +25,7 @@ type AuthContextType = {
   setIsLoadingUser: React.Dispatch<React.SetStateAction<boolean>>;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
+  register: (credentials: RegisterCredentials) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -80,13 +89,29 @@ export function AuthProvider(
     }
   }
 
+  const register = async (registerCredentials: RegisterCredentials) => {
+    setIsLoadingUser(true);
+    try {
+      const registerResponse = await registerUser(registerCredentials);
+      saveTokens(registerResponse.tokens.access, registerResponse.tokens.refresh);
+      setUser(registerResponse.user);
+      
+    } catch (error) {
+      // Re-throw the error so it can be caught by the caller
+      throw error;   
+    } finally {
+      setIsLoadingUser(false);
+    }
+  }
+
   return (
     <AuthContext.Provider value={{
       user,
       isLoadingUser,
       setIsLoadingUser,
       login,
-      logout
+      logout,
+      register
     }}>
       {children}
     </AuthContext.Provider>

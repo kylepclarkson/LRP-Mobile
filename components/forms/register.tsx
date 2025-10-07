@@ -1,3 +1,4 @@
+import { useAuthSession } from "@/lib/context/auth";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import {
@@ -8,6 +9,7 @@ import {
   View
 } from "react-native";
 import {
+  ActivityIndicator,
   Button,
   Text,
   TextInput,
@@ -34,6 +36,8 @@ export default function RegisterForm() {
 
   const theme = useTheme();
 
+  const { register } = useAuthSession();
+
   const isFormValid = (): boolean => {
     if (!email || email.trim().length === 0) {
       setError("Email is required");
@@ -55,14 +59,39 @@ export default function RegisterForm() {
       setError("Passwords do not match");
       return false;
     }
-    // TODO add name validation
+    if (!firstName || firstName.trim().length === 0) {
+      setError("First name is required");
+      return false;
+    }
+    if (!lastName || lastName.trim().length === 0) {
+      setError("Last name is required");
+      return false;
+    }
+    if (!dateOfBirth || dateOfBirth.trim().length === 0) {
+      setError("Date of birth is required");
+      return false;
+    }
     setError("");
     return true;
   }
 
   const handleRegistration = async () => {
     if (!isFormValid()) return;
-    // TODO call backend, check response
+    setIsLoading(true);
+    try {
+      await register({
+        email,
+        password,
+        date_of_birth: dateOfBirth,
+        first_name: firstName,
+        last_name: lastName
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      setError("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const toggleDateOfBirthPicker = () => {
@@ -89,6 +118,14 @@ export default function RegisterForm() {
     let day = date.getDate().toString().padStart(2, '0');
     return year + '-' + month + '-' + day;
     // return month + '-' + day + '-' + year;
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   return (
@@ -165,21 +202,19 @@ export default function RegisterForm() {
         </View>
       )}
 
-      {!showDateOfBirthPicker && (
-        <Pressable
-          onPress={toggleDateOfBirthPicker}
-        >
-          <TextInput
-            style={styles.input}
-            label="Date of birth"
-            value={dateOfBirth}
-            mode="outlined"
-            onChange={setDateOfBirth}
-            editable={false}
-            onPressIn={toggleDateOfBirthPicker}
-          />
-        </Pressable>
-      )}
+      <Pressable
+        onPress={toggleDateOfBirthPicker}
+      >
+        <TextInput
+          style={styles.input}
+          label="Date of birth"
+          value={dateOfBirth}
+          mode="outlined"
+          onChange={setDateOfBirth}
+          editable={false}
+          onPressIn={toggleDateOfBirthPicker}
+        />
+      </Pressable>
 
       {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
       <Button
