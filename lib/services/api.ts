@@ -59,3 +59,17 @@ export const post = <T>(path: string, body: any) => request<T>(path, { method: "
 export function isApiError(error: any): error is ApiError {
   return error instanceof Error && 'data' in error && typeof (error as ApiError).status === 'number';
 }
+
+
+
+const users_paths = {
+  login: `${getBaseUrl()}/users/login/`,
+  signOut: `${getBaseUrl()}/users/signout/`,
+  register: `${getBaseUrl()}/users/register/`
+}
+/**
+ * Exports all API paths
+ */
+export const API_PATHS = {
+  users: users_paths
+}

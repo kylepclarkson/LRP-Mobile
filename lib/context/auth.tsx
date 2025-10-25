@@ -1,15 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AuthenticatedUser } from "../../types/User";
-import { 
-  getUser, 
-  LoginCredentials, 
-  login as signIn, 
-  logout as signOut,
-  register as registerUser, 
-  RegisterCredentials
+import { AuthenticatedUser } from "../../types/users/User";
+import {
+  getUser,
+  LoginCredentials,
+  RegisterCredentials,
+  register as registerUser,
+  login as signIn,
+  logout as signOut
 } from "../services/auth.service";
-import { getAccessToken } from "../services/token.service";
-import { saveTokens } from '../services/token.service';
+import { getAccessToken, saveTokens } from "../services/token.service";
 
 
 const PLACEHOLDER_USER = {
@@ -95,10 +94,10 @@ export function AuthProvider(
       const registerResponse = await registerUser(registerCredentials);
       saveTokens(registerResponse.tokens.access, registerResponse.tokens.refresh);
       setUser(registerResponse.user);
-      
+
     } catch (error) {
       // Re-throw the error so it can be caught by the caller
-      throw error;   
+      throw error;
     } finally {
       setIsLoadingUser(false);
     }

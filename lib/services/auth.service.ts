@@ -1,5 +1,5 @@
-import { get, post } from '@/lib/services/api';
-import { AuthenticatedUser } from '@/types/User';
+import { API_PATHS, get, post } from '@/lib/services/api';
+import { AuthenticatedUser } from '@/types/users/User';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 
 
@@ -43,7 +43,7 @@ export interface RegisterResponse {
  */
 export async function login(credentials: LoginCredentials): Promise<TokenPair> {
   try {
-    const data = await post<TokenPair>("user/login/", credentials);
+    const data = await post<TokenPair>(API_PATHS.users.login, credentials);
     // Store tokens
     await saveTokens(data.access, data.refresh);
     return data;
@@ -55,7 +55,7 @@ export async function login(credentials: LoginCredentials): Promise<TokenPair> {
 export async function getUser(): Promise<AuthenticatedUser> {
   console.debug("Fetching authenticated user details...");
   try {
-    const data = await get<AuthenticatedUser>("user/");
+    const data = await get<AuthenticatedUser>("users/");
     // Set user data in context
     console.debug("Fetched user data:", data);
     return data;
@@ -71,7 +71,7 @@ export async function logout(): Promise<void> {
 
 export async function register(credentials: RegisterCredentials): Promise<RegisterResponse> {
   try {
-    const data = await post<RegisterResponse>("user/register/", credentials);
+    const data = await post<RegisterResponse>(API_PATHS.users.register, credentials);
     console.debug("Registration successful:", data);
     return data;
     // TODO set user and tokens. 
@@ -93,7 +93,8 @@ export async function refreshTokens(): Promise<TokenPair> {
     throw new Error("No refresh token available");
   }
   // Call the API to refresh tokens
-  const data = await post<TokenPair>("user/login/refresh/", { refreshToken });
+  // Move API path to constants object
+  const data = await post<TokenPair>("users/login/refresh/", { refreshToken });
   await saveTokens(data.access, data.refresh);
   return data;
 }
