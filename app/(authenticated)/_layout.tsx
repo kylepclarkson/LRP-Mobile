@@ -1,4 +1,4 @@
-import { useAuthSession } from '@/lib/context/auth';
+import { useAuthContext } from '@/lib/context/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,7 +8,7 @@ import { Text } from "react-native-paper";
 
 export default function AuthenticatedLayout() {
 
-  const { user, isLoadingUser } = useAuthSession();
+  const { user, isLoadingUser } = useAuthContext();
 
   if (isLoadingUser) {
     return <Text>Loading...</Text>

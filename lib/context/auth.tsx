@@ -118,7 +118,7 @@ export function AuthProvider(
 }
 
 // Export the context
-export function useAuthSession() {
+export function useAuthContext() {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth must be defined within AuthProvider.")

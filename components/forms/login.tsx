@@ -1,4 +1,4 @@
-import { useAuthSession } from "@/lib/context/auth";
+import { useAuthContext } from "@/lib/context/auth";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -20,7 +20,7 @@ export default function LoginForm() {
   const [error, setError] = useState<string>("");
 
   const theme = useTheme();
-  const { login, isLoadingUser, setIsLoadingUser } = useAuthSession();
+  const { login, isLoadingUser, setIsLoadingUser } = useAuthContext();
 
 
   const isFormValid = () => {

@@ -1,4 +1,4 @@
-import { useAuthSession } from "@/lib/context/auth";
+import { useAuthContext } from "@/lib/context/auth";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import {
@@ -36,7 +36,7 @@ export default function RegisterForm() {
 
   const theme = useTheme();
 
-  const { register } = useAuthSession();
+  const { register } = useAuthContext();
 
   const isFormValid = (): boolean => {
     if (!email || email.trim().length === 0) {

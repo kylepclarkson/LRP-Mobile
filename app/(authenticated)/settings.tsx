@@ -1,4 +1,4 @@
-import { useAuthSession } from "@/lib/context/auth";
+import { useAuthContext } from "@/lib/context/auth";
 import { Text } from "@react-navigation/elements";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
@@ -6,7 +6,7 @@ import { Button } from "react-native-paper";
 
 export default function Menu() {
 
-  const { logout } = useAuthSession();
+  const { logout } = useAuthContext();
 
   return (
     <View>
