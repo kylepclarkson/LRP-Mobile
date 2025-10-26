@@ -43,6 +43,9 @@ async function request<T>(
   return payload as T;
 }
 
+/**
+ * Returns the base URL for the current environment. 
+ */
 function getBaseUrl() {
   const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
   if (!baseUrl) {
@@ -60,16 +63,15 @@ export function isApiError(error: any): error is ApiError {
   return error instanceof Error && 'data' in error && typeof (error as ApiError).status === 'number';
 }
 
-
-
-const users_paths = {
-  login: `${getBaseUrl()}/users/login/`,
-  signOut: `${getBaseUrl()}/users/signout/`,
-  register: `${getBaseUrl()}/users/register/`
-}
 /**
- * Exports all API paths
+ * Exports relative paths. The base path is provided by the env settings
+ * and is added to the provided URL when performing the request. 
  */
-export const API_PATHS = {
-  users: users_paths
+export const paths = {
+  authentication: {
+    login: `/users/login/`,
+    signOut: `/users/signout/`,
+    register: `/users/register/`,
+    user_details: `/users/user_details/`
+  },
 }

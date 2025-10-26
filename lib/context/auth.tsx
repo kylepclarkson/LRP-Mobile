@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthenticatedUser } from "../../types/users/User";
 import {
-  getUser,
+  getUserDetails,
   LoginCredentials,
   RegisterCredentials,
   register as registerUser,
@@ -52,7 +52,7 @@ export function AuthProvider(
         return;
       }
       try {
-        const user = await getUser();
+        const user = await getUserDetails();
         console.debug("Fetched user on initial load:", user);
         setUser(user);
       } catch (error) {
@@ -68,7 +68,7 @@ export function AuthProvider(
     setIsLoadingUser(true);
     try {
       await signIn(credentials);
-      const user = await getUser();
+      const user = await getUserDetails();
       setUser(user);
     } catch (error) {
       // Re-throw the error so it can be caught by the caller

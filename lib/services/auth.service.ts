@@ -1,4 +1,4 @@
-import { API_PATHS, get, post } from '@/lib/services/api';
+import { get, paths, post } from '@/lib/services/api';
 import { AuthenticatedUser } from '@/types/users/User';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 
@@ -42,22 +42,22 @@ export interface RegisterResponse {
  * @param credentials - User login credentials.
  */
 export async function login(credentials: LoginCredentials): Promise<TokenPair> {
+  console.debug("Attempting login with user credentials");
   try {
-    const data = await post<TokenPair>(API_PATHS.users.login, credentials);
+    const data = await post<TokenPair>(paths.authentication.login, credentials);
     // Store tokens
     await saveTokens(data.access, data.refresh);
     return data;
   } catch (error) {
+    console.debug("Error caught while attempting login", error);
     throw error;
   }
 }
 
-export async function getUser(): Promise<AuthenticatedUser> {
+export async function getUserDetails(): Promise<AuthenticatedUser> {
   console.debug("Fetching authenticated user details...");
   try {
-    const data = await get<AuthenticatedUser>("users/");
-    // Set user data in context
-    console.debug("Fetched user data:", data);
+    const data = await get<AuthenticatedUser>(paths.authentication.user_details);
     return data;
   } catch (error) {
     throw error;
@@ -71,7 +71,7 @@ export async function logout(): Promise<void> {
 
 export async function register(credentials: RegisterCredentials): Promise<RegisterResponse> {
   try {
-    const data = await post<RegisterResponse>(API_PATHS.users.register, credentials);
+    const data = await post<RegisterResponse>(paths.authentication.register, credentials);
     console.debug("Registration successful:", data);
     return data;
     // TODO set user and tokens. 
