@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AuthenticatedUser } from "../../types/users/User";
+import { AuthenticatedUser } from "../../types/types";
 import {
   getUserDetails,
   LoginCredentials,
@@ -52,9 +52,9 @@ export function AuthProvider(
         return;
       }
       try {
-        const user = await getUserDetails();
-        console.debug("Fetched user on initial load:", user);
-        setUser(user);
+        const userDetails = await getUserDetails();
+        console.debug("Fetched user on initial load:", userDetails);
+        setUser(userDetails.user);
       } catch (error) {
         setUser(null);
       } finally {
