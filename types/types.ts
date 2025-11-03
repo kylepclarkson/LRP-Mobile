@@ -10,6 +10,11 @@ export type AuthenticatedUser = {
   employee_groups: EmployeeGroup[]
 }
 
+export type UserDetails = {
+  user: AuthenticatedUser,
+  employee_groups: EmployeeGroup
+}
+
 export type EmployeeGroup = {
   id: string,
   name: string,

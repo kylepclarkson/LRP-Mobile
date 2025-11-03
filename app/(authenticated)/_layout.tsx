@@ -30,6 +30,19 @@ export default function AuthenticatedLayout() {
         }}>
       </Tabs.Screen>
       <Tabs.Screen
+        name="reward-tracker"
+        options={{
+          title: "Tracker",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="progress-star"
+              size={size}
+              color={color}
+            />
+          )
+        }}>
+      </Tabs.Screen>
+      <Tabs.Screen
         name="add-reward"
         options={{
           title: "Add reward",
@@ -43,12 +56,12 @@ export default function AuthenticatedLayout() {
         }}>
       </Tabs.Screen>
       <Tabs.Screen
-        name="tracker"
+        name="rewards"
         options={{
-          title: "Reward progress",
+          title: "Rewards",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="progress-star"
+              name="star"
               size={size}
               color={color}
             />

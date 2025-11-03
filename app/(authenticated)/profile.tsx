@@ -1,11 +1,11 @@
-import { useAuthSession } from "@/lib/context/auth";
+import { useAuthContext } from "@/lib/context/auth";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 
 
 export default function ProfileScreen() {
 
-  const { user } = useAuthSession();
+  const { user } = useAuthContext();
   return (
     <View>
       <Text>Profile screen</Text>

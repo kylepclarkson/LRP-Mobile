@@ -68,8 +68,8 @@ export function AuthProvider(
     setIsLoadingUser(true);
     try {
       await signIn(credentials);
-      const user = await getUserDetails();
-      setUser(user);
+      const userDetails = await getUserDetails();
+      setUser(userDetails.user);
     } catch (error) {
       // Re-throw the error so it can be caught by the caller
       throw error;
