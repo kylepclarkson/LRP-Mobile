@@ -42,6 +42,10 @@ export function AuthProvider(
   // If fetching user is in a loading state
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(false);
 
+  /**
+   * On initial load, attempt to fetch user details if access token exists
+   * in local storage.
+   */
   useEffect(() => {
     setIsLoadingUser(true);
     // Fetches user details using access token, if one exists

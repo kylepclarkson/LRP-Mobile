@@ -26,3 +26,19 @@ export type Business = {
   name: string,
 }
 
+export type StampDefinition = {
+  id: string,
+  title: string,
+  description: string,
+  progression_criteria: string,
+  redemption_text: string,
+  stamps_required: number,
+  created_at: Date,
+}
+
+export type StampCard = {
+  id: string,
+  state: string,
+  created_at: Date,
+  definition: StampDefinition,
+}
