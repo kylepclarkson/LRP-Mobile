@@ -1,5 +1,5 @@
 import { get, paths, post } from '@/lib/services/api';
-import { AuthenticatedUser, UserDetails } from '@/types/types';
+import { AuthenticatedUser, StampCard, UserDetails } from '@/types/types';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 
 
@@ -97,4 +97,15 @@ export async function refreshTokens(): Promise<TokenPair> {
   const data = await post<TokenPair>("users/login/refresh/", { refreshToken });
   await saveTokens(data.access, data.refresh);
   return data;
+}
+
+export async function fetchStampCards(): Promise<StampCard[]> {
+  console.debug("Fetching StampCards");
+  try {
+    const data = await get<StampCard[]>(paths.rewards.stampTokens);
+    return data;
+  } catch (error) {
+    console.error("Error fetching StampCards:", error);
+    throw error;
+  }
 }

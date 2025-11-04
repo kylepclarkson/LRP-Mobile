@@ -74,4 +74,7 @@ export const paths = {
     register: `/users/register/`,
     user_details: `/users/user_details/`
   },
+  rewards: {
+    stampTokens: `/rewards/stamp-cards/`
+  }
 }
