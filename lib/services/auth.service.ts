@@ -90,15 +90,19 @@ export async function refreshTokens(): Promise<TokenPair> {
   if (!refreshToken) {
     // TODO - redirect user to login
     console.error("No refresh token available");
-    throw new Error("No refresh token available");
+    throw new Error("No refresh troken available");
   }
   // Call the API to refresh tokens
   // Move API path to constants object
-  const data = await post<TokenPair>("users/login/refresh/", { refreshToken });
+  const data = await post<TokenPair>("users/login/refresh/", { refresh: refreshToken });
   await saveTokens(data.access, data.refresh);
   return data;
 }
 
+/**
+ * Retrieve the current user's StampCards. By default it retrieves 
+ * all StampCards that are not in a terminal state.
+ */
 export async function fetchStampCards(): Promise<StampCard[]> {
   console.debug("Fetching StampCards");
   try {

@@ -26,7 +26,6 @@ function InitialLayout() {
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      {/* <ScrollView> */}
       <PaperProvider>
         <AuthProvider>
           <RewardsProvider>
@@ -34,7 +33,6 @@ export default function RootLayout() {
           </RewardsProvider>
         </AuthProvider>
       </PaperProvider>
-      {/* </ScrollView> */}
-    // </SafeAreaProvider>
+    </SafeAreaProvider>
   );
 }

@@ -32,6 +32,7 @@ async function request<T>(
   // handle response
   const payload = response.status !== 204 ? await response.json() : null;
   if (!response.ok) {
+    console.debug("Response not OK:", response.status, payload);
     const message = typeof payload === 'object' && 'detail' in payload
       ? payload.detail
       : JSON.stringify(payload);

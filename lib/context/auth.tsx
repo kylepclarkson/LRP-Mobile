@@ -3,12 +3,14 @@ import { AuthenticatedUser } from "../../types/types";
 import {
   getUserDetails,
   LoginCredentials,
+  refreshTokens,
   RegisterCredentials,
   register as registerUser,
   login as signIn,
   logout as signOut
 } from "../services/auth.service";
 import { getAccessToken, saveTokens } from "../services/token.service";
+import { isApiError } from "../services/api";
 
 
 const PLACEHOLDER_USER = {
@@ -48,6 +50,7 @@ export function AuthProvider(
    */
   useEffect(() => {
     setIsLoadingUser(true);
+    // TODO clean up this function
     // Fetches user details using access token, if one exists
     const initialUserLoad = async () => {
       const accessToken = await getAccessToken();
@@ -60,12 +63,24 @@ export function AuthProvider(
         console.debug("Fetched user on initial load:", userDetails);
         setUser(userDetails.user);
       } catch (error) {
-        setUser(null);
+        if (isApiError(error) && error.status === 401) {
+          // Token is invalid - attempt to refresh tokens
+          console.debug("Access token invalid, attempting to refresh tokens...");
+          await refreshTokens();
+          const userDetails = await getUserDetails();
+          console.debug("Fetched user after refreshing tokens:", userDetails);
+          setUser(userDetails.user);
+        } else {
+          setUser(null);
+          setIsLoadingUser(false);
+          return;
+        }
       } finally {
         setIsLoadingUser(false);
       }
     };
     initialUserLoad();
+    setIsLoadingUser(false);
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
