@@ -1,23 +1,17 @@
 import { StampCard } from "@/types/types";
 import { Meta, StoryObj } from "@storybook/react-native";
-import { StampCardFlatListItem } from "./index";
+import Component from "react-native-paper/lib/typescript/components/List/ListItem";
+import { StampCardList } from ".";
 
-const meta = {
-  component: StampCardFlatListItem,
-} satisfies Meta<typeof StampCardFlatListItem>;;
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-const STAMP_CARDS: StampCard[] = [
+const stampCardsData: StampCard[] = [
   {
     id: '1',
     state: "in_progress",
     createdAt: new Date(),
     stampDefinition: {
       id: "1",
-      title: 'Free Coffee Card',
+      title: 'Buy 10 coffees, get 1 free',
       description: "This is a sample stamp card",
       progressionText: "",
       redemptionText: "",
@@ -25,7 +19,7 @@ const STAMP_CARDS: StampCard[] = [
       createdAt: new Date(),
       business: {
         id: "1",
-        name: "Sample Business",
+        name: "Coco Cafe",
       }
     },
     stampRecords: [
@@ -41,23 +35,34 @@ const STAMP_CARDS: StampCard[] = [
     createdAt: new Date(),
     stampDefinition: {
       id: "1",
-      title: 'Free Coffee Card',
+      title: 'Buy 5 coffees, get 1 free',
       description: "This is a sample stamp card",
       progressionText: "",
       redemptionText: "",
-      stampsRequired: 10,
+      stampsRequired: 5,
       createdAt: new Date(),
       business: {
         id: "1",
-        name: "Sample Business",
+        name: "Tim's Coffee",
       }
     },
-    stampRecords: []
+    stampRecords: [
+      {
+        id: '1',
+      }, {
+        id: '2',
+      }, {
+        id: '3',
+      }
+    ]
   }
-]
+];
 
-export const StampCardStory: Story = {
+const meta = { component: StampCardList } satisfies Meta<typeof StampCardList>;
+
+export default meta;
+export const StampCardListStory: StoryObj<typeof meta> = {
   args: {
-    stampCard: STAMP_CARDS[0],
+    stampCards: stampCardsData,
   }
-}
+};
