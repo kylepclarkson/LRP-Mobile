@@ -31,7 +31,7 @@ export default function Index() {
             style={styles.redirectLink}
           >Register now!</Text>
         </Text>
-        <Link href="./storybook">Open Storybook</Link>
+        <Link href="./storybook" style={{ textAlign: "center", marginVertical: 12, backgroundColor: "lightgray", padding: 8, borderRadius: 4 }}>Open Storybook</Link>
       </View>
     </KeyboardAvoidingView>
   );

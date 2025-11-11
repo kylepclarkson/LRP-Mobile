@@ -30,15 +30,21 @@ export type StampDefinition = {
   id: string,
   title: string,
   description: string,
-  progression_criteria: string,
-  redemption_text: string,
-  stamps_required: number,
-  created_at: Date,
+  progressionText: string,
+  redemptionText: string,
+  stampsRequired: number,
+  createdAt: Date,
+  business: Business,
 }
 
 export type StampCard = {
   id: string,
   state: string,
-  created_at: Date,
-  definition: StampDefinition,
+  createdAt: Date,
+  stampDefinition: StampDefinition,
+  stampRecords: StampRecord[],
+}
+
+export type StampRecord = {
+  id: string,
 }
