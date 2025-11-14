@@ -1,9 +1,8 @@
 import { StampCard } from '@/types/types';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, Touchable, View } from 'react-native';
 import { ProgressBar } from '../ProgressBar';
 
-export function StampCardListItem({ stampCard }: { stampCard: StampCard }) {
+export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard, onPress?: (item: StampCard) => void }) {
 
   const computeStampCardProgress = (): number => {
     if (stampCard.stampDefinition.stampsRequired === 0) {
@@ -16,15 +15,17 @@ export function StampCardListItem({ stampCard }: { stampCard: StampCard }) {
   }
 
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>{stampCard.stampDefinition.title}</Text>
-        <Text style={styles.businessName}>{stampCard.stampDefinition.business.name}</Text>
-        <View style={styles.progressBarWrapper}>
-          <ProgressBar progress={computeStampCardProgress()} />
+    <Pressable onPress={() => onPress && onPress(stampCard)}>
+      <View style={styles.cardContainer}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>{stampCard.stampDefinition.business.name}</Text>
+          <Text style={styles.businessName}>{stampCard.stampDefinition.title}</Text>
+          <View style={styles.progressBarWrapper}>
+            <ProgressBar progress={computeStampCardProgress()} />
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
