@@ -1,5 +1,5 @@
 import { StampCard } from '@/types/types';
-import { Pressable, StyleSheet, Text, Touchable, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ProgressBar } from '../ProgressBar';
 
 export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard, onPress?: (item: StampCard) => void }) {
