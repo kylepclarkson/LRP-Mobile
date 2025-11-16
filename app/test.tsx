@@ -1,27 +1,60 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { useCallback, useRef } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import React, { useCallback, useMemo, useRef } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
-  // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  // hooks
+  const sheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const data = useMemo(
+    () =>
+      Array(50)
+        .fill(0)
+        .map((_, index) => `index-${index}`),
+    []
+  );
+  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
 
   // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+  const handleSheetChange = useCallback((index) => {
+    console.log("handleSheetChange", index);
+  }, []);
+  const handleSnapPress = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index);
+  }, []);
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close();
   }, []);
 
-  // renders
+  // render
+  const renderItem = useCallback(
+    ({ item }) => (
+      <View style={styles.itemContainer}>
+        <Text>{item}</Text>
+      </View>
+    ),
+    []
+  );
   return (
     <GestureHandlerRootView style={styles.container}>
+      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
+      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
+      <Button title="Close" onPress={() => handleClosePress()} />
       <BottomSheet
-        ref={bottomSheetRef}
-        onChange={handleSheetChanges}
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        enableDynamicSizing={false}
+        onChange={handleSheetChange}
       >
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-        </BottomSheetView>
+        <BottomSheetFlatList
+          data={data}
+          keyExtractor={(i) => i}
+          renderItem={renderItem}
+          contentContainerStyle={styles.contentContainer}
+        />
       </BottomSheet>
     </GestureHandlerRootView>
   );
@@ -30,12 +63,15 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
+    paddingTop: 200,
   },
   contentContainer: {
-    flex: 1,
-    padding: 36,
-    alignItems: 'center',
+    backgroundColor: "white",
+  },
+  itemContainer: {
+    padding: 6,
+    margin: 6,
+    backgroundColor: "#eee",
   },
 });
 
