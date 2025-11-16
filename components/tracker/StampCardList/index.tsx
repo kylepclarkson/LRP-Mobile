@@ -16,13 +16,11 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
   const [sheetIndex, setSheetIndex] = React.useState<number>(-1);
 
   const openBottomSheet = React.useCallback((stampCard: StampCard) => {
-    console.log("Opening bottom sheet");
     setSelectedStampCard(stampCard);
     setSheetIndex(0);
   }, []);
 
   const closeBottomSheet = React.useCallback(() => {
-    console.info("Closing bottom sheet");
     bottomSheetRef.current?.close();
     setSelectedStampCard(null);
     setSheetIndex(-1);
@@ -46,9 +44,7 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
    * Opens the bottom sheet whenever a stamp card is selected.
    */
   React.useEffect(() => {
-    console.debug("Selected stamp card changed:", selectedStampCard?.id);
     if (selectedStampCard) {
-      console.log("Opening bottom sheet");
       // bottomSheetRef.current?.snapToIndex(0);
       setTimeout(() => { console.log('snap attempt', bottomSheetRef.current); bottomSheetRef.current?.snapToIndex(0); }, 50)
     }

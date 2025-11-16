@@ -1,5 +1,5 @@
 import LoginForm from "@/components/forms/login";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -31,8 +31,6 @@ export default function Index() {
             style={styles.redirectLink}
           >Register now!</Text>
         </Text>
-        <Link href="./test" style={{ textAlign: "center", marginVertical: 12, backgroundColor: "lightgray", padding: 8, borderRadius: 4 }}>Open Test</Link>
-        <Link href="./storybook" style={{ textAlign: "center", marginVertical: 12, backgroundColor: "lightgray", padding: 8, borderRadius: 4 }}>Open Storybook</Link>
       </View>
     </KeyboardAvoidingView>
   );
