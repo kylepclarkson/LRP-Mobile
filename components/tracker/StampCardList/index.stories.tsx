@@ -1,6 +1,5 @@
 import { StampCard } from "@/types/types";
 import { Meta, StoryObj } from "@storybook/react-native";
-import Component from "react-native-paper/lib/typescript/components/List/ListItem";
 import { StampCardList } from ".";
 
 
@@ -11,15 +10,15 @@ const stampCardsData: StampCard[] = [
     createdAt: new Date(),
     stampDefinition: {
       id: "1",
-      title: 'Buy 10 coffees, get 1 free',
-      description: "This is a sample stamp card",
-      progressionText: "",
-      redemptionText: "",
+      title: 'Free bag of dog food',
+      description: "Buy 5 bags of FirstMates dog food and receive a free one.",
+      progressionText: "Purchase at any Chico Pets location or online.",
+      redemptionText: "Redeem at any Chico Pets location or online.",
       stampsRequired: 10,
       createdAt: new Date(),
       business: {
         id: "1",
-        name: "Coco Cafe",
+        name: "Chico Pet Toys",
       }
     },
     stampRecords: [

@@ -46,7 +46,7 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
   React.useEffect(() => {
     if (selectedStampCard) {
       // bottomSheetRef.current?.snapToIndex(0);
-      setTimeout(() => { console.log('snap attempt', bottomSheetRef.current); bottomSheetRef.current?.snapToIndex(0); }, 50)
+      setTimeout(() => { bottomSheetRef.current?.snapToIndex(0); }, 10)
     }
   }, [selectedStampCard]);
 
