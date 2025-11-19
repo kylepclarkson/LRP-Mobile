@@ -1,10 +1,11 @@
 // ProgressBar.tsx
+import { StampCard } from '@/types/types';
 import React, { useEffect, useRef } from 'react';
 import {
   AccessibilityProps,
   Animated,
   StyleSheet,
-  View,
+  View
 } from 'react-native';
 
 type ProgressBarProps = {
@@ -17,6 +18,21 @@ type ProgressBarProps = {
   animated?: boolean;
   animationDuration?: number;
 };
+
+/**
+ * Utility function to compute progression amount for a stamp card. 
+ * @param stampCard 
+ * @returns A value between 0 and 100
+ */
+export function computeStampCardProgress(stampCard: StampCard): number {
+  if (stampCard.stampDefinition.stampsRequired === 0) {
+    return 0;
+  } else if (stampCard.stampRecords.length >= stampCard.stampDefinition.stampsRequired) {
+    return 100;
+  } else {
+    return (stampCard.stampRecords.length / stampCard.stampDefinition.stampsRequired) * 100;
+  }
+}
 
 /**
  * Simple, full-width horizontal progress bar.

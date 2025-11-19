@@ -1,18 +1,8 @@
 import { StampCard } from '@/types/types';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { ProgressBar } from '../ProgressBar';
+import { ProgressBar, computeStampCardProgress } from '../ProgressBar';
 
 export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard, onPress: (item: StampCard) => void }) {
-
-  const computeStampCardProgress = (): number => {
-    if (stampCard.stampDefinition.stampsRequired === 0) {
-      return 0;
-    } else if (stampCard.stampRecords.length >= stampCard.stampDefinition.stampsRequired) {
-      return 100;
-    } else {
-      return (stampCard.stampRecords.length / stampCard.stampDefinition.stampsRequired) * 100;
-    }
-  }
 
   return (
     <Pressable onPress={() => onPress(stampCard)}>
@@ -21,7 +11,7 @@ export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard
           <Text style={styles.title}>{stampCard.stampDefinition.business.name}</Text>
           <Text style={styles.businessName}>{stampCard.stampDefinition.title}</Text>
           <View style={styles.progressBarWrapper}>
-            <ProgressBar progress={computeStampCardProgress()} />
+            <ProgressBar progress={computeStampCardProgress(stampCard)} />
           </View>
         </View>
       </View>

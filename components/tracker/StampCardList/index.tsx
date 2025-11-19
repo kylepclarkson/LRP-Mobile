@@ -1,14 +1,14 @@
 import { StampCard } from '@/types/types';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StampCardBottomSheet } from '../StampCardBottomSheet';
 import { StampCardListItem } from '../StampCardListItem';
 
 export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
 
-  const snapPoints = React.useMemo(() => ['70%'], []);
+  const snapPoints = React.useMemo(() => ['80%'], []);
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const [selectedStampCard, setSelectedStampCard] = React.useState<StampCard | null>(null);
   // Need to track index to deterministically open/close the sheet
@@ -18,6 +18,7 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
   const openBottomSheet = React.useCallback((stampCard: StampCard) => {
     setSelectedStampCard(stampCard);
     setSheetIndex(0);
+    bottomSheetRef.current?.snapToIndex(0);
   }, []);
 
   const closeBottomSheet = React.useCallback(() => {
@@ -52,21 +53,23 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
 
   return (
     <SafeAreaView>
-      <FlatList
-        data={stampCards}
-        renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
-        keyExtractor={item => item.id}
-      />
-      <BottomSheet
-        index={sheetIndex}
-        snapPoints={snapPoints}
-        ref={bottomSheetRef}
-        onClose={closeBottomSheet}
-        enablePanDownToClose={true}
-        backdropComponent={renderBackdrop}
-      >
-        {selectedStampCard && <StampCardBottomSheet stampCard={selectedStampCard} />}
-      </BottomSheet>
+      <View className='h-full'>
+        <FlatList
+          data={stampCards}
+          renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
+          keyExtractor={item => item.id}
+        />
+        <BottomSheet
+          index={sheetIndex}
+          snapPoints={snapPoints}
+          ref={bottomSheetRef}
+          onClose={closeBottomSheet}
+          enablePanDownToClose={true}
+          backdropComponent={renderBackdrop}
+        >
+          {selectedStampCard && <StampCardBottomSheet stampCard={selectedStampCard} />}
+        </BottomSheet>
+      </View>
     </SafeAreaView>
   );
 }
