@@ -8,7 +8,7 @@ export function StampCardBottomSheet({ stampCard }: { stampCard: StampCard }) {
   return (
     <BottomSheetView>
       {/* Wrapper */}
-      <View className='flex-col px-8'>
+      <View className='flex-col px-6'>
         {/* Header */}
         <View className="flex items-start mb-3">
           <Text className='text-2xl font-bold'>{stampCard.stampDefinition.title}</Text>
@@ -21,21 +21,21 @@ export function StampCardBottomSheet({ stampCard }: { stampCard: StampCard }) {
         <View className='mb-3'>
           <ProgressBar progress={computeStampCardProgress(stampCard)} />
         </View>
-        <View className='h-full border-2'>
+        <View className=''>
           {/* Reward description */}
-          <View className='flex'>
+          <View className='mb-3'>
             <Text className='font-semibold text-md mb-2'>Reward details</Text>
-            <Text className='px-2 py-1 bg-gray-100 rounded-2xl'>{stampCard.stampDefinition.description}</Text>
+            <Text className='p-2 bg-gray-100 rounded-lg'>{stampCard.stampDefinition.description}</Text>
           </View>
           {/* Reward progression */}
-          <View className='flex'>
+          <View className='mb-3'>
             <Text className='font-semibold text-md mb-2'>How to earn</Text>
-            <Text className='px-2 py-1 bg-gray-100 rounded-2xl'>{stampCard.stampDefinition.progressionText}</Text>
+            <Text className='p-2 bg-gray-100 rounded-lg'>{stampCard.stampDefinition.progressionText}</Text>
           </View>
           {/* Reward redemption */}
-          <View className='flex'>
+          <View className='mb-3'>
             <Text className='font-semibold text-md mb-2'>How to redeem</Text>
-            <Text className='px-2 py-1 bg-gray-100 rounded-2xl'>{stampCard.stampDefinition.redemptionText}</Text>
+            <Text className='p-2 bg-gray-100 rounded-2xl'>{stampCard.stampDefinition.redemptionText}</Text>
           </View>
         </View>
       </View>

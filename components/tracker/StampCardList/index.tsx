@@ -6,7 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StampCardBottomSheet } from '../StampCardBottomSheet';
 import { StampCardListItem } from '../StampCardListItem';
 
-export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
+type StampCardListProps = {
+  stampCards: StampCard[],
+  emptyListComponent: React.FC
+}
+
+export function StampCardList({ stampCards, emptyListComponent }: StampCardListProps) {
 
   const snapPoints = React.useMemo(() => ['80%'], []);
   const bottomSheetRef = React.useRef<BottomSheet>(null);
@@ -57,6 +62,7 @@ export function StampCardList({ stampCards }: { stampCards: StampCard[] }) {
         <FlatList
           data={stampCards}
           renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
+          ListEmptyComponent={emptyListComponent}
           keyExtractor={item => item.id}
         />
         <BottomSheet
