@@ -1,16 +1,16 @@
 import { StampCard } from '@/types/types';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { ProgressBar, computeStampCardProgress } from '../ProgressBar';
 
 export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard, onPress: (item: StampCard) => void }) {
 
   return (
     <Pressable onPress={() => onPress(stampCard)}>
-      <View style={styles.cardContainer}>
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{stampCard.stampDefinition.business.name}</Text>
-          <Text style={styles.businessName}>{stampCard.stampDefinition.title}</Text>
-          <View style={styles.progressBarWrapper}>
+      <View className='flex-row bg-white rounded-lg shadow-lg elevation-1 overflow-hidden mx-3 mb-4'>
+        <View className='flex-1 justify-center p-4'>
+          <Text className='text-lg font-bold mb-4'>{stampCard.stampDefinition.business.name}</Text>
+          <Text className='text-md font-medium'>{stampCard.stampDefinition.title}</Text>
+          <View className='mt-4 mb-2'>
             <ProgressBar progress={computeStampCardProgress(stampCard)} />
           </View>
         </View>
@@ -18,38 +18,3 @@ export function StampCardListItem({ stampCard, onPress }: { stampCard: StampCard
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    flexDirection: 'row', // Arrange image and content horizontally
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    overflow: 'hidden', // Clip content that extends beyond border radius
-  },
-  contentContainer: {
-    flex: 1, // Take remaining space
-    padding: 16,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4,
-    color: '#333',
-  },
-  businessName: {
-    fontSize: 14,
-    color: '#666',
-  },
-  progressBarWrapper: {
-    marginTop: 20,
-    marginBottom: 4
-  }
-});

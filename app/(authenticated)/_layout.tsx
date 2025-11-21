@@ -4,7 +4,7 @@ import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from "expo-router";
 import React from 'react';
-import { Text } from "react-native-paper";
+import { Text } from "react-native";
 
 export default function AuthenticatedLayout() {
 
@@ -33,6 +33,7 @@ export default function AuthenticatedLayout() {
         name="reward-tracker"
         options={{
           title: "Tracker",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="progress-star"

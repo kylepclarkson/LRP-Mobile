@@ -1,7 +1,6 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
-
+import { Text } from "react-native";
 
 export default function ProfileScreen() {
 

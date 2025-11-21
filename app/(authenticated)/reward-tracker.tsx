@@ -1,34 +1,16 @@
 import { StampCardList } from '@/components/tracker/StampCardList';
 import { useRewardsContext } from '@/lib/context/rewards';
-import { StampCard } from '@/types/types';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function RewardTrackerScreen() {
   const { stampCards = [] } = useRewardsContext();
-
-  const keyExtractor = useCallback((item: StampCard) => item.id, []);
-
   return (
-    <View style={styles.container}>
+    <View>
       <StampCardList
         stampCards={stampCards}
         emptyListComponent={() => { return <Text>No stamps</Text>; }}
       />
-      {/* <FlatList
-        data={stampCards}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        ListEmptyComponent={() => (
-          <View style={styles.empty}>
-            <Text>No stamp cards</Text>
-          </View>
-        )}
-        contentContainerStyle={
-          stampCards.length === 0 ? styles.emptyContainer : undefined
-        }
-      /> */}
     </View>
   );
 }

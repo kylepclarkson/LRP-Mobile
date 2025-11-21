@@ -4,9 +4,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Text,
   View
 } from "react-native";
-import { Text } from "react-native-paper";
 
 export default function RegisterScreen() {
 
@@ -22,8 +22,8 @@ export default function RegisterScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.content}>
-        <Text style={styles.title} variant="headlineMedium">Welcome to Aandeg</Text>
-        <Text style={styles.title} variant="titleMedium">Create an account to start collecting rewards</Text>
+        <Text style={styles.title}>Welcome to Aandeg</Text>
+        <Text style={styles.title}>Create an account to start collecting rewards</Text>
         <RegisterForm />
         <Text style={styles.redirectText}>
           Already collecting rewards?{' '}
