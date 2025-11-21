@@ -4,9 +4,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Text,
   View
 } from "react-native";
-import { Text } from "react-native-paper";
 
 export default function Index() {
 
@@ -22,7 +22,7 @@ export default function Index() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.content}>
-        <Text style={styles.title} variant="headlineMedium">Welcome to Aandeg</Text>
+        <Text style={styles.title}>Welcome to Aandeg</Text>
         <LoginForm />
         <Text style={styles.redirectText}>
           Want to start collecting rewards?{' '}
