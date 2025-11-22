@@ -1,16 +1,18 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { useState } from "react";
 import {
-  StyleSheet,
-  View
-} from "react-native";
-import {
-  ActivityIndicator,
-  Button,
+  Pressable,
   Text,
   TextInput,
-  useTheme
-} from "react-native-paper";
+  View
+} from "react-native";
+// import {
+//   ActivityIndicator,
+//   Button,
+//   Text,
+//   TextInput,
+//   useTheme
+// } from "react-native-paper";
 
 
 export default function LoginForm() {
@@ -19,7 +21,6 @@ export default function LoginForm() {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const theme = useTheme();
   const { login, isLoadingUser, setIsLoadingUser } = useAuthContext();
 
 
@@ -52,59 +53,45 @@ export default function LoginForm() {
   if (isLoadingUser) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" />
+        {/* <ActivityIndicator size="large" /> */}
+        <Text>Loading...</Text>
       </View>
     )
   }
 
   return (
-    <View>
+    <View className="flex items-center justify-center bg-gray-50 px-6">
       <TextInput
-        label="Email"
-        style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        placeholder='email@gmail.com'
-        mode="outlined"
+        placeholder="Enter your email"
+        value={email}
         onChangeText={setEmail}
+        keyboardType="email-address" // Shows a keyboard with the "@" sign
+        autoCapitalize="none"        // Prevents auto-capitalization
+        autoComplete="email"         // Enables autofill for email on supported platforms
+        textContentType="emailAddress" // iOS specific autofill hint
+        className="w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+
       />
       <TextInput
-        style={styles.input}
-        label="Password"
-        secureTextEntry
-        placeholder='password'
-        mode="outlined"
+        placeholder="Enter your password"
+        value={password}
         onChangeText={setPassword}
+        secureTextEntry={true}       // Hides the characters as the user types
+        autoCapitalize="none"
+        autoComplete="current-password" // Enables autofill for current password
+        textContentType="password"      // iOS specific autofill hint
+        className="mt-4 w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
       />
-      {error && <Text style={{ ...styles.errorMessage, color: theme.colors.error }}>{error}</Text>}
-      <Button
-        mode="contained"
+      {error && (
+        <Text className="mt-3 text-sm text-red-600 font-medium">{error}</Text>
+      )}
+      <Pressable
         onPress={handleSignIn}
-        style={styles.button}>
-        Sign In
-      </Button>
+        className="mt-3 w-full rounded-md bg-blue-600 px-4 py-3 active:bg-blue-700"
+      >
+        <Text className="text-center text-white font-semibold">Login</Text>
+      </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  input: {
-    marginBottom: 16,
-  },
-  button: {
-    marginTop: 8,
-  },
-  switchModeButton: {
-    marginTop: 16
-  },
-  errorMessage: {
-    color: 'red',
-    textAlign: 'center',
-    margin: 8
-  }
-})
 

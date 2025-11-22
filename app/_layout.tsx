@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import React from "react";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import "./global.css";
 
 function InitialLayout() {
@@ -33,15 +33,17 @@ function InitialLayout() {
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView>
-        <PaperProvider>
-          <AuthProvider>
-            <RewardsProvider>
-              <InitialLayout />
-            </RewardsProvider>
-          </AuthProvider>
-        </PaperProvider>
-      </GestureHandlerRootView>
+      <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]}>
+        <GestureHandlerRootView>
+          <PaperProvider>
+            <AuthProvider>
+              <RewardsProvider>
+                <InitialLayout />
+              </RewardsProvider>
+            </AuthProvider>
+          </PaperProvider>
+        </GestureHandlerRootView>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
