@@ -1,4 +1,5 @@
-import { getAccessToken } from "../token.service";
+import { deleteTokens, getAccessToken } from "../token.service";
+import { refreshManager } from "./refreshManager";
 
 
 // export interface ApiError extends Error {
@@ -20,9 +21,9 @@ export class ApiError extends Error {
  * Core request method that wraps the fetch API call.
  * As backend is powered by Django REST Framework we expect JSON responses.
  */
-async function request<T>(
+export async function request<T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit & { body?: any } = {}
 ): Promise<T> {
   const url = `${getBaseUrl()}/${path}`;
   const authToken = await getAccessToken();
@@ -30,26 +31,68 @@ async function request<T>(
 
   console.debug(`Performing fetch request: url=${url}, method=${method}`);
 
+  let body: BodyInit | undefined;
+  if (options.body !== undefined) {
+    // Body is expected to be an object type. 
+    if (
+      typeof options.body === "object" &&
+      !(options.body instanceof FormData) &&
+      !(options.body instanceof Blob)
+    ) {
+      console.debug("=== stringify options.body")
+      body = JSON.stringify(options.body);
+    } else {
+      console.debug("=== non JSON body");
+      body = options.body;
+    }
+  }
+  console.debug("===body=", body);
+
   const response = await fetch(url, {
     method,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}),
       ...options.headers,
     },
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
-  // handle response
-  const payload = response.status !== 204 ? await response.json() : null;
+    body
+  })
+
+  // Parse Payload as either JSON or text. 
+  const resContentType = response.headers.get("Content-Type");
+  let payload: any = null;
+  if (response.status !== 204) {
+    if (resContentType?.includes("application/json")) {
+      payload = await response.json();
+    } else {
+      payload = await response.text();
+    }
+  }
+
+  console.debug("=== response=", response);
+  // Handle errors
   if (!response.ok) {
-    console.debug("Response not OK:", response.status, payload);
-    const message = typeof payload === 'object' && 'detail' in payload
-      ? payload.detail
-      : JSON.stringify(payload);
-    const error = new Error(message) as ApiError;
-    error.status = response.status;
-    error.data = payload;
-    throw error;
+    // 401 - attempt access token refresh.
+    if (response.status === 401) {
+      console.debug("401 received. Attempting to fetch new access token...")
+      const newToken = await refreshManager.refreshAccessToken();
+      if (newToken) {
+        // Retry request having stored new access token. 
+        console.debug("New fresh token received...");
+        return refreshManager.enqueueRequest<T>(path, options);
+      } else {
+        console.debug("Refresh failed, clearing token cache...")
+        await deleteTokens();
+      }
+      // Normalize error message
+    }
+    const message =
+      payload && typeof payload === "object" && "detail" in payload
+        ? payload.detail
+        : (payload && typeof payload === "string")
+          ? payload
+          : response.statusText
+    throw new ApiError(message, response.status, payload);
   }
   return payload as T;
 }
@@ -57,7 +100,7 @@ async function request<T>(
 /**
  * Returns the base URL for the current environment. 
  */
-function getBaseUrl() {
+export function getBaseUrl() {
   const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
   if (!baseUrl) {
     throw new Error("API_BASE_URL is not defined in environment variables.");
@@ -80,13 +123,13 @@ export function isApiError(error: any): error is ApiError {
  */
 export const paths = {
   authentication: {
-    login: `/users/login/`,
-    signOut: `/users/signout/`,
-    register: `/users/register/`,
-    user_details: `/users/user_details/`,
-    refreshToken: '/users/login/refresh' 
+    login: `users/login/`,
+    signOut: `users/signout/`,
+    register: `users/register/`,
+    user_details: `users/user_details/`,
+    refreshToken: 'users/login/refresh/'
   },
   rewards: {
-    stampTokens: `/rewards/stamp-cards/`
+    stampTokens: `rewards/stamp-cards/`
   }
 }
