@@ -2,6 +2,7 @@ import { StampCard } from '@/types/types';
 import camelcaseKeys from 'camelcase-keys';
 import React, { createContext, useContext, useEffect } from 'react';
 import { fetchStampCards } from '../services/auth.service';
+import { useAuthContext } from './auth';
 
 
 type RewardsContextType = {
@@ -14,12 +15,15 @@ const RewardsContext = createContext<RewardsContextType | undefined>(undefined);
 export function RewardsProvider(
   { children }: { children: React.ReactNode }
 ) {
-
+  const { user } = useAuthContext();
   const [stampCards, setStampCards] = React.useState<StampCard[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   useEffect(() => {
-    console.debug("Rewards useEffect called");
+    if (!user) {
+      console.debug("RewardsProvider: no user - skipping StampCard fetch");
+      return;
+    }
     const initialStampCardsLoad = async () => {
       setIsLoading(true);
       try {
@@ -35,7 +39,7 @@ export function RewardsProvider(
       }
     };
     initialStampCardsLoad();
-  }, []);
+  }, [user]);
 
 
   return (
