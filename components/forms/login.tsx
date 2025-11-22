@@ -38,7 +38,6 @@ export default function LoginForm() {
 
   const handleSignIn = async () => {
     if (!isFormValid()) return;
-    console.debug("Calling login");
     setIsLoadingUser(true);
     try {
       await login({ email: email!, password: password! });

@@ -10,7 +10,6 @@ const REFRESH_KEY = "jwt_refresh_token";
  * @param refresh 
  */
 export async function saveTokens(access: string, refresh: string) {
-  console.debug("=== Saving tokens:", access, refresh);
   await SecureStore.setItemAsync(ACCESS_KEY, access);
   await SecureStore.setItemAsync(REFRESH_KEY, refresh);
 }

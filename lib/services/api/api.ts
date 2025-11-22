@@ -39,14 +39,11 @@ export async function request<T>(
       !(options.body instanceof FormData) &&
       !(options.body instanceof Blob)
     ) {
-      console.debug("=== stringify options.body")
       body = JSON.stringify(options.body);
     } else {
-      console.debug("=== non JSON body");
       body = options.body;
     }
   }
-  console.debug("===body=", body);
 
   const response = await fetch(url, {
     method,
@@ -69,19 +66,15 @@ export async function request<T>(
     }
   }
 
-  console.debug("=== response=", response);
   // Handle errors
   if (!response.ok) {
     // 401 - attempt access token refresh.
     if (response.status === 401) {
-      console.debug("401 received. Attempting to fetch new access token...")
       const newToken = await refreshManager.refreshAccessToken();
       if (newToken) {
         // Retry request having stored new access token. 
-        console.debug("New fresh token received...");
         return refreshManager.enqueueRequest<T>(path, options);
       } else {
-        console.debug("Refresh failed, clearing token cache...")
         await deleteTokens();
       }
       // Normalize error message

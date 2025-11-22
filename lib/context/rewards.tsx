@@ -28,9 +28,7 @@ export function RewardsProvider(
       setIsLoading(true);
       try {
         const fetchedStampCards = await fetchStampCards();
-        console.debug(camelcaseKeys(fetchedStampCards, { deep: true}));
         const x = camelcaseKeys(fetchedStampCards, { deep: true }) as unknown as StampCard[];
-        console.debug(x);
         setStampCards(x);
       } catch (error) {
         console.error("Error fetching StampCards:", error);

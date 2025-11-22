@@ -30,11 +30,9 @@ export class RefreshManager {
       // Start new refresh call
       this.refreshPromise = (async () => {
         const refreshToken = await getRefreshToken();
-        console.debug("refreshToken from cache=", refreshToken)
         if (!refreshToken)
           return null;
         let data: TokenPair;
-        console.debug("=== attempting refresh...");
         try {
           data = await post<TokenPair>(paths.authentication.refreshToken, { refresh: refreshToken });
         } catch (error) {
@@ -44,7 +42,6 @@ export class RefreshManager {
           await deleteTokens();
           return null;
         }
-        console.debug("=== data:", data)
         // Parse new access token from response
         await saveTokens(data.access, data.refresh);
         return data.access;
