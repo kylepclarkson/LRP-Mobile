@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthenticatedUser } from "../../types/types";
+import { isApiError } from "../services/api/api";
 import {
   getUserDetails,
   LoginCredentials,
@@ -10,7 +11,6 @@ import {
   logout as signOut
 } from "../services/auth.service";
 import { getAccessToken, saveTokens } from "../services/token.service";
-import { isApiError } from "../services/api";
 
 
 const PLACEHOLDER_USER = {

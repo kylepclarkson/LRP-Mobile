@@ -1,4 +1,4 @@
-import { get, paths, post } from '@/lib/services/api';
+import { get, paths, post } from '@/lib/services/api/api';
 import { AuthenticatedUser, StampCard, UserDetails } from '@/types/types';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 

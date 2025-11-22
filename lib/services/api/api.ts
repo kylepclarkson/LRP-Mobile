@@ -1,9 +1,19 @@
-import { getAccessToken } from "./token.service";
+import { getAccessToken } from "../token.service";
 
 
-export interface ApiError extends Error {
-  status?: number;
-  data?: any;
+// export interface ApiError extends Error {
+//   status?: number;
+//   data?: any;
+// }
+
+export class ApiError extends Error {
+  status: number;
+  data: any;
+  constructor(message: string, status: number, data: any) {
+    super(message);
+    this.status = status;
+    this.data = data;
+  }
 }
 
 /** 
@@ -73,7 +83,8 @@ export const paths = {
     login: `/users/login/`,
     signOut: `/users/signout/`,
     register: `/users/register/`,
-    user_details: `/users/user_details/`
+    user_details: `/users/user_details/`,
+    refreshToken: '/users/login/refresh' 
   },
   rewards: {
     stampTokens: `/rewards/stamp-cards/`
