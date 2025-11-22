@@ -33,7 +33,7 @@ function InitialLayout() {
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]}>
+      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView>
           <PaperProvider>
             <AuthProvider>

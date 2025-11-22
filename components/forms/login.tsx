@@ -6,14 +6,7 @@ import {
   TextInput,
   View
 } from "react-native";
-// import {
-//   ActivityIndicator,
-//   Button,
-//   Text,
-//   TextInput,
-//   useTheme
-// } from "react-native-paper";
-
+import { LoadingOverlay } from "../common/LoadingOverlay";
 
 export default function LoginForm() {
 
@@ -51,12 +44,7 @@ export default function LoginForm() {
   }
 
   if (isLoadingUser) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {/* <ActivityIndicator size="large" /> */}
-        <Text>Loading...</Text>
-      </View>
-    )
+    return <LoadingOverlay />;
   }
 
   return (

@@ -2,7 +2,6 @@ import { StampCard } from '@/types/types';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StampCardBottomSheet } from '../StampCardBottomSheet';
 import { StampCardListItem } from '../StampCardListItem';
 
@@ -57,26 +56,24 @@ export function StampCardList({ stampCards, emptyListComponent }: StampCardListP
   }, [selectedStampCard]);
 
   return (
-    <SafeAreaView>
-      <View className='h-full'>
-        <FlatList
-          data={stampCards}
-          renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
-          ListEmptyComponent={emptyListComponent}
-          keyExtractor={item => item.id}
-        />
-        <BottomSheet
-          index={sheetIndex}
-          snapPoints={snapPoints}
-          ref={bottomSheetRef}
-          onClose={closeBottomSheet}
-          enablePanDownToClose={true}
-          backdropComponent={renderBackdrop}
-        >
-          {selectedStampCard && <StampCardBottomSheet stampCard={selectedStampCard} />}
-        </BottomSheet>
-      </View>
-    </SafeAreaView>
+    <View className='h-full'>
+      <FlatList
+        data={stampCards}
+        renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
+        ListEmptyComponent={emptyListComponent}
+        keyExtractor={item => item.id}
+      />
+      <BottomSheet
+        index={sheetIndex}
+        snapPoints={snapPoints}
+        ref={bottomSheetRef}
+        onClose={closeBottomSheet}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+      >
+        {selectedStampCard && <StampCardBottomSheet stampCard={selectedStampCard} />}
+      </BottomSheet>
+    </View>
   );
 }
 
