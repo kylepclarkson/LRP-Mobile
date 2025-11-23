@@ -119,6 +119,7 @@ export const paths = {
     login: `users/login/`,
     signOut: `users/signout/`,
     register: `users/register/`,
+    user: 'users/',
     user_details: `users/user_details/`,
     refreshToken: 'users/login/refresh/'
   },

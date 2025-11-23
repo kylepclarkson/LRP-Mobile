@@ -1,6 +1,5 @@
 import { useAuthContext } from "@/lib/context/auth";
-import { View } from "react-native";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function ProfileScreen() {
 
@@ -9,6 +8,7 @@ export default function ProfileScreen() {
     <View>
       <Text>Profile screen</Text>
       <Text>Hello {user?.first_name}</Text>
+      <Text>Employee groups: {user?.employeeGroups.length}</Text>
     </View>
   )
 }

@@ -1,5 +1,5 @@
 import { get, paths, post } from '@/lib/services/api/api';
-import { AuthenticatedUser, StampCard, UserDetails } from '@/types/types';
+import { AuthenticatedUser, StampCard } from '@/types/types';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 
 
@@ -54,11 +54,11 @@ export async function login(credentials: LoginCredentials): Promise<TokenPair> {
   }
 }
 
-export async function getUserDetails(): Promise<UserDetails> {
-  console.debug("Fetching authenticated user details...");
+export async function getUser(): Promise<AuthenticatedUser> {
+  console.debug("Fetching authenticated user...");
   try {
-    const data = await get<UserDetails>(paths.authentication.user_details);
-    return data;
+    const authenticatedUser = await get<AuthenticatedUser>(paths.authentication.user);
+    return authenticatedUser;
   } catch (error) {
     throw error;
   }

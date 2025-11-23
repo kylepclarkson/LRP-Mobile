@@ -7,12 +7,12 @@ export type AuthenticatedUser = {
   email: string,
   first_name: string,
   last_name: string,
-  employee_groups: EmployeeGroup[]
+  employeeGroups: EmployeeGroup[]
 }
 
 export type UserDetails = {
   user: AuthenticatedUser,
-  employee_groups: EmployeeGroup
+  employeeGroups: EmployeeGroup[]
 }
 
 export type EmployeeGroup = {

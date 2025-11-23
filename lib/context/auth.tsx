@@ -1,10 +1,9 @@
+import camelcaseKeys from "camelcase-keys";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthenticatedUser } from "../../types/types";
-import { isApiError } from "../services/api/api";
 import {
-  getUserDetails,
+  getUser,
   LoginCredentials,
-  refreshTokens,
   RegisterCredentials,
   register as registerUser,
   login as signIn,
@@ -53,28 +52,20 @@ export function AuthProvider(
     // TODO clean up this function
     // Fetches user details using access token, if one exists
     const initialUserLoad = async () => {
+      console.debug("AuthProvider - initialUserLoad called");
       const accessToken = await getAccessToken();
       if (!accessToken) {
         setIsLoadingUser(false);
         return;
       }
       try {
-        const userDetails = await getUserDetails();
-        console.debug("Fetched user on initial load:", userDetails);
-        setUser(userDetails.user);
+        const authenticatedUser = await getUser();
+        const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
+        console.debug("setting user:", camelAuthenticatedUser);
+        setUser(camelAuthenticatedUser);
       } catch (error) {
-        if (isApiError(error) && error.status === 401) {
-          // Token is invalid - attempt to refresh tokens
-          console.debug("Access token invalid, attempting to refresh tokens...");
-          await refreshTokens();
-          const userDetails = await getUserDetails();
-          console.debug("Fetched user after refreshing tokens:", userDetails);
-          setUser(userDetails.user);
-        } else {
-          setUser(null);
-          setIsLoadingUser(false);
-          return;
-        }
+        setUser(null);
+        return;
       } finally {
         setIsLoadingUser(false);
       }
@@ -86,9 +77,13 @@ export function AuthProvider(
   const login = async (credentials: LoginCredentials) => {
     setIsLoadingUser(true);
     try {
+      // Attempt sign in, setting access token if successful
       await signIn(credentials);
-      const userDetails = await getUserDetails();
-      setUser(userDetails.user);
+      // TODO combine repeated code used above. 
+      const authenticatedUser = await getUser();
+      const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
+      console.debug("setting user:", camelAuthenticatedUser);
+      setUser(camelAuthenticatedUser);
     } catch (error) {
       // Re-throw the error so it can be caught by the caller
       throw error;
