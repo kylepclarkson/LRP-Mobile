@@ -65,7 +65,6 @@ export async function getUser(): Promise<AuthenticatedUser> {
 }
 
 export async function logout(): Promise<void> {
-  // TODO - implement logout API call
   await deleteTokens();
 }
 
