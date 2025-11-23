@@ -1,4 +1,5 @@
 import { AuthProvider, useAuthContext } from "@/lib/context/auth";
+import { BusinessProvider } from "@/lib/context/business";
 import { RewardsProvider } from "@/lib/context/rewards";
 import { Stack } from "expo-router";
 import React from "react";
@@ -22,10 +23,10 @@ function InitialLayout() {
       <Stack.Protected guard={!!user}>
         <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
       </Stack.Protected>
-      <Stack.Protected guard={__DEV__}>
+      {/* <Stack.Protected guard={__DEV__}>
         <Stack.Screen name="test" options={{ headerShown: false }} />
         <Stack.Screen name="storybook" />
-      </Stack.Protected>
+      </Stack.Protected> */}
     </Stack>
   );
 }
@@ -36,11 +37,13 @@ export default function RootLayout() {
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView>
           <PaperProvider>
-            <AuthProvider>
-              <RewardsProvider>
-                <InitialLayout />
-              </RewardsProvider>
-            </AuthProvider>
+            <BusinessProvider>
+              <AuthProvider>
+                <RewardsProvider>
+                  <InitialLayout />
+                </RewardsProvider>
+              </AuthProvider>
+            </BusinessProvider>
           </PaperProvider>
         </GestureHandlerRootView>
       </SafeAreaView>
