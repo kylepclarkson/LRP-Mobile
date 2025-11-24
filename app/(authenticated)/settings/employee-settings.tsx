@@ -45,15 +45,12 @@ export default function EmployeeGroupsMenu() {
 
   return (
     <View className="flex-1 bg-gray-50 px-6 py-8">
-      {/* Greeting */}
       <Text className="text-2xl font-semibold text-gray-900 mb-2">
         Hello, {user?.firstName}
       </Text>
       <Text className="text-gray-600 mb-4">
         Here are your current employee groups:
       </Text>
-
-      {/* List */}
       <FlatList
         data={listGroups}
         keyExtractor={(item) => item.id}
