@@ -12,14 +12,6 @@ import {
 import { getAccessToken, saveTokens } from "../services/token.service";
 import { useBusinessContext } from "./business";
 
-
-const PLACEHOLDER_USER = {
-  id: "1",
-  email: "michael-wilbert@email.com",
-  first_name: "Michael",
-  last_name: "Wilbert"
-}
-
 type AuthContextType = {
   user: AuthenticatedUser | null;
   isLoadingUser: boolean;
@@ -65,7 +57,7 @@ export function AuthProvider(
         const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
         console.debug("setting user:", camelAuthenticatedUser);
         setUser(camelAuthenticatedUser);
-        if(camelAuthenticatedUser.employeeGroups.length > 0) {
+        if (camelAuthenticatedUser.employeeGroups.length > 0) {
           setActiveEmployeeGroup(camelAuthenticatedUser.employeeGroups[0]);
         }
       } catch (error) {

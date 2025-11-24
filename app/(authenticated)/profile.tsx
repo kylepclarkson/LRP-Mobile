@@ -10,7 +10,7 @@ export default function ProfileScreen() {
   return (
     <View>
       <Text>Profile screen</Text>
-      <Text>Hello {user?.first_name}</Text>
+      <Text>Hello {user?.firstName}</Text>
       <Text>Employee groups: {user?.employeeGroups.length}</Text>
       <Text>Active employee group: {activeEmployeeGroup?.business.name}</Text>
     </View>
