@@ -38,6 +38,7 @@ export default function LoginForm() {
     } catch (err) {
       console.error("Caught login error");
       setError("Invalid email or password");
+      setPassword("");
     } finally {
       setIsLoadingUser(false);
     }
