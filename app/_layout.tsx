@@ -37,13 +37,13 @@ export default function RootLayout() {
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView>
           <PaperProvider>
-            <BusinessProvider>
-              <AuthProvider>
+            <AuthProvider>
+              <BusinessProvider>
                 <RewardsProvider>
                   <InitialLayout />
                 </RewardsProvider>
-              </AuthProvider>
-            </BusinessProvider>
+              </BusinessProvider>
+            </AuthProvider>
           </PaperProvider>
         </GestureHandlerRootView>
       </SafeAreaView>

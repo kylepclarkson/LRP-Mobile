@@ -10,7 +10,6 @@ import {
   logout as signOut
 } from "../services/auth.service";
 import { getAccessToken, saveTokens } from "../services/token.service";
-import { useBusinessContext } from "./business";
 
 type AuthContextType = {
   user: AuthenticatedUser | null;
@@ -31,7 +30,7 @@ export function AuthProvider(
   { children }: { children: React.ReactNode }
 ) {
 
-  const { setActiveEmployeeGroup } = useBusinessContext();
+  // const { setActiveEmployeeGroup } = useBusinessContext();
   // An authenticated user, null if not authenticated
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   // If fetching user is in a loading state
@@ -57,9 +56,9 @@ export function AuthProvider(
         const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
         console.debug("setting user:", camelAuthenticatedUser);
         setUser(camelAuthenticatedUser);
-        if (camelAuthenticatedUser.employeeGroups.length > 0) {
-          setActiveEmployeeGroup(camelAuthenticatedUser.employeeGroups[0]);
-        }
+        // if (camelAuthenticatedUser.employeeGroups.length > 0) {
+        //   setActiveEmployeeGroup(camelAuthenticatedUser.employeeGroups[0]);
+        // }
       } catch (error) {
         setUser(null);
         return;

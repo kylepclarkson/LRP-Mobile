@@ -1,5 +1,6 @@
 import { EmployeeGroup } from "@/types/types";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useAuthContext } from "@/lib/context/auth";
 
 type BusinessContextType = {
   activeEmployeeGroup: EmployeeGroup | null;
@@ -16,7 +17,19 @@ export function BusinessProvider(
   { children }: { children: React.ReactNode }
 ) {
 
+  const { user } = useAuthContext();
+
   const [activeEmployeeGroup, setActiveEmployeeGroup] = useState<EmployeeGroup | null>(null);
+
+  useEffect(() => {
+    if (!user) {
+      setActiveEmployeeGroup(null);
+    } else if (user.employeeGroups.length > 0) {
+      setActiveEmployeeGroup(user.employeeGroups[0]);
+    } else {
+      setActiveEmployeeGroup(null);
+    }
+  }, [user]);
 
   return (
     <BusinessContext.Provider value={{

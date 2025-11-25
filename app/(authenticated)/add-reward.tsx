@@ -1,35 +1,3 @@
-// import { useAuthContext } from "@/lib/context/auth";
-// import { useBusinessContext } from "@/lib/context/business";
-// import { router } from "expo-router";
-// import React from "react";
-// import { Text, View } from "react-native";
-
-
-// export default function AddRewardScreen() {
-
-//   const { user } = useAuthContext();
-//   const { activeEmployeeGroup } = useBusinessContext();
-
-//   const redirectToEmployeeSettings = () => {
-//     router.replace("/(authenticated)/settings/employee-settings")
-//   }
-
-//   return (
-//     <View className="flex-1 px-6 my-8">
-//       {user?.employeeGroups && (
-//         <View className="flex items-center justify-center">
-//           {activeEmployeeGroup && (<Text>Your business: {activeEmployeeGroup.business.name}</Text>)}
-//           <Text>
-//             To set your current business role visit the{' '}
-//             <Text onPress={redirectToEmployeeSettings}>Change in employee settings menu</Text>
-//           </Text>
-//         </View>
-//       )}
-//       <Text>Add reward screen</Text>
-//     </View>
-//   )
-// }
-
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { Ionicons } from "@expo/vector-icons";
