@@ -1,4 +1,4 @@
-import { paths, get, post } from '@/lib/services/api/api';
+import { paths, get, post, patch } from '@/lib/services/api/api';
 import { StampCard } from '@/types/types';
 
 
@@ -12,6 +12,26 @@ export async function getStampCards(): Promise<StampCard[]> {
     return data;
   } catch (error) {
     console.error("Error fetching StampCards:", error);
+    throw error;
+  }
+}
+
+/**
+ * Assigns the StampCard for this ID to the current user by attaching it to an active StampCard 
+ * owned by this customer. 
+ * @param stampCardId - The ID of the StampCard to be assigned.
+ * @param req - Contains the StampDefinition ID for which this StampCard was created for. 
+ * @returns 
+ */
+// TODO Add type to 'req' param.
+export async function assignStampCard(stampCardId:string, req) {
+  console.debug(`Assigning stampCardId=${stampCardId}`);
+  const path = paths.rewards.stampRecordAssign(stampCardId);
+  try {
+    const data = await patch(path, req);
+    return data
+  } catch (error) {
+    console.error("Error assigning StampCard for current user", error);
     throw error;
   }
 }

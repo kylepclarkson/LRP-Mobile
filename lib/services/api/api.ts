@@ -104,6 +104,7 @@ export function getBaseUrl() {
 // Wrapper methods for common HTTP verbs
 export const get = <T>(path: string) => request<T>(path, { method: "GET" });
 export const post = <T>(path: string, body: any) => request<T>(path, { method: "POST", body });
+export const patch = <T>(path: string, body: any) => request<T>(path, { method: "PATCH", body});
 
 // Utility function for checking error type
 export function isApiError(error: any): error is ApiError {
@@ -124,6 +125,7 @@ export const paths = {
     refreshToken: 'users/login/refresh/'
   },
   rewards: {
-    stampTokens: `rewards/stamp-cards/`
+    stampTokens: `rewards/stamp-cards/`,
+    stampRecordAssign: (id:string) => `rewards/stamp-cards/${id}/assign/`, 
   }
 }

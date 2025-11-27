@@ -25,19 +25,6 @@ export function RewardsProvider(
       console.debug("RewardsProvider: no user - skipping StampCard fetch");
       return;
     }
-    // const initialStampCardsLoad = async () => {
-    //   setIsLoading(true);
-    //   try {
-    //     const fetchedStampCards = await fetchStampCards();
-    //     const x = camelcaseKeys(getStampCards, { deep: true }) as unknown as StampCard[];
-    //     setStampCards(x);
-    //   } catch (error) {
-    //     console.error("Error fetching StampCards:", error);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // };
-    // initialStampCardsLoad();
     fetchStampCards();
   }, [user]);
 
