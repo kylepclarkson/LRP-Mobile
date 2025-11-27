@@ -4,12 +4,18 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function RewardTrackerScreen() {
-  const { stampCards = [] } = useRewardsContext();
+  const { stampCards = [], isLoading, fetchStampCards } = useRewardsContext();
+
+  const stampCardRefresh = React.useCallback(() => {
+    fetchStampCards();
+  }, [stampCards]);
   return (
     <View>
       <StampCardList
         stampCards={stampCards}
         emptyListComponent={() => { return <Text>No stamps</Text>; }}
+        isLoading={isLoading}
+        onRefresh={stampCardRefresh}
       />
     </View>
   );

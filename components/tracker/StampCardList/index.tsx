@@ -1,16 +1,23 @@
 import { StampCard } from '@/types/types';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';
 import { StampCardBottomSheet } from '../StampCardBottomSheet';
 import { StampCardListItem } from '../StampCardListItem';
 
 type StampCardListProps = {
   stampCards: StampCard[],
-  emptyListComponent: React.FC
+  emptyListComponent: React.FC,
+  isLoading: boolean,
+  onRefresh: () => void
 }
 
-export function StampCardList({ stampCards, emptyListComponent }: StampCardListProps) {
+export function StampCardList({
+  stampCards,
+  emptyListComponent,
+  isLoading,
+  onRefresh
+}: StampCardListProps) {
 
   const snapPoints = React.useMemo(() => ['80%'], []);
   const bottomSheetRef = React.useRef<BottomSheet>(null);
@@ -62,7 +69,19 @@ export function StampCardList({ stampCards, emptyListComponent }: StampCardListP
         renderItem={({ item }) => <StampCardListItem stampCard={item} onPress={() => openBottomSheet(item)} />}
         ListEmptyComponent={emptyListComponent}
         keyExtractor={item => item.id}
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+          />
+        }
       />
+      {isLoading && (
+        <View className="absolute inset-0 bg-white/50 items-center justify-center">
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      )}
+
       <BottomSheet
         index={sheetIndex}
         snapPoints={snapPoints}
