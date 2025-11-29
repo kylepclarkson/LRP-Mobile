@@ -127,5 +127,6 @@ export const paths = {
   rewards: {
     stampTokens: `rewards/stamp-cards/`,
     stampRecordAssign: (id:string) => `rewards/stamp-cards/${id}/assign/`, 
+    stampRecords: `rewards/stamp-records/`
   }
 }
