@@ -13,3 +13,8 @@ export function isEmployee(user: AuthenticatedUser | null) {
   }
   return false;
 } 
+
+/**
+ * Bottom sheet snap point values
+ */
+export const snapPointValues = ["25%", "40%", "80%"];

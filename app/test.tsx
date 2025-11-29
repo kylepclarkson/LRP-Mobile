@@ -14,7 +14,7 @@ const App = () => {
         .map((_, index) => `index-${index}`),
     []
   );
-  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
+  const snapPoints = useMemo(() => ["25%", "40%", "80%"], []);
 
   // callbacks
   const handleSheetChange = useCallback((index) => {

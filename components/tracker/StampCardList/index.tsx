@@ -1,3 +1,4 @@
+import { snapPointValues } from '@/lib/util';
 import { StampCard } from '@/types/types';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import React from 'react';
@@ -19,7 +20,7 @@ export function StampCardList({
   onRefresh
 }: StampCardListProps) {
 
-  const snapPoints = React.useMemo(() => ['80%'], []);
+  const snapPoints = React.useMemo(() => snapPointValues, []);
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const [selectedStampCard, setSelectedStampCard] = React.useState<StampCard | null>(null);
   // Need to track index to deterministically open/close the sheet
@@ -58,7 +59,7 @@ export function StampCardList({
   React.useEffect(() => {
     if (selectedStampCard) {
       // bottomSheetRef.current?.snapToIndex(0);
-      setTimeout(() => { bottomSheetRef.current?.snapToIndex(0); }, 10)
+      setTimeout(() => { bottomSheetRef.current?.expand(); }, 10)
     }
   }, [selectedStampCard]);
 
