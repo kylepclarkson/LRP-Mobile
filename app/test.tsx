@@ -1,7 +1,6 @@
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import React, { useCallback, useMemo, useRef } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const App = () => {
   // hooks
@@ -38,11 +37,21 @@ const App = () => {
     []
   );
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} />
+    <View className="flex-1">
+      <View className="flex-col items-center justify-start space-y-4">
+        <Pressable onPress={() => handleSnapPress(2)} className="px-4 py-2 bg-blue-500 rounded">
+          <Text>Snap to 90%</Text>
+        </Pressable>
+        <Pressable onPress={() => handleSnapPress(1)} className="px-4 py-2 bg-blue-500 rounded">
+          <Text>Snap to 50%</Text>
+        </Pressable>
+        <Pressable onPress={() => handleSnapPress(0)} className="px-4 py-2 bg-blue-500 rounded">
+          <Text>Snap to 25%</Text>
+        </Pressable>
+        <Pressable onPress={() => handleClosePress()} className="px-4 py-2 bg-red-500 rounded">
+          <Text>Close</Text>
+        </Pressable>
+      </View>
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
@@ -56,15 +65,11 @@ const App = () => {
           contentContainerStyle={styles.contentContainer}
         />
       </BottomSheet>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 200,
-  },
   contentContainer: {
     backgroundColor: "white",
   },

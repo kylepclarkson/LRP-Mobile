@@ -1,13 +1,15 @@
-import { EmployeeGroup, StampDefinition } from "@/types/types";
-import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuthContext } from "@/lib/context/auth";
-import { getStampDefinitions } from "../services/api/businesses.service";
+import { EmployeeGroup, StampDefinition } from "@/types/types";
 import camelcaseKeys from "camelcase-keys";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getStampDefinitions } from "../services/api/businesses.service";
 
 type BusinessContextType = {
   activeEmployeeGroup: EmployeeGroup | null;
   setActiveEmployeeGroup: React.Dispatch<React.SetStateAction<EmployeeGroup | null>>;
   stampDefinitions: StampDefinition[] | null;
+  activeStampDefinition: StampDefinition | null;
+  setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
 }
 
 const BusinessContext = createContext<BusinessContextType | undefined>(undefined);
@@ -24,6 +26,7 @@ export function BusinessProvider(
 
   const [activeEmployeeGroup, setActiveEmployeeGroup] = useState<EmployeeGroup | null>(null);
   const [stampDefinitions, setStampDefinitions] = useState<StampDefinition[] | null>(null);
+  const [activeStampDefinition, setActiveStampDefinition] = useState<StampDefinition | null>(null);
 
   /**
    * Set the ActiveEmployeeGroup for this user. 
@@ -43,20 +46,27 @@ export function BusinessProvider(
    */
 
   useEffect(() => {
-    const fn = async () => {
+    const fetchStampDefinitions = async () => {
       if (activeEmployeeGroup) {
-        const x = await getStampDefinitions(activeEmployeeGroup.business.id);
-        setStampDefinitions(camelcaseKeys(x) as unknown as StampDefinition[]);
+        const data = await getStampDefinitions(activeEmployeeGroup.business.id);
+        const _stampDefinitions = camelcaseKeys(data) as unknown as StampDefinition[];
+        console.debug("setting stamp definitions", _stampDefinitions);
+        setStampDefinitions(_stampDefinitions);
+        if (_stampDefinitions.length > 0) {
+          setActiveStampDefinition(_stampDefinitions[0])
+        }
       }
     }
-    fn();
+    fetchStampDefinitions();
   }, [activeEmployeeGroup]);
 
   return (
     <BusinessContext.Provider value={{
       activeEmployeeGroup,
       setActiveEmployeeGroup,
-      stampDefinitions
+      stampDefinitions,
+      activeStampDefinition,
+      setActiveStampDefinition
     }}>
       {children}
     </BusinessContext.Provider>
