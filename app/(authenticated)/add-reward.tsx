@@ -6,7 +6,7 @@ import { Pressable, Text, View } from "react-native";
 
 export default function AddRewardScreen() {
   const { user } = useAuthContext();
-  const { activeEmployeeGroup } = useBusinessContext();
+  const { activeEmployeeGroup, stampDefinitions } = useBusinessContext();
 
   const redirectToEmployeeSettings = () => {
     router.replace("/(authenticated)/settings/employee-settings");
@@ -41,6 +41,7 @@ export default function AddRewardScreen() {
       <Text className="text-xl font-semibold text-gray-900">
         Add reward screen
       </Text>
+      {stampDefinitions && stampDefinitions.map((x) => <Text>{x.title}</Text>)}
     </View>
   );
 }

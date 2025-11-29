@@ -124,6 +124,9 @@ export const paths = {
     user_details: `users/user_details/`,
     refreshToken: 'users/login/refresh/'
   },
+  businesses: {
+    stampDefinitions: (business_id:string) => `businesses/${business_id}/stamp-definitions/`,
+  },
   rewards: {
     stampTokens: `rewards/stamp-cards/`,
     stampRecordAssign: (id:string) => `rewards/stamp-cards/${id}/assign/`, 
