@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
+import { CreateStampCardRequest, createStampRecord } from "@/lib/services/rewards.service";
 import { EmployeeGroup, getEmployeeGroupLabel, getStampDefinitionLabel, StampDefinition } from "@/types/types";
 import React, { JSX, useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -21,20 +22,34 @@ export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
     stampDefinitions
   } = useBusinessContext();
 
-  const [currencyValue, setCurrencyValue] = useState<{ value: number, isValid: boolean }>({
+  const [currencyData, setCurrencyData] = useState<{ value: number, isValid: boolean }>({
     value: 0,
-    isValid: true,
+    isValid: false,
   });
-  
-  const formIsValid = ():boolean => {
-    return currencyValue.isValid
-  }
 
-  const onCreateStampRecord = () => {
-    if (!formIsValid) {
-      return;
+  const [formIsValid, setFormIsValid] = useState<boolean>(true);
+
+  // useEffect(() => {
+  //   setFormIsValid(validateFormData())
+  // }, [currencyData])
+
+  // const validateFormData = (): boolean => {
+  //   return currencyData.isValid
+  // }
+
+  const handleCreateStampRecordPress = () => {
+    const req: CreateStampCardRequest = {
+      stampDefinitionId: activeStampDefinition!.id,
+      transaction: {
+        amount: currencyData.value,
+        currencyCode: "CAD"
+      }
     }
-    console.debug(`onCreateStampRecord - businessId=${activeStampDefinition?.business.id}, stampDefinitionId=${activeStampDefinition?.id}, currencyValue=${currencyValue.value}`)
+    const makeRequest = async () => {
+      const data = await createStampRecord(req);
+      console.log("data received", data);
+    }
+    makeRequest();
   }
 
   return (
@@ -65,13 +80,19 @@ export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
       />}
       <CurrencyInput
         label="Transaction amount"
-        onUpdate={({ value, isValid }) => setCurrencyValue({ value, isValid })}
+        onUpdate={({ value, isValid }) => setCurrencyData({ value, isValid })}
       />
+      {!formIsValid && (
+        <Text className="text-xs text-red-600">
+          Please enter a non‑negative amount
+        </Text>
+      )}
       <View className="items-center mt-4">
-        <Pressable className="px-6 py-3 bg-blue-600 rounded-md" onPress={onCreateStampRecord}>
+        <Pressable className="px-6 py-3 bg-blue-600 rounded-md" onPress={handleCreateStampRecordPress}>
           <Text className="text-white font-semibold">Create stamp record</Text>
         </Pressable>
       </View>
+
 
     </View>
   )

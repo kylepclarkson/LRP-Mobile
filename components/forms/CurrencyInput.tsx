@@ -80,7 +80,7 @@ export function CurrencyInput({
         onBlur={handleBlur}
         onFocus={handleFocus}
         keyboardType="decimal-pad"
-        placeholder="$0.00"
+        // placeholder="$0.00"
         className={`px-3 border rounded-md bg-white text-gray-900 h-11 ${!isValid ? "border-red-500" : "border-gray-300"
           }`}
       />

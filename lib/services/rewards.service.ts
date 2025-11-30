@@ -1,4 +1,4 @@
-import { get, patch, paths } from '@/lib/services/api/api';
+import { get, patch, paths, post } from '@/lib/services/api/api';
 import { StampCard } from '@/types/types';
 
 
@@ -16,6 +16,27 @@ export async function getStampCards(): Promise<StampCard[]> {
   }
 }
 
+export type CreateStampCardRequest = {
+  stampDefinitionId: string;
+  transaction: {
+    amount: number,
+    currencyCode: string,
+  }
+}
+
+export async function createStampRecord(req: CreateStampCardRequest) {
+  console.debug("Creating StampRecord", req);
+  const path = paths.rewards.stampRecords;
+  try {
+    const data = await post(path, req);
+    return data
+  } catch (error) {
+    console.error("Error creating StampRecord");
+    throw error;
+  }
+}
+
+
 export type AssignStampCardRequest = {
   stampDefinitionId: string
 }
@@ -27,7 +48,6 @@ export type AssignStampCardRequest = {
  * @param req - Contains the StampDefinition ID for which this StampCard was created for. 
  * @returns 
  */
-// TODO Add type to 'req' param.
 export async function assignStampCard(stampCardId: string, req: AssignStampCardRequest) {
   console.debug(`Assigning stampCardId=${stampCardId}`);
   const path = paths.rewards.stampRecordAssign(stampCardId);

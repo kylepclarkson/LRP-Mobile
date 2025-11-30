@@ -1,11 +1,6 @@
+import { objectToCamel, objectToSnake } from "ts-case-convert";
 import { deleteTokens, getAccessToken } from "../token.service";
 import { refreshManager } from "./refreshManager";
-
-
-// export interface ApiError extends Error {
-//   status?: number;
-//   data?: any;
-// }
 
 export class ApiError extends Error {
   status: number;
@@ -39,7 +34,9 @@ export async function request<T>(
       !(options.body instanceof FormData) &&
       !(options.body instanceof Blob)
     ) {
-      body = JSON.stringify(options.body);
+      // Convert JSON keys from camel case to snake case. 
+      const snakeBody = objectToSnake(options.body);
+      body = JSON.stringify(snakeBody);
     } else {
       body = options.body;
     }
@@ -60,7 +57,9 @@ export async function request<T>(
   let payload: any = null;
   if (response.status !== 204) {
     if (resContentType?.includes("application/json")) {
-      payload = await response.json();
+      const snakePayload = await response.json();
+      // convert payload JSON keys from snake case to camel case. 
+      payload = objectToCamel(snakePayload);
     } else {
       payload = await response.text();
     }
@@ -104,7 +103,7 @@ export function getBaseUrl() {
 // Wrapper methods for common HTTP verbs
 export const get = <T>(path: string) => request<T>(path, { method: "GET" });
 export const post = <T>(path: string, body: any) => request<T>(path, { method: "POST", body });
-export const patch = <T>(path: string, body: any) => request<T>(path, { method: "PATCH", body});
+export const patch = <T>(path: string, body: any) => request<T>(path, { method: "PATCH", body });
 
 // Utility function for checking error type
 export function isApiError(error: any): error is ApiError {
@@ -125,11 +124,11 @@ export const paths = {
     refreshToken: 'users/login/refresh/'
   },
   businesses: {
-    stampDefinitions: (business_id:string) => `businesses/${business_id}/stamp-definitions/`,
+    stampDefinitions: (business_id: string) => `businesses/${business_id}/stamp-definitions/`,
   },
   rewards: {
     stampTokens: `rewards/stamp-cards/`,
-    stampRecordAssign: (id:string) => `rewards/stamp-cards/${id}/assign/`, 
+    stampRecordAssign: (id: string) => `rewards/stamp-cards/${id}/assign/`,
     stampRecords: `rewards/stamp-records/`
   }
 }

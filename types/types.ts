@@ -50,3 +50,7 @@ export type StampCard = {
 export type StampRecord = {
   id: string,
 }
+
+export type Transaction = {
+  
+}
