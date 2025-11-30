@@ -1,14 +1,13 @@
-import { CurrencyInput } from "@/components/forms/CurrencyInput";
+import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { isEmployee, snapPointValues } from "@/lib/util";
 import { StampDefinition } from "@/types/types";
-import { Ionicons } from "@expo/vector-icons";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, Text, View } from "react-native";
+import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 
 
 export default function AddRewardScreen() {
@@ -22,10 +21,13 @@ export default function AddRewardScreen() {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => snapPointValues, []);
-  // Open the sheet
-  const openBottomSheet = useCallback(() => {
+  const [sheetContent, setSheetContent] = useState<() => JSX.Element>(() => () => <></>);
+
+  const openBottomSheet = (renderContent: () => JSX.Element) => {
+    setSheetContent(() => renderContent);
     bottomSheetRef.current?.expand();
-  }, []);
+  };
+
 
   // Close the sheet
   const closeBottomSheet = useCallback(() => {
@@ -49,11 +51,6 @@ export default function AddRewardScreen() {
       bottomSheetRef.current?.close();
     }
   }, [isFocused]);
-
-  const [formState, setFormState] = useState({
-    amount: { value: 0, isValid: true }
-  });
-
   return (
     <View className="flex-1 px-6">
       <Text className="text-xl font-semibold text-gray-900">
@@ -63,7 +60,7 @@ export default function AddRewardScreen() {
         // Employee section
         <>
           {/* TODO replace with selection */}
-          <View className="bg-blue-50 px-4 py-3 rounded-md mb-6">
+          {/* <View className="bg-blue-50 px-4 py-3 rounded-md mb-6">
             {activeEmployeeGroup ? (
               <Text className="text-base font-medium text-blue-900">
                 Your current role: {activeEmployeeGroup.business.name} - {activeEmployeeGroup.name}
@@ -83,39 +80,16 @@ export default function AddRewardScreen() {
                 Change in employee settings menu
               </Text>
             </Pressable>
-          </View>
+          </View> */}
 
-          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} className="flex-1">
-            <Pressable onPressIn={() => Keyboard.dismiss()} className="flex-1">
-
-              <View className="space-y-2">
-                <Text className="text-sm font-medium text-gray-700 mb-1">Active stamp record</Text>
-                <Pressable
-                  onPress={openBottomSheet}
-                  className="flex-row items-center justify-between px-3 py-2 border border-gray-300 rounded-md bg-white"
-                >
-                  <Text className={activeStampDefinition ? "text-gray-900" : "text-gray-400"}>
-                    {activeStampDefinition ? activeStampDefinition.title : "Select an stamp definition"}
-                  </Text>
-                </Pressable>
-              </View>
-              <View className="space-y-2">
-                <Text className="text-sm font-medium text-gray-700 mb-1">Transaction amount</Text>
-                <CurrencyInput
-                  value={formState.amount.value}
-                  currencyCode="CAD"
-                  onUpdate={({ value, isValid }: any) => {
-                    setFormState((prev) => ({
-                      ...prev,
-                      amount: { value, isValid }
-                    }))
-                  }}
-                />
-              </View>
-              <Pressable onPress={() => console.debug(formState)}>
-                <Text>Button</Text>
-              </Pressable>
-            </Pressable>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            className="flex-1"
+          >
+            <CreateStampRecordForm
+              onOpen={openBottomSheet}
+              onClose={closeBottomSheet}
+            />
           </KeyboardAvoidingView>
         </>
       )}
@@ -123,10 +97,9 @@ export default function AddRewardScreen() {
       {/* Bottom sheet */}
       <BottomSheet
         ref={bottomSheetRef}
+        snapPoints={snapPointValues}
         index={-1}
-        snapPoints={snapPoints}
-        onClose={closeBottomSheet}
-        enablePanDownToClose={true}
+        enablePanDownToClose
         backdropComponent={(props) => (
           <BottomSheetBackdrop
             {...props}
@@ -136,20 +109,7 @@ export default function AddRewardScreen() {
           />
         )}
       >
-        <BottomSheetFlatList
-          data={stampDefinitions}
-          keyExtractor={(item: StampDefinition) => item.id}
-          renderItem={({ item }: { item: StampDefinition }) => (
-            <Pressable
-              onPress={() => handleSelect(item)}
-              className={`px-4 py-3 border-b border-gray-200 ${item.id === activeStampDefinition?.id ? "bg-blue-100" : "bg-white"
-                }`}
-            >
-              <Text className="text-gray-900">{item.title}</Text>
-            </Pressable>
-          )}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        />
+        {sheetContent()}
       </BottomSheet>
     </View>
   );

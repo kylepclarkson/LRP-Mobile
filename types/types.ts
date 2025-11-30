@@ -20,6 +20,7 @@ export type EmployeeGroup = {
   name: string,
   business: Business
 }
+export const getEmployeeGroupLabel = (group: EmployeeGroup) => `${group.business.name} - ${group.name}`;
 
 export type Business = {
   id: string,
@@ -36,6 +37,7 @@ export type StampDefinition = {
   createdAt: Date,
   business: Business,
 }
+export const getStampDefinitionLabel = (def: StampDefinition) => def.title;
 
 export type StampCard = {
   id: string,
