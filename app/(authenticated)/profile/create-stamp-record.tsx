@@ -6,10 +6,11 @@ import { renderSelectableList } from '@/components/forms/RenderSelectableList';
 import { useBusinessContext } from '@/lib/context/business';
 import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from '@/lib/services/rewards.service';
 import { getStampDefinitionLabel, StampDefinition } from '@/types/types';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useIsFocused } from '@react-navigation/native';
 import React, { JSX, useEffect, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 
 type CurrencyData = {
   value: number,
@@ -18,7 +19,7 @@ type CurrencyData = {
 
 export default function CreateStampRecord() {
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<BottomSheetMethods>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element>(<></>);
 
   const DEFAULT_CURRENCY_DATA: CurrencyData = { value: 0, isValid: true };
@@ -27,9 +28,12 @@ export default function CreateStampRecord() {
   const [createStampCardResponse, setCreateStampCardResponse] = useState<CreateStampCardResponse | null>(null);
 
   // TODO double tap seems to be required to open the bottom sheet. 
+  // It is kind of fixed by setTimeout, but requestAnimationFrame works even less often. 
+  // Seems to be an underlying issue with the gorhom package. 
   const openBottomSheet = (sheetContent: JSX.Element) => {
     setSheetContent(sheetContent);
-    bottomSheetRef.current?.expand();
+    setTimeout(() => bottomSheetRef.current?.expand(), 100);
+    // requestAnimationFrame(() => bottomSheetRef.current?.expand());
   }
 
   const closeBottomSheet = () => {
@@ -43,13 +47,13 @@ export default function CreateStampRecord() {
     }
   }, [isFocused]);
 
-  useEffect(() => {
-    setFormIsValid(validateFormData())
-  }, [currencyData])
-
   const validateFormData = (): boolean => {
     return currencyData.isValid
   }
+
+  useEffect(() => {
+    setFormIsValid(validateFormData())
+  }, [currencyData])
 
   const handleCreateStampRecordPress = async () => {
     const req: CreateStampCardRequest = {
@@ -59,18 +63,41 @@ export default function CreateStampRecord() {
         currencyCode: "CAD"
       }
     }
-    const makeRequest = async (): Promise<CreateStampCardResponse> => {
-      return await createStampRecord(req);
+    if (!formIsValid) {
+      console.debug("Form is not valid");
+      return;
     }
-    if (formIsValid) {
-      setCurrencyData(DEFAULT_CURRENCY_DATA);
-      const response = await makeRequest();
-      console.debug("response from creating StampRecord=", response)
+    setCurrencyData(DEFAULT_CURRENCY_DATA);
+    try {
+      const response = await createStampRecord(req);
+      console.debug("response", response);
       setCreateStampCardResponse(response);
-    } else {
-      console.debug("form is not valid");
+    } catch (error) {
+      console.error("Failed to create stamp record", error);
     }
   }
+
+  useEffect(() => {
+    if (createStampCardResponse) {
+      openBottomSheet(
+        <View className="p-4">
+          <StampRecordScanDurationBar
+            createdAt={createStampCardResponse.createdAt}
+            onComplete={() => closeBottomSheet()}
+          />
+          <View className="items-center my-4">
+            <QRCode
+              value={String(createStampCardResponse.stampRecordId)}
+              size={200}
+              color="black"
+            />
+            <Text className="mt text-gray-800">Scan this code to redeem</Text>
+          </View>
+        </View>
+      );
+    }
+  }, [createStampCardResponse]);
+
 
   const {
     activeEmployeeGroup,
@@ -140,7 +167,6 @@ export default function CreateStampRecord() {
             </Text>
           </Pressable>
         </View>
-        {createStampCardResponse && <StampRecordScanDurationBar createdAt={createStampCardResponse.createdAt} durationMs={15000} />}
       </View>
 
       {/* Bottom Sheet */}

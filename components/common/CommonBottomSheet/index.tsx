@@ -1,5 +1,6 @@
 import { snapPointValues } from "@/lib/util";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { forwardRef, JSX } from "react";
 
 type CommonBottomSheetProps = {
@@ -8,7 +9,7 @@ type CommonBottomSheetProps = {
   onClose?: () => void;
 };
 
-const CommonBottomSheet = forwardRef<BottomSheet, CommonBottomSheetProps>(
+const CommonBottomSheet = forwardRef<BottomSheetMethods, CommonBottomSheetProps>(
   ({ snapPoints = snapPointValues, content, onClose }, ref) => {
     return (
       <BottomSheet

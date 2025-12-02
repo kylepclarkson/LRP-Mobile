@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useTimedProgress } from "./hooks";
 
 type Props = {
   createdAt: Date,
-  duration: number, // in milliseconds
+  duration?: number, // in milliseconds
   onComplete: () => void
 }
 
@@ -20,12 +20,9 @@ export default function StampRecordScanDurationBar({ createdAt, duration, onComp
 
   return (
     <View className="w-full mt-4">
-      <Text className="text-center text-gray-700 mb-2">
-        {isComplete ? "Done!" : "Waiting..."}
-      </Text>
-      <View className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+      <View className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
         {/* Cannot mix Nativewind with style property */}
-        <View style={{ height: 12, backgroundColor: "blue", width: `${progress * 100}%` }} />
+        <View style={{ height: 8, backgroundColor: "blue", width: `${progress * 100}%` }} />
       </View>
     </View>
   );
