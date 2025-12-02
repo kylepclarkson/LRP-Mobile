@@ -20,14 +20,12 @@ export default function AddRewardScreen() {
   } = useBusinessContext();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => snapPointValues, []);
   const [sheetContent, setSheetContent] = useState<() => JSX.Element>(() => () => <></>);
 
   const openBottomSheet = (renderContent: () => JSX.Element) => {
     setSheetContent(() => renderContent);
     bottomSheetRef.current?.expand();
   };
-
 
   // Close the sheet
   const closeBottomSheet = useCallback(() => {

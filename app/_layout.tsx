@@ -23,10 +23,6 @@ function InitialLayout() {
       <Stack.Protected guard={!!user}>
         <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
       </Stack.Protected>
-      {/* <Stack.Protected guard={__DEV__}>
-        <Stack.Screen name="test" options={{ headerShown: false }} />
-        <Stack.Screen name="storybook" />
-      </Stack.Protected> */}
     </Stack>
   );
 }
