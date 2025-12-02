@@ -1,12 +1,15 @@
+import CommonBottomSheet from "@/components/common/CommonBottomSheet";
 import { FormSelectable } from "@/components/forms/FormSelectable";
+import { renderSelectableList } from "@/components/forms/RenderSelectableList";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
-import { isEmployee, snapPointValues } from "@/lib/util";
+import { isEmployee } from "@/lib/util";
 import { EmployeeGroup, getEmployeeGroupLabel } from "@/types/types";
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
-import { JSX, useCallback, useEffect, useRef, useState } from "react";
-import { Text, View } from "react-native";
+import { router } from "expo-router";
+import { JSX, useEffect, useRef, useState } from "react";
+import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
 
@@ -14,23 +17,27 @@ export default function ProfileScreen() {
   const { activeEmployeeGroup, setActiveEmployeeGroup } = useBusinessContext();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const [sheetContent, setSheetContent] = useState<() => JSX.Element>(() => () => <></>);
+  const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
 
-  const openBottomSheet = (renderContent: () => JSX.Element) => {
-    setSheetContent(() => renderContent);
-    bottomSheetRef.current?.expand();
+  const openBottomSheet = (renderContent: JSX.Element) => {
+    setSheetContent(renderContent);
   };
-
-  const closeBottomSheet = useCallback(() => {
+  const closeBottomSheet = () => {
     bottomSheetRef.current?.close();
-  }, []);
+  }
   const isFocused = useIsFocused();
   // Close sheet when navigating away. 
   useEffect(() => {
     if (!isFocused) {
-      bottomSheetRef.current?.close();
+      closeBottomSheet();
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    if (sheetContent) {
+      bottomSheetRef.current?.expand();
+    }
+  }, [sheetContent]);
 
 
   return (
@@ -52,34 +59,38 @@ export default function ProfileScreen() {
                 label="Select business to create a stamp record for"
                 placeholder="Select an employee group"
                 activeItem={activeEmployeeGroup}
-                data={user!.employeeGroups}
                 getLabel={getEmployeeGroupLabel}
-                onSelect={(item) => {
-                  setActiveEmployeeGroup(item);
-                  closeBottomSheet();
-                }}
-                onOpen={openBottomSheet}
+                onOpen={() =>
+                  openBottomSheet(
+                    renderSelectableList(
+                      user!.employeeGroups,
+                      getEmployeeGroupLabel,
+                      (item) => {
+                        setActiveEmployeeGroup(item);
+                        closeBottomSheet();
+                      }
+                    )
+                  )
+                }
               />
             </View>
+            <Pressable
+              onPress={() => router.push("./profile/create-stamp-record")}
+              className="mt-4 bg-blue-600 rounded-lg p-3"
+            >
+              <Text className="text-white text-center font-semibold">
+                Create Stamp Record
+              </Text>
+            </Pressable>
+
           </View>
         </View>
       )}
-
-      <BottomSheet
+      <CommonBottomSheet
         ref={bottomSheetRef}
-        snapPoints={snapPointValues}
-        index={-1}
-        enablePanDownToClose
-        backdropComponent={(props) => (
-          <BottomSheetBackdrop
-            {...props}
-            disappearsOnIndex={-1}
-            appearsOnIndex={0}
-            opacity={0.5}
-          />
-        )}>
-        {sheetContent()}
-      </BottomSheet>
+        content={sheetContent}
+        onClose={closeBottomSheet}
+      />
     </View>
 
   )

@@ -11,10 +11,6 @@ export default function SettingsLayout() {
         name="employee-settings"
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="history"
-        options={{ title: "History" }}
-      /> */}
     </Stack>
   );
 }

@@ -1,25 +1,26 @@
+import { LoadingOverlay } from '@/components/common/LoadingOverlay';
 import { useAuthContext } from '@/lib/context/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from "expo-router";
 import React from 'react';
-import { Text } from "react-native";
 
 export default function AuthenticatedLayout() {
 
-  const { user, isLoadingUser } = useAuthContext();
+  const { isLoadingUser } = useAuthContext();
 
   if (isLoadingUser) {
-    return <Text>Loading...</Text>
+    return <LoadingOverlay />
   }
 
   return (
-    <Tabs>
+    <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Feather
               name="user"
@@ -33,7 +34,6 @@ export default function AuthenticatedLayout() {
         name="reward-tracker"
         options={{
           title: "Tracker",
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="progress-star"
