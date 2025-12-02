@@ -24,11 +24,16 @@ export type CreateStampCardRequest = {
   }
 }
 
+export type CreateStampCardResponse = {
+  stampDefinitionId: string,
+  stampRecordId: string
+}
+
 export async function createStampRecord(req: CreateStampCardRequest) {
   console.debug("Creating StampRecord", req);
   const path = paths.rewards.stampRecords;
   try {
-    const data = await post(path, req);
+    const data = await post<CreateStampCardResponse>(path, req);
     return data
   } catch (error) {
     console.error("Error creating StampRecord");

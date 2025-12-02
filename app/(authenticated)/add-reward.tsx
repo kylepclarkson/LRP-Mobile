@@ -1,3 +1,4 @@
+import StampRecordScanner from "@/components/AddRewards/StampRecordScanner";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
@@ -5,7 +6,6 @@ import { isEmployee, snapPointValues } from "@/lib/util";
 import { StampDefinition } from "@/types/types";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
-import { router } from "expo-router";
 import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 
@@ -39,10 +39,6 @@ export default function AddRewardScreen() {
     setActiveStampDefinition(item);
     closeBottomSheet();
   }, [closeBottomSheet]);
-
-  const redirectToEmployeeSettings = () => {
-    router.replace("/(authenticated)/settings/employee-settings");
-  };
 
   const isFocused = useIsFocused();
   // Close sheet when navigating away. 
@@ -93,6 +89,10 @@ export default function AddRewardScreen() {
           </KeyboardAvoidingView>
         </>
       )}
+
+      <StampRecordScanner
+        onScanned={(data) => console.debug("scanned data in parent", data)}
+      />
 
       {/* Bottom sheet */}
       <BottomSheet
