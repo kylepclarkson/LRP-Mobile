@@ -26,7 +26,8 @@ export type CreateStampCardRequest = {
 
 export type CreateStampCardResponse = {
   stampDefinitionId: string,
-  stampRecordId: string
+  stampRecordId: string,
+  createdAt: Date
 }
 
 export async function createStampRecord(req: CreateStampCardRequest) {
