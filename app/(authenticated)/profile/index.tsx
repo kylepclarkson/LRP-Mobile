@@ -8,6 +8,7 @@ import { isEmployee } from "@/lib/util";
 import { EmployeeGroup, getEmployeeGroupLabel } from "@/types/types";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { JSX, useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -40,12 +41,16 @@ export default function ProfileScreen() {
     }
   }, [sheetContent]);
 
-
   return (
     <SharedPageWrapper>
-      <View className="flex-row justify-between mb-6">
+      <View className="flex-row justify-between items-center mb-6">
         <Text className="text-4xl font-bold">Aandeg</Text>
-        <Text className="text-2xl font-bold">Image</Text>
+        {/* TODO Nativewind 5 does not seem to work for images */}
+        <Image
+          source={require('../../../assets/images/aandeg-icon.png')}
+          alt="Aandeg logo"
+          style={{ width: 60, height: 60, borderRadius: 50, backgroundColor: 'black' }}
+        />
       </View>
       <Text className="text-2xl font-bold text-gray-900 mb-4">
         Hello {user!.firstName}
