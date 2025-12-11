@@ -9,9 +9,7 @@ export default function ProfileLayout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{
-          title: "Profile"
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="create-stamp-record"

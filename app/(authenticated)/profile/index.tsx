@@ -1,4 +1,5 @@
 import CommonBottomSheet from "@/components/common/CommonBottomSheet";
+import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import { FormSelectable } from "@/components/forms/FormSelectable";
 import { renderSelectableList } from "@/components/forms/RenderSelectableList";
 import { useAuthContext } from "@/lib/context/auth";
@@ -41,9 +42,13 @@ export default function ProfileScreen() {
 
 
   return (
-    <View className="flex-1 bg-white px-4 py-6">
-      <Text className="text-xl font-bold text-gray-900 mb-4">
-        Hi, {user!.firstName}
+    <SharedPageWrapper>
+      <View className="flex-row justify-between mb-6">
+        <Text className="text-4xl font-bold">Aandeg</Text>
+        <Text className="text-2xl font-bold">Image</Text>
+      </View>
+      <Text className="text-2xl font-bold text-gray-900 mb-4">
+        Hello {user!.firstName}
       </Text>
 
       {/* Employee Group Selector */}
@@ -91,7 +96,6 @@ export default function ProfileScreen() {
         content={sheetContent}
         onClose={closeBottomSheet}
       />
-    </View>
-
+    </SharedPageWrapper>
   )
 }
