@@ -12,11 +12,12 @@ export default function ProfileLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="create-stamp-record"
+        name="business-rewards"
         options={() => ({
-          title: activeEmployeeGroup
-            ? `${activeEmployeeGroup?.business.name} - Create Stamp Record`
-            : "Create Stamp Record"
+          headerShown: false,
+          // title: activeEmployeeGroup
+          //   ? `${activeEmployeeGroup?.business.name} Rewards`
+          //   : "Business Rewards"
         })}
       />
     </Stack>

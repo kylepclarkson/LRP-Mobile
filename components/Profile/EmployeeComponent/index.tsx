@@ -1,3 +1,4 @@
+import ElevatedCard from "@/components/common/ElevatedCard";
 import { FormSelectable } from "@/components/forms/FormSelectable";
 import { renderSelectableList } from "@/components/forms/RenderSelectableList";
 import { useAuthContext } from "@/lib/context/auth";
@@ -29,11 +30,11 @@ export function EmployeeComponent({
   }
 
   return (
-    <View className="p-4 bg-white rounded-lg shadow-lg">
+    <ElevatedCard>
       <View className="flex-row justify-between items-center py-2">
         <Text className="text-2xl font-bold">Employee view</Text>
         <Pressable
-          onPress={() => router.push("./profile/create-stamp-record")}
+          onPress={() => router.push("./profile/business-rewards")}
           className="rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center"
         >
           <Ionicons name="chevron-forward" size={24} color="black" />
@@ -57,7 +58,6 @@ export function EmployeeComponent({
           )
         }
       />
-
-    </View>
+    </ElevatedCard>
   );
 }

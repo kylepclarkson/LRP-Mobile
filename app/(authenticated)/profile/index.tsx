@@ -1,18 +1,14 @@
 import CommonBottomSheet from "@/components/common/CommonBottomSheet";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
-import { FormSelectable } from "@/components/forms/FormSelectable";
-import { renderSelectableList } from "@/components/forms/RenderSelectableList";
 import { EmployeeComponent } from "@/components/Profile/EmployeeComponent";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { isEmployee } from "@/lib/util";
-import { EmployeeGroup, getEmployeeGroupLabel } from "@/types/types";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import { JSX, useEffect, useRef, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export default function ProfileScreen() {
 
@@ -45,7 +41,10 @@ export default function ProfileScreen() {
   return (
     <SharedPageWrapper>
       <View className="flex-row justify-between items-center mb-6">
-        <Text className="text-3xl font-bold pl-2">Aandeg</Text>
+        <View className="pl-2">
+          <Text className="text-3xl font-bold">Aandeg</Text>
+          <Text className="text-sm italic text-gray-500">Customer Loyalty App</Text>
+        </View>
         {/* TODO Nativewind 5 does not seem to work for images */}
         <Image
           source={require('../../../assets/images/aandeg-icon.png')}
