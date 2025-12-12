@@ -124,7 +124,13 @@ export const paths = {
     refreshToken: 'users/login/refresh/'
   },
   businesses: {
-    stampDefinitions: (business_id: string) => `businesses/${business_id}/stamp-definitions/`,
+    stampDefinitions: (business_id: string, params?: string) => {
+      let path = `businesses/${business_id}/stamp-definitions`;
+      if (params) {
+        path += `?${params}`;
+      }
+      return path;
+    },
   },
   rewards: {
     stampTokens: `rewards/stamp-cards/`,

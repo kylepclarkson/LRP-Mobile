@@ -27,6 +27,8 @@ export type Business = {
   name: string,
 }
 
+export type StampDefinitionState = 'active' | 'sunset' | 'inactive';
+
 export type StampDefinition = {
   id: string,
   title: string,
@@ -35,6 +37,7 @@ export type StampDefinition = {
   redemptionText: string,
   stampsRequired: number,
   createdAt: Date,
+  state: StampDefinitionState,
   business: Business,
 }
 export const getStampDefinitionLabel = (def: StampDefinition) => def.title;
@@ -52,5 +55,5 @@ export type StampRecord = {
 }
 
 export type Transaction = {
-  
+
 }
