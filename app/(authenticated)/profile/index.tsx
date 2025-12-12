@@ -2,6 +2,7 @@ import CommonBottomSheet from "@/components/common/CommonBottomSheet";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import { FormSelectable } from "@/components/forms/FormSelectable";
 import { renderSelectableList } from "@/components/forms/RenderSelectableList";
+import { EmployeeComponent } from "@/components/Profile/EmployeeComponent";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { isEmployee } from "@/lib/util";
@@ -44,7 +45,7 @@ export default function ProfileScreen() {
   return (
     <SharedPageWrapper>
       <View className="flex-row justify-between items-center mb-6">
-        <Text className="text-4xl font-bold">Aandeg</Text>
+        <Text className="text-3xl font-bold pl-2">Aandeg</Text>
         {/* TODO Nativewind 5 does not seem to work for images */}
         <Image
           source={require('../../../assets/images/aandeg-icon.png')}
@@ -58,43 +59,10 @@ export default function ProfileScreen() {
 
       {/* Employee Group Selector */}
       {(isEmployee(user) && activeEmployeeGroup) && (
-        <View className="mb-6 bg-lime-300 rounded-2xl">
-          <View className="p-4">
-
-            <Text className="text-base font-medium text-gray-700 mb-2">
-              Employee view
-            </Text>
-            <View>
-              <FormSelectable<EmployeeGroup>
-                label="Select business to create a stamp record for"
-                placeholder="Select an employee group"
-                activeItem={activeEmployeeGroup}
-                getLabel={getEmployeeGroupLabel}
-                onOpen={() =>
-                  openBottomSheet(
-                    renderSelectableList(
-                      user!.employeeGroups,
-                      getEmployeeGroupLabel,
-                      (item) => {
-                        setActiveEmployeeGroup(item);
-                        closeBottomSheet();
-                      }
-                    )
-                  )
-                }
-              />
-            </View>
-            <Pressable
-              onPress={() => router.push("./profile/create-stamp-record")}
-              className="mt-4 bg-blue-600 rounded-lg p-3"
-            >
-              <Text className="text-white text-center font-semibold">
-                Create Stamp Record
-              </Text>
-            </Pressable>
-
-          </View>
-        </View>
+        <EmployeeComponent
+          openBottomSheet={openBottomSheet}
+          closeBottomSheet={closeBottomSheet}
+        />
       )}
       <CommonBottomSheet
         ref={bottomSheetRef}
