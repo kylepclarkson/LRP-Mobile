@@ -1,12 +1,11 @@
-import CommonBottomSheet from "@/components/common/CommonBottomSheet";
 import ElevatedCard from "@/components/common/ElevatedCard";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import { useBusinessContext } from "@/lib/context/business";
 import { getStampDefinitions } from "@/lib/services/api/businesses.service";
 import { StampDefinition } from "@/types/types";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import React, { JSX } from "react";
+import { TrueSheet } from "@lodev09/react-native-true-sheet";
+import React, { JSX, useRef } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 
@@ -14,7 +13,9 @@ export default function BusinessRewardsScreen() {
 
   const { activeEmployeeGroup } = useBusinessContext();
 
-  const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
+  // const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
+  const bottomSheetRef = useRef<TrueSheet>(null);
+
 
   const [sheetContent, setSheetContent] = React.useState<JSX.Element | null>(null);
   const [stampDefinitions, setStampDefinitions] = React.useState<StampDefinition[]>([]);
@@ -45,15 +46,13 @@ export default function BusinessRewardsScreen() {
   }, [activeEmployeeGroup]);
 
   React.useEffect(() => {
-    console.debug("Sheet content changed:", sheetContent);
-    if (sheetContent) {
-      setTimeout(() => bottomSheetRef.current?.snapToIndex(0), 100);
+    const openBottomSheet = async () => {
+      if (sheetContent) {
+        await bottomSheetRef.current?.present();
+      }
     }
+    openBottomSheet();
   }, [sheetContent]);
-
-  const closeBottomSheet = () => {
-    bottomSheetRef.current?.close();
-  }
 
   const renderItem = ({ item }: { item: StampDefinition }) => (
     <Pressable
@@ -105,11 +104,12 @@ export default function BusinessRewardsScreen() {
           />
         </ElevatedCard>
       </SharedPageWrapper>
-      <CommonBottomSheet
+      <TrueSheet
         ref={bottomSheetRef}
-        content={sheetContent}
-        onClose={closeBottomSheet}
-      />
+        detents={['auto']}
+      >
+        {sheetContent}
+      </TrueSheet>
     </>
   );
 }
