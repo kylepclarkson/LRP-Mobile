@@ -13,9 +13,7 @@ export default function BusinessRewardsScreen() {
 
   const { activeEmployeeGroup } = useBusinessContext();
 
-  // const bottomSheetRef = React.useRef<BottomSheetMethods>(null);
   const bottomSheetRef = useRef<TrueSheet>(null);
-
 
   const [sheetContent, setSheetContent] = React.useState<JSX.Element | null>(null);
   const [stampDefinitions, setStampDefinitions] = React.useState<StampDefinition[]>([]);
@@ -64,6 +62,13 @@ export default function BusinessRewardsScreen() {
             <Text className="text-base mb-2">Stamps required: {item.stampsRequired}</Text>
             <Text className="text-base mb-2">Created at: {new Date(item.createdAt).toLocaleDateString()}</Text>
             <Text className="text-base mb-2">State: {item.state}</Text>
+            <Pressable
+              className={`bg-blue-500 py-2 px-4 rounded shadow-md`}
+            >
+              <Text className={`text-white font-semibold text-center`}>
+                Create Reward
+              </Text>
+            </Pressable>
           </View>
         );
       }}

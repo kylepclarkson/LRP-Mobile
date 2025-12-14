@@ -34,7 +34,7 @@ export function EmployeeComponent({
       <View className="flex-row justify-between items-center py-2">
         <Text className="text-2xl font-bold">Employee view</Text>
         <Pressable
-          onPress={() => router.push("./profile/business-rewards")}
+          onPress={() => router.push("./profile/business")}
           className="rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center"
         >
           <Ionicons name="chevron-forward" size={24} color="black" />

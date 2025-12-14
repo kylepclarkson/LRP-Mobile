@@ -12,13 +12,8 @@ export default function ProfileLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="business-rewards"
-        options={() => ({
-          headerShown: false,
-          // title: activeEmployeeGroup
-          //   ? `${activeEmployeeGroup?.business.name} Rewards`
-          //   : "Business Rewards"
-        })}
+        name="business"
+        options={{ headerShown: false }}
       />
     </Stack>
   );
