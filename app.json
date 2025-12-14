@@ -46,6 +46,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ffaa0390-c006-46dd-b87f-be6c65c5a36c"
+      }
+    },
+    "owner": "kylepc"
   }
 }

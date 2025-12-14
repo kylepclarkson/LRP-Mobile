@@ -13,9 +13,6 @@ import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 export default function AddRewardScreen() {
   const { user } = useAuthContext();
   const {
-    activeEmployeeGroup,
-    stampDefinitions,
-    activeStampDefinition,
     setActiveStampDefinition
   } = useBusinessContext();
 

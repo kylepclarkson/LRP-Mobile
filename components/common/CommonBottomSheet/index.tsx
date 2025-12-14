@@ -10,12 +10,14 @@ type CommonBottomSheetProps = {
 };
 
 const CommonBottomSheet = forwardRef<BottomSheetMethods, CommonBottomSheetProps>(
+
+
   ({ snapPoints = snapPointValues, content, onClose }, ref) => {
     return (
       <BottomSheet
         ref={ref}
         snapPoints={snapPoints}
-        index={-1} // always start closed
+        index={0} // always start closed
         enablePanDownToClose
         backdropComponent={(props) => (
           <BottomSheetBackdrop

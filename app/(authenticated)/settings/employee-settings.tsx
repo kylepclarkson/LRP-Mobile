@@ -24,7 +24,6 @@ export default function EmployeeGroupsMenu() {
     const isActive =
       (activeEmployeeGroup === null && item.id === "customer") ||
       activeEmployeeGroup?.id === item.id;
-
     return (
       <Pressable
         onPress={() => setActiveEmployeeGroup(item.id === "customer" ? null : item)}
@@ -41,7 +40,6 @@ export default function EmployeeGroupsMenu() {
       </Pressable>
     );
   };
-
 
   return (
     <View className="flex-1 bg-gray-50 px-6 py-8">
