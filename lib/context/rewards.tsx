@@ -25,7 +25,7 @@ export function RewardsProvider(
       console.debug("RewardsProvider: no user - skipping StampCard fetch");
       return;
     }
-    fetchStampCards();
+    // fetchStampCards();
   }, [user]);
 
   const fetchStampCards = async () => {

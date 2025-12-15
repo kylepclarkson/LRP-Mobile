@@ -5,6 +5,7 @@ import { useBusinessContext } from "@/lib/context/business";
 import { getStampDefinitions } from "@/lib/services/api/businesses.service";
 import { StampDefinition } from "@/types/types";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
+import { router } from "expo-router";
 import React, { JSX, useRef } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
@@ -36,7 +37,7 @@ export default function BusinessRewardsScreen() {
       } finally {
         setLoading(false);
       }
-      console.debug("Response", response)
+      // console.debug("Response", response)
       setStampDefinitions(response);
     };
 
@@ -63,13 +64,18 @@ export default function BusinessRewardsScreen() {
             <Text className="text-base mb-2">Created at: {new Date(item.createdAt).toLocaleDateString()}</Text>
             <Text className="text-base mb-2">State: {item.state}</Text>
             <Pressable
-              className={`bg-blue-500 py-2 px-4 rounded shadow-md`}
+              onPress={async () => {
+                console.debug("Navigating to create stamp record screen for stamp definition", item.id);
+                router.push(`/profile/business/stamp-definition/create-stamp-record/${item.id}`)
+                await bottomSheetRef.current?.dismiss();
+              }}
+              className={`bg-blue-500 py-2 px-4 rounded shadow-md p-3 border-2`}
             >
               <Text className={`text-white font-semibold text-center`}>
                 Create Reward
               </Text>
             </Pressable>
-          </View>
+          </View >
         );
       }}
     >
@@ -78,7 +84,7 @@ export default function BusinessRewardsScreen() {
           <Text className="text-lg text-gray-900">{item.title}</Text>
         </View>
       </View>
-    </Pressable>
+    </Pressable >
   );
 
   const EmptyList = () => (
