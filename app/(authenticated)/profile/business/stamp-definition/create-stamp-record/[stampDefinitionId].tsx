@@ -1,18 +1,30 @@
 
 
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
+import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
+import { StampDefinition } from "@/types/types";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 
 export default function CreateStampRecordScreen() {
-  const { stampDefinitionId } = useLocalSearchParams<{ stampDefinitionId: string }>();
+  const {
+    stampDefinitionId,
+    title
+  } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
+
+  const [stampDefinition, setStampDefinition] = useState<StampDefinition>();
+
+  useEffect(() => {
+    // Set
+  }, [])
 
   return (
     <SharedPageWrapper>
-      <View className="flex-1 items-center justify-center">
-        <Text className="text-lg">Create Stamp Record Screen</Text>
-        <Text className="mt-4">Stamp Definition ID: {stampDefinitionId}</Text>
+      <View className="flex">
+        <Text className="text-lg">{title}</Text>
+        <CreateStampRecordForm />
       </View>
     </SharedPageWrapper>
   );

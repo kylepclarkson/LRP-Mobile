@@ -66,7 +66,13 @@ export default function BusinessRewardsScreen() {
             <Pressable
               onPress={async () => {
                 console.debug("Navigating to create stamp record screen for stamp definition", item.id);
-                router.push(`/profile/business/stamp-definition/create-stamp-record/${item.id}`)
+                router.push({
+                  pathname: `/profile/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
+                  params: {
+                    stampDefinitionId: item.id, 
+                    title: item.title 
+                  }
+                })
                 await bottomSheetRef.current?.dismiss();
               }}
               className={`bg-blue-500 py-2 px-4 rounded shadow-md p-3 border-2`}

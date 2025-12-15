@@ -1,5 +1,5 @@
 import StampRecordScanner from "@/components/AddRewards/StampRecordScanner";
-import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
+import CreateStampRecordForm from "@/components/forms/__CreateStampRecordForm";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { isEmployee, snapPointValues } from "@/lib/util";
