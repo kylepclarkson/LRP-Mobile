@@ -83,7 +83,7 @@ export function Currency({
         className={className ?? "border border-gray-300 rounded p-2 bg-white"}
         {...inputProps}
       />
-      {error ? <Text className="text-red-500 text-xs">{error}</Text> : null}
+      {/* {error ? <Text className="text-red-500 text-xs">{error}</Text> : null} */}
     </View>
   );
 }

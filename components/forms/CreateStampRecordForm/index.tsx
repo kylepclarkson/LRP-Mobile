@@ -2,13 +2,15 @@ import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import React, { useReducer } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import { Currency } from "../Currency";
+import { FormField } from "../FormField";
 import { formReducer, initialFormState } from "./reducer";
+import { CurrencyCode } from "./types";
 
 // NativeWind styled components
-const StyledPicker = styled(Picker);
-const StyledTextInput = styled(TextInput);
-const StyledText = styled(Text);
-const StyledView = styled(View);
+const StyledPicker = styled(Picker<CurrencyCode>);
+const inputClass = "border border-gray-300 rounded bg-white text-base";
+
 
 export default function CreateStampRecordForm() {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
@@ -22,39 +24,43 @@ export default function CreateStampRecordForm() {
   };
 
   return (
-    <StyledView className="p-4 space-y-4">
-      <StyledPicker
-        selectedValue={form.currencyCode}
-        onValueChange={(val) => dispatch({ type: "SET_CODE", payload: val })}
-        className="border border-gray-300 rounded bg-white"
-      >
-        <Picker.Item label="CAD" value="CAD" />
-        <Picker.Item label="USD" value="USD" />
-      </StyledPicker>
-
-      <StyledTextInput
-        value={form.currencyAmount !== null ? form.currencyAmount.toFixed(2) : ""}
-        onChangeText={(val) => dispatch({ type: "SET_AMOUNT", payload: val })}
-        keyboardType="decimal-pad"
-        placeholder="Amount"
-        className="border border-gray-300 rounded p-2"
-      />
-      {form.errors.currencyAmount && (
-        <StyledText className="text-red-500">{form.errors.currencyAmount}</StyledText>
-      )}
-
-      <StyledTextInput
-        value={form.details}
-        onChangeText={(val) => dispatch({ type: "SET_DETAILS", payload: val })}
-        placeholder="Details"
-        className="border border-gray-300 rounded p-2"
-      />
-      {form.errors.details && (
-        <StyledText className="text-red-500">{form.errors.details}</StyledText>
-      )}
-      <Pressable onPress={handleSubmit}><Text>Submit</Text></Pressable>
-      {/* <Button title="Submit" onPress={handleSubmit}>Submit</Button> */}
-      {/* <Button title="Reset" onPress={() => dispatch({ type: "RESET" })} /> */}
-    </StyledView>
+    <View className="gap-y-4">
+      <FormField label="Currency Code" error={form.errors.currencyCode}>
+        <StyledPicker
+          selectedValue={form.currencyCode}
+          onValueChange={(val) => dispatch({ type: "SET_CODE", payload: val })}
+          className={`${inputClass}`}
+        >
+          <Picker.Item label="CAD" value="CAD" />
+          <Picker.Item label="USD" value="USD" />
+        </StyledPicker>
+      </FormField>
+      <FormField label="Amount" error={form.errors.currencyAmount}>
+        <Currency
+          value={form.currencyAmount}
+          onChange={(next) => {
+            dispatch({ type: "SET_AMOUNT", payload: next !== null ? next.toString() : "" });
+          }}
+          inputProps={{ placeholder: "0.00" }}
+          error={form.errors.currencyAmount}
+          className={inputClass}
+        />
+      </FormField>
+      <FormField label="Details (optional)" error={form.errors.details}>
+        <TextInput
+          value={form.details}
+          onChangeText={(val) => dispatch({ type: "SET_DETAILS", payload: val })}
+          placeholder="Details"
+          className={`${inputClass} h-40`}
+          multiline
+          textAlignVertical="top"
+        />
+      </FormField>
+      <Pressable
+        className="bg-blue-500 rounded p-3 items-center mt-4"
+        onPress={handleSubmit}>
+        <Text className="text-white">Create stamp</Text>
+      </Pressable>
+    </View>
   );
 }
