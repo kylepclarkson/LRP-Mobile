@@ -1,4 +1,4 @@
-import StampRecordScanner from "@/components/AddRewards/StampRecordScanner";
+import StampRecordScanner from "@/components/Stamps/StampRecordScanner";
 import CreateStampRecordForm from "@/components/forms/__CreateStampRecordForm";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
@@ -6,7 +6,7 @@ import { isEmployee, snapPointValues } from "@/lib/util";
 import { StampDefinition } from "@/types/types";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
-import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { JSX, useCallback, useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 
 

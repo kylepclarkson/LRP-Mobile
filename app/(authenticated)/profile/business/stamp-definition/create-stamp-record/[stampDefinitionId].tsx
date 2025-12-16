@@ -3,6 +3,7 @@
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
+import { StampRecordDisplay } from "@/components/Stamps/StampRecordDisplay";
 import { createStampRecord } from "@/lib/services/rewards.service";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
@@ -52,7 +53,15 @@ export default function CreateStampRecordScreen() {
     try {
       const response = await createStampRecordRequest();
       console.debug("response:", response);
-      setSheetContent(<Text>Created record ID: {response.stampDefinitionId}</Text>);
+      console.debug("createdAt type", typeof response.createdAt);
+      console.debug("claimBy type", typeof response.claimBy);
+      setSheetContent(
+        <StampRecordDisplay
+          stampRecordId={response.stampRecordId}
+          createdAt={response.createdAt}
+          claimBy={response.claimBy}
+        />
+      );
       console.debug("response:", response);
     } catch (error) {
       console.error("Error creating stamp record:", error);

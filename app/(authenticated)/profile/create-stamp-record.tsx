@@ -1,4 +1,4 @@
-import StampRecordScanDurationBar from '@/components/AddRewards/StampRecordScanDurationBar';
+import StampRecordScanDurationBar from '@/components/Stamps/StampRecordScanDurationBar';
 import CommonBottomSheet from '@/components/common/CommonBottomSheet';
 import { CurrencyInput } from '@/components/forms/CurrencyInput';
 import { FormSelectable } from '@/components/forms/FormSelectable';

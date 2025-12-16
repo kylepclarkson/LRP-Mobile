@@ -31,7 +31,6 @@ export type CreateStampCardResponse = {
   claimBy: Date,
   state: string, // TODO - define enum that matches backend
   transaction: Transaction
-
 }
 
 export async function createStampRecord(req: CreateStampCardRequest): Promise<CreateStampCardResponse> {
@@ -39,7 +38,11 @@ export async function createStampRecord(req: CreateStampCardRequest): Promise<Cr
   const path = paths.rewards.stampRecords;
   try {
     const data = await post<CreateStampCardResponse>(path, req);
-    return data
+    return {
+      ...data,
+      createdAt: new Date(data.createdAt),
+      claimBy: new Date(data.claimBy)
+    }
   } catch (error) {
     console.error("Error creating StampRecord");
     throw error;
