@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import React, { useReducer } from "react";
@@ -5,23 +6,42 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { Currency } from "../Currency";
 import { FormField } from "../FormField";
 import { formReducer, initialFormState } from "./reducer";
-import { CurrencyCode } from "./types";
+import { CreateStampRecordFormData, CurrencyCode } from "./types";
 
 // NativeWind styled components
 const StyledPicker = styled(Picker<CurrencyCode>);
 const inputClass = "border border-gray-300 rounded bg-white text-base";
 
+type CreateStampRecordFormProps = {
+  onSubmit: (data: CreateStampRecordFormData) => Promise<void>;
+  isSubmitting?: boolean;
+};
 
-export default function CreateStampRecordForm() {
+export default function CreateStampRecordForm({
+  onSubmit,
+  isSubmitting
+}: CreateStampRecordFormProps) {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
 
+  const formIsValid = (): boolean => {
+    return (
+      form.currencyAmount !== null &&
+      !form.errors.currencyAmount &&
+      !form.errors.details
+    );
+  }
+
   const handleSubmit = () => {
-    if (!form.errors.currencyAmount && !form.errors.details && form.currencyAmount) {
-      console.log("Submitting form:", form);
-    } else {
-      console.log("Form has errors:", form.errors);
+    if (!formIsValid()) {
+      console.warn("Create stamp record form is invalid");
+      return;
     }
-  };
+    onSubmit(form);
+  }
+
+  if (isSubmitting) {
+    return <LoadingOverlay />
+  }
 
   return (
     <View className="gap-y-4">

@@ -133,8 +133,8 @@ export const paths = {
     },
   },
   rewards: {
-    stampTokens: `rewards/stamp-cards/`,
-    stampRecordAssign: (id: string) => `rewards/stamp-cards/${id}/assign/`,
-    stampRecords: `rewards/stamp-records/`
+    stampTokens: `stamps/stamp-cards/`,
+    stampRecordAssign: (id: string) => `stamps/stamp-cards/${id}/assign/`,
+    stampRecords: `stamps/stamp-records/`
   }
 }

@@ -2,9 +2,10 @@
 
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
-import { StampDefinition } from "@/types/types";
+import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
+import { createStampRecord } from "@/lib/services/rewards.service";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text, View } from "react-native";
 
 
@@ -14,17 +15,44 @@ export default function CreateStampRecordScreen() {
     title
   } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
 
-  const [stampDefinition, setStampDefinition] = useState<StampDefinition>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    // Set
-  }, [])
+  const handleFormSubmit = async ({
+    currencyCode,
+    currencyAmount,
+    details
+  }: CreateStampRecordFormData) => {
+
+    const createStampRecordRequest = async () => {
+      const res = await createStampRecord({
+        stampDefinitionId,
+        transaction: {
+          amount: currencyAmount,
+          currencyCode
+        }
+      });
+      return res;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await createStampRecordRequest();
+      console.debug("response:", response);
+    } catch (error) {
+      console.error("Error creating stamp record:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <SharedPageWrapper>
       <View className="flex">
         <Text className="text-lg">{title}</Text>
-        <CreateStampRecordForm />
+        <CreateStampRecordForm
+          onSubmit={handleFormSubmit}
+          isSubmitting={isSubmitting}
+        />
       </View>
     </SharedPageWrapper>
   );

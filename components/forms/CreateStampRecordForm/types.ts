@@ -1,13 +1,16 @@
-export type CreateStampRecordForm = {
-  currencyCode: CurrencyCode;
-  currencyAmount: number | null;
-  details: string;
+export type CreateStampRecordForm = CreateStampRecordFormData & {
   errors: {
     currencyCode?: string;
     currencyAmount?: string;
     details?: string;
   };
 };
+
+export type CreateStampRecordFormData = {
+  currencyCode: CurrencyCode;
+  currencyAmount: number;
+  details: string;
+}
 
 export type CurrencyCode = "CAD" | "USD";
 
