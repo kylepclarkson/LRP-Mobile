@@ -4,8 +4,9 @@ import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
 import { createStampRecord } from "@/lib/services/rewards.service";
+import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { Text, View } from "react-native";
 
 
@@ -16,6 +17,19 @@ export default function CreateStampRecordScreen() {
   } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
+  const bottomSheetRef = useRef<TrueSheet>(null);
+
+  useEffect(() => {
+    const openBottomSheet = async () => {
+      if (sheetContent) {
+        console.debug("Opening bottom sheet")
+        await bottomSheetRef.current?.present();
+      }
+    }
+    openBottomSheet();
+  }, [sheetContent]);
 
   const handleFormSubmit = async ({
     currencyCode,
@@ -38,6 +52,8 @@ export default function CreateStampRecordScreen() {
     try {
       const response = await createStampRecordRequest();
       console.debug("response:", response);
+      setSheetContent(<Text>Created record ID: {response.stampDefinitionId}</Text>);
+      console.debug("response:", response);
     } catch (error) {
       console.error("Error creating stamp record:", error);
     } finally {
@@ -46,14 +62,19 @@ export default function CreateStampRecordScreen() {
   }
 
   return (
-    <SharedPageWrapper>
-      <View className="flex">
-        <Text className="text-lg">{title}</Text>
-        <CreateStampRecordForm
-          onSubmit={handleFormSubmit}
-          isSubmitting={isSubmitting}
-        />
-      </View>
-    </SharedPageWrapper>
+    <>
+      <SharedPageWrapper>
+        <View className="flex">
+          <Text className="text-lg">{title}</Text>
+          <CreateStampRecordForm
+            onSubmit={handleFormSubmit}
+            isSubmitting={isSubmitting}
+          />
+        </View>
+      </SharedPageWrapper>
+      <TrueSheet ref={bottomSheetRef} detents={[0.8]}>
+        {sheetContent}
+      </TrueSheet>
+    </>
   );
 }

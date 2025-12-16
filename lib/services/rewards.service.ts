@@ -1,5 +1,5 @@
 import { get, patch, paths, post } from '@/lib/services/api/api';
-import { StampCard } from '@/types/types';
+import { StampCard, Transaction } from '@/types/types';
 
 
 /** Retrieve the current user's StampCards. By default, it retrieves all 
@@ -27,10 +27,14 @@ export type CreateStampCardRequest = {
 export type CreateStampCardResponse = {
   stampDefinitionId: string,
   stampRecordId: string,
-  createdAt: Date
+  createdAt: Date,
+  claimBy: Date,
+  state: string, // TODO - define enum that matches backend
+  transaction: Transaction
+
 }
 
-export async function createStampRecord(req: CreateStampCardRequest) {
+export async function createStampRecord(req: CreateStampCardRequest): Promise<CreateStampCardResponse> {
   console.debug("Creating StampRecord", req);
   const path = paths.rewards.stampRecords;
   try {
