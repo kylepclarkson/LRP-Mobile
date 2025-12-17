@@ -136,5 +136,9 @@ export const paths = {
     stampTokens: `stamps/stamp-cards/`,
     stampRecordAssign: (id: string) => `stamps/stamp-cards/${id}/assign/`,
     stampRecords: `stamps/stamp-records/`
+  },
+  stamps: {
+    stampRecordUpdateState: (id: string) => `stamps/stamp-records/${id}/`,
+    stampRecordClaim: (id: string) => `stamps/stamp-records/${id}/claim/`
   }
 }

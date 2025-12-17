@@ -4,7 +4,7 @@ import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
 import { StampRecordDisplay } from "@/components/Stamps/StampRecordDisplay";
-import { createStampRecord } from "@/lib/services/rewards.service";
+import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/rewards.service";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -31,6 +31,18 @@ export default function CreateStampRecordScreen() {
     }
     openBottomSheet();
   }, [sheetContent]);
+
+  const handleExpire = async (stampRecordId: string, trigger: "button" | "timeout"): Promise<void> => {
+    try {
+      const new_state_value = trigger === "button" ? StampRecordState.REVOKED : StampRecordState.EXPIRED
+      const res = await stampRecordUpdateState(stampRecordId, { state: new_state_value });
+      console.debug(`Updated stampRecordId=${stampRecordId}'s state to ${res.state}`);
+      bottomSheetRef.current?.dismiss();
+    } catch (error) {
+      // TODO render error. 
+      console.warn("Error updating stamp record state", error);
+    }
+  };
 
   const handleFormSubmit = async ({
     currencyCode,
@@ -60,6 +72,7 @@ export default function CreateStampRecordScreen() {
           stampRecordId={response.stampRecordId}
           createdAt={response.createdAt}
           claimBy={response.claimBy}
+          onExpire={handleExpire}
         />
       );
       console.debug("response:", response);

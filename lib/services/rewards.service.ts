@@ -49,6 +49,35 @@ export async function createStampRecord(req: CreateStampCardRequest): Promise<Cr
   }
 }
 
+export enum StampRecordState {
+  CREATED = "created",
+  PENDING = "pending",
+  CLAIMED = "claimed",
+  EXPIRED = "expired",
+  REVOKED = "revoked",
+}
+
+export type StampRecordUpdateStateRequest = {
+  state: StampRecordState
+}
+
+export type StampRecordUpdateStateResponse = CreateStampCardResponse;
+
+export async function stampRecordUpdateState(
+  stampRecordId: string,
+  req: StampRecordUpdateStateRequest
+): Promise<StampRecordUpdateStateResponse> {
+  console.debug("Updating stamp record state");
+  const path = paths.stamps.stampRecordUpdateState(stampRecordId)
+  try {
+    const data = await patch<StampRecordUpdateStateResponse>(path, req);
+    return data;
+  } catch (error) {
+    console.error("Error updating stamp record state");
+    throw error;
+  }
+}
+
 
 export type AssignStampCardRequest = {
   stampDefinitionId: string

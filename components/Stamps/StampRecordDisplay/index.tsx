@@ -1,11 +1,14 @@
+import { StampRecordState, stampRecordUpdateState } from "@/lib/services/rewards.service";
+import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import StampRecordScanDurationBar from "../StampRecordScanDurationBar";
 
 type StampRecordDisplayProps = {
-  stampRecordId: string,
-  createdAt: Date,
-  claimBy: Date
+  stampRecordId: string;
+  createdAt: Date;
+  claimBy: Date;
+  onExpire: (stampRecordId: string, trigger: 'button' | 'timeout') => Promise<void>;
 }
 
 /**
@@ -14,12 +17,22 @@ type StampRecordDisplayProps = {
 export function StampRecordDisplay({
   stampRecordId,
   createdAt,
-  claimBy
+  claimBy,
+  onExpire
 }: StampRecordDisplayProps) {
 
-  const scanNotCompleted = () => {
-    console.debug("Scan duration bar completed");
-  };
+  // True if the stamp record's state has been set to expired.
+  const [hasExpired, setHasExpired] = useState(false);
+
+  useEffect(() => {
+    setHasExpired(false);
+  }, [stampRecordId])
+
+  const handleExpire = (trigger: 'button' | 'timeout') => {
+    if (hasExpired) return;
+    setHasExpired(true);
+    onExpire(stampRecordId, trigger);
+  }
 
   return (
     <View className="grow mt-10 px-4">
@@ -35,7 +48,7 @@ export function StampRecordDisplay({
         />
         <View className="my-4 w-100">
           <StampRecordScanDurationBar
-            onComplete={scanNotCompleted}
+            onComplete={() => handleExpire("timeout")}
             createdAt={createdAt}
             duration={claimBy.getTime() - createdAt.getTime()}
           />
@@ -44,6 +57,7 @@ export function StampRecordDisplay({
       <View className="items-center mb-4">
         <Pressable
           className="w-full bg-blue-600 rounded-lg py-3 shadow-md active:bg-blue-700"
+          onPress={() => handleExpire("timeout")}
         >
           <Text className="text-white font-semibold text-center text-lg">
             Cancel
