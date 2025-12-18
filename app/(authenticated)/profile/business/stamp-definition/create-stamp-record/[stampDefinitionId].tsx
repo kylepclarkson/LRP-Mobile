@@ -12,6 +12,7 @@ import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
 import { JSX, useEffect, useRef, useState } from "react";
 import { Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 
 export default function CreateStampRecordScreen() {
@@ -21,10 +22,11 @@ export default function CreateStampRecordScreen() {
   } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [stampRecordClaimed, setStampRecordClaimed] = useState(false);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [stampRecordId, setStampRecordId] = useState<string | null>(null);
-  
+
   const bottomSheetRef = useRef<TrueSheet>(null);
 
   // fetch access token
@@ -49,17 +51,33 @@ export default function CreateStampRecordScreen() {
   // listen to websocket messages
   useEffect(() => {
     console.debug("last message changed:", lastMessage)
-    if (lastMessage?.type === "stamp_record_claim") {
+    if (lastMessage?.type === "stamp_record_claimed") {
       console.debug("received claim event:", lastMessage);
+      console.debug("toast:", lastMessage.claimed_by.first_name)
+      bottomSheetRef.current?.dismiss();
+      setStampRecordClaimed(true);
+      Toast.show({
+        type: "success",
+        text1: "Stamp recorded claimed!",
+        text2: `Thank you ${lastMessage.claimed_by.first_name} 🎉`
+      })
     }
   }, [lastMessage]);
 
   const handleExpire = async (stampRecordId: string, trigger: "button" | "timeout"): Promise<void> => {
+    // TODO need to rethink the lifecycle of this component: 
+    // - After one stamp is created, how can we gracefully create another stamp
+    // - How do we clear the form fields if successful, but persist them if not.
+    // if (stampRecordClaimed) return;
     try {
       const new_state_value = trigger === "button" ? StampRecordState.REVOKED : StampRecordState.EXPIRED
       const res = await stampRecordUpdateState(stampRecordId, { state: new_state_value });
       console.debug(`Updated stampRecordId=${stampRecordId}'s state to ${res.state}`);
       bottomSheetRef.current?.dismiss();
+      Toast.show({
+        type: "error",
+        text1: "Stamp record cancelled"
+      })
     } catch (error) {
       // TODO render error. 
       console.warn("Error updating stamp record state", error);

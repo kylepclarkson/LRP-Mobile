@@ -6,6 +6,8 @@ import React from "react";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+
 import "./global.css";
 
 function InitialLayout() {
@@ -37,6 +39,7 @@ export default function RootLayout() {
               <BusinessProvider>
                 <RewardsProvider>
                   <InitialLayout />
+                  <Toast />
                 </RewardsProvider>
               </BusinessProvider>
             </AuthProvider>
