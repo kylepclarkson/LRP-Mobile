@@ -140,5 +140,9 @@ export const paths = {
   stamps: {
     stampRecordUpdateState: (id: string) => `stamps/stamp-records/${id}/`,
     stampRecordClaim: (id: string) => `stamps/stamp-records/${id}/claim/`
+  },
+  ws: {
+    // TODO Define this better. The getBaseUrl function likely needs to only return the uri and not the protocol. 
+    claimStampRecord: (id: string) => `wss://antone-logomachic-marcia.ngrok-free.dev/ws/stamps/${id}/claim`
   }
 }

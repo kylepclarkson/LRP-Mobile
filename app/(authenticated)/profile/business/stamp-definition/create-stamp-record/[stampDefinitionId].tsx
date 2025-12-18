@@ -4,7 +4,10 @@ import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
 import { StampRecordDisplay } from "@/components/Stamps/StampRecordDisplay";
+import { useWebSocket } from "@/lib/hooks/useWebSocket";
+import { paths } from "@/lib/services/api/api";
 import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/rewards.service";
+import { getAccessToken } from "@/lib/services/token.service";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -18,9 +21,16 @@ export default function CreateStampRecordScreen() {
   } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [stampRecordId, setStampRecordId] = useState<string | null>(null);
+  
   const bottomSheetRef = useRef<TrueSheet>(null);
+
+  // fetch access token
+  useEffect(() => {
+    getAccessToken().then(setAccessToken)
+  }, [])
 
   useEffect(() => {
     const openBottomSheet = async () => {
@@ -32,6 +42,18 @@ export default function CreateStampRecordScreen() {
     openBottomSheet();
   }, [sheetContent]);
 
+  const wsUrl = stampRecordId ? paths.ws.claimStampRecord(stampRecordId) : undefined;
+  console.debug("wsUrl=", wsUrl)
+  const { lastMessage, connected } = useWebSocket(wsUrl, accessToken ?? undefined);
+
+  // listen to websocket messages
+  useEffect(() => {
+    console.debug("last message changed:", lastMessage)
+    if (lastMessage?.type === "stamp_record_claim") {
+      console.debug("received claim event:", lastMessage);
+    }
+  }, [lastMessage]);
+
   const handleExpire = async (stampRecordId: string, trigger: "button" | "timeout"): Promise<void> => {
     try {
       const new_state_value = trigger === "button" ? StampRecordState.REVOKED : StampRecordState.EXPIRED
@@ -41,6 +63,8 @@ export default function CreateStampRecordScreen() {
     } catch (error) {
       // TODO render error. 
       console.warn("Error updating stamp record state", error);
+    } finally {
+      setStampRecordId(null);
     }
   };
 
@@ -64,9 +88,7 @@ export default function CreateStampRecordScreen() {
     setIsSubmitting(true);
     try {
       const response = await createStampRecordRequest();
-      console.debug("response:", response);
-      console.debug("createdAt type", typeof response.createdAt);
-      console.debug("claimBy type", typeof response.claimBy);
+      setStampRecordId(response.stampRecordId);
       setSheetContent(
         <StampRecordDisplay
           stampRecordId={response.stampRecordId}
