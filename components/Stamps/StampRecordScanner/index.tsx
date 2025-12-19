@@ -1,8 +1,12 @@
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { BarcodeScanningResult, CameraView, useCameraPermissions } from "expo-camera";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
-export default function StampRecordScanner({ onScanned }: { onScanned: (id: string) => void }) {
+export default function StampRecordScanner({
+  onScanned
+}: {
+  onScanned: (scanningResult: BarcodeScanningResult) => void
+}) {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
 
@@ -21,25 +25,30 @@ export default function StampRecordScanner({ onScanned }: { onScanned: (id: stri
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <CameraView
-        style={StyleSheet.absoluteFillObject}
-        onBarcodeScanned={({ data }) => {
+        // className="absolute inset-0"   // Tailwind: fills the parent
+        style={{ width: "100%", height: "100%" }}
+        onBarcodeScanned={(scanningResult: BarcodeScanningResult) => {
           if (!scanned) {
             setScanned(true);
-            onScanned(data); // 👈 data is the string you encoded in your QR
-            console.debug("scanned data:", data);
+            onScanned(scanningResult);
           }
         }}
         barcodeScannerSettings={{
-          barcodeTypes: ["qr"], // only scan QR codes
+          barcodeTypes: ["qr"],
         }}
       />
+
       {scanned && (
-        <Text style={{ position: "absolute", bottom: 20, alignSelf: "center" }}>
-          QR scanned!
-        </Text>
+        <View className="absolute bottom-10 w-full items-center">
+          <Text className="text-white text-lg mb-2">QR scanned!</Text>
+          <Pressable onPress={() => setScanned(false)}>
+            <Text className="text-white underline">Scan again</Text>
+          </Pressable>
+        </View>
       )}
     </View>
+
   );
 }

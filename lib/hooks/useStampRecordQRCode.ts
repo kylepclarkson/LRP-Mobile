@@ -1,8 +1,6 @@
 import { StampRecordQRCode } from "@/types/stamps";
 
 
-
-
 export function useStampRecordQRCode() {
 
   const encode = (stampRecordId: string): string => {
@@ -10,11 +8,12 @@ export function useStampRecordQRCode() {
     return JSON.stringify(payload);
   }
 
-  const decode = (qrString: string): StampRecordQRCode => {
+  const decode = (jsonDataString: string): StampRecordQRCode => {
     try {
-      const parsed = JSON.parse(qrString);
-      if (!parsed?.stampRecord) {
-        throw new Error("Invalid QR payload");
+      console.debug("jsonData", )
+      const parsed = JSON.parse(jsonDataString) as StampRecordQRCode;
+      if (!parsed?.stampRecordId) {
+        throw new Error("Invalid QR payload",);
       }
       return parsed as StampRecordQRCode;
     } catch (err) {

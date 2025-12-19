@@ -4,7 +4,7 @@ import { CurrencyInput } from '@/components/forms/CurrencyInput';
 import { FormSelectable } from '@/components/forms/FormSelectable';
 import { renderSelectableList } from '@/components/forms/RenderSelectableList';
 import { useBusinessContext } from '@/lib/context/business';
-import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from '@/lib/services/rewards.service';
+import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from '@/lib/services/stamps.service';
 import { getStampDefinitionLabel, StampDefinition } from '@/types/types';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useIsFocused } from '@react-navigation/native';

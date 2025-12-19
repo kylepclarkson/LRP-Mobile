@@ -6,7 +6,7 @@ import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordF
 import { StampRecordDisplay } from "@/components/Stamps/StampRecordDisplay";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { paths } from "@/lib/services/api/api";
-import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/rewards.service";
+import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/stamps.service";
 import { getAccessToken } from "@/lib/services/token.service";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useLocalSearchParams } from "expo-router";
@@ -110,6 +110,7 @@ export default function CreateStampRecordScreen() {
       setSheetContent(
         <StampRecordDisplay
           stampRecordId={response.stampRecordId}
+
           createdAt={response.createdAt}
           claimBy={response.claimBy}
           onExpire={handleExpire}

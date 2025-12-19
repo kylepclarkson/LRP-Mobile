@@ -1,4 +1,4 @@
-import { StampRecordState, stampRecordUpdateState } from "@/lib/services/rewards.service";
+import { useStampRecordQRCode } from "@/lib/hooks/useStampRecordQRCode";
 import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
@@ -23,6 +23,7 @@ export function StampRecordDisplay({
 
   // True if the stamp record's state has been set to expired.
   const [hasExpired, setHasExpired] = useState(false);
+  const { encode } = useStampRecordQRCode();
 
   useEffect(() => {
     setHasExpired(false);
@@ -42,7 +43,7 @@ export function StampRecordDisplay({
       </View>
       <View className="grow items-center justify-center">
         <QRCode
-          value={String(stampRecordId)}
+          value={encode(stampRecordId)}
           size={200}
           color="black"
         />

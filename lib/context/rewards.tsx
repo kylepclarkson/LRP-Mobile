@@ -1,7 +1,7 @@
 import { StampCard } from '@/types/types';
 import camelcaseKeys from 'camelcase-keys';
 import React, { createContext, useContext, useEffect } from 'react';
-import { getStampCards } from '../services/rewards.service';
+import { getStampCards } from '../services/stamps.service';
 import { useAuthContext } from './auth';
 
 

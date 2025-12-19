@@ -101,3 +101,22 @@ export async function assignStampCard(stampCardId: string, req: AssignStampCardR
     throw error;
   }
 }
+
+export type ClaimStampRecordResponse = CreateStampCardResponse;
+
+/**
+ * Assigns the stamp record to the customer who is claiming it. 
+ * @param stampRecordId 
+ * @returns 
+ */
+export async function claimStampRecord(stampRecordId: string): Promise<ClaimStampRecordResponse> {
+  console.debug(`Claiming stamp record id=${stampRecordId}`);
+  const path = paths.stamps.stampRecordClaim(stampRecordId);
+  try {
+    const data = await patch<ClaimStampRecordResponse>(path, {});
+    return data
+  } catch (error) {
+    console.error("Error claiming stamp card", error);
+    throw error;
+  }
+}
