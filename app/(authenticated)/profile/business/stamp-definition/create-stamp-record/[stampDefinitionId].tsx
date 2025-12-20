@@ -3,7 +3,7 @@
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
-import { StampRecordDisplay } from "@/components/Stamps/StampRecordDisplay";
+import { StampRecordDisplay } from "@/components/stamps/StampRecordDisplay";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { paths } from "@/lib/services/api/api";
 import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/stamps.service";

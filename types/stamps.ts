@@ -7,6 +7,14 @@ export type StampRecordQRCode = {
   stampRecordId: string
 }
 
+export enum StampCardState {
+  IN_PROGRESS = 'in-progress',
+  COMPLETED = 'completed',
+  REDEEMED = 'redeemed',
+  EXPIRED = 'expired',
+  ABANDONED = 'abandoned',
+}
+
 export type StampCard = {
   id: string
   state: string

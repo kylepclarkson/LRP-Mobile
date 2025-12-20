@@ -1,5 +1,5 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import StampRecordScanner from "@/components/Stamps/StampRecordScanner";
+import StampRecordScanner from "@/components/stamps/StampRecordScanner";
 import { useStampRecordQRCode } from "@/lib/hooks/useStampRecordQRCode";
 import { claimStampRecord } from "@/lib/services/stamps.service";
 import { StampRecordQRCode } from "@/types/stamps";
@@ -19,14 +19,14 @@ export default function AddRewardScreen() {
     }
     try {
       setIsLoading(true);
-      const stampRecordQRCode:StampRecordQRCode = decode(scanningResult.data);
+      const stampRecordQRCode: StampRecordQRCode = decode(scanningResult.data);
       const res = await callClaimStampRecord(stampRecordQRCode.stampRecordId);
       console.debug("stamp card claimed:", res.stampRecordId, res.state);
       Toast.show({
         type: "success",
         text1: "Stamp successfully claimed!"
       })
-      
+
     } catch (error) {
       Toast.show({
         type: "error",

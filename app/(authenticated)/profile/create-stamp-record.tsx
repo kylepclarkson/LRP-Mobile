@@ -1,8 +1,8 @@
-import StampRecordScanDurationBar from '@/components/Stamps/StampRecordScanDurationBar';
 import CommonBottomSheet from '@/components/common/CommonBottomSheet';
 import { CurrencyInput } from '@/components/forms/CurrencyInput';
 import { FormSelectable } from '@/components/forms/FormSelectable';
 import { renderSelectableList } from '@/components/forms/RenderSelectableList';
+import StampRecordScanDurationBar from '@/components/stamps/StampRecordScanDurationBar';
 import { useBusinessContext } from '@/lib/context/business';
 import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from '@/lib/services/stamps.service';
 import { getStampDefinitionLabel, StampDefinition } from '@/types/types';
