@@ -1,6 +1,5 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { StampProgress } from "@/components/stamps/StampProgress";
-import { useAuthContext } from "@/lib/context/auth";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
 import { useEffect } from "react";
@@ -8,7 +7,6 @@ import { FlatList, Pressable, Text, View } from "react-native";
 
 export default function RewardTrackerScreen() {
 
-  const { user } = useAuthContext();
   const { stampCards, fetchStampCards, loadingStampCards } = useStampsContext();
   // filter for cards that are in progress
   const inProgressStampCards = stampCards.filter(card => card.state === StampCardState.IN_PROGRESS)

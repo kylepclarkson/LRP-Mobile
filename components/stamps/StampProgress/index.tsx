@@ -1,21 +1,25 @@
+import { StampCard } from "@/types/stamps";
+import Entypo from '@expo/vector-icons/Entypo';
+import { MotiView } from "moti";
 import React from "react";
 import { View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Entypo from '@expo/vector-icons/Entypo';
-import { StampCard } from "@/types/stamps";
 
 type StampProgressProps = {
   card: StampCard;
-  size?: number; 
+  size?: number;
   filledColor?: string;
   emptyColor?: string;
+  animate?: boolean;
+  animationDelay?: number;
 };
 
 export function StampProgress({
   card,
   size = 22,
-  filledColor = "#16a34a", // green-600
-  emptyColor = "#9ca3af",  // gray-400
+  filledColor = "#16a34a",
+  emptyColor = "#9ca3af",
+  animate = false,
+  animationDelay = 60
 }: StampProgressProps) {
   const earned = card.stampRecords.length;
   const required = card.stampDefinition.stampsRequired;
@@ -23,27 +27,48 @@ export function StampProgress({
   const filledIcons = Array.from({ length: earned });
   const emptyIcons = Array.from({ length: required - earned });
 
+  const renderIcon = (
+    key: string,
+    iconName: React.ComponentProps<typeof Entypo>["name"],
+    color: string,
+    index: number
+  ) => {
+    if (!animate) {
+      return (
+        <Entypo
+          key={key}
+          name={iconName}
+          size={size}
+          color={color}
+          style={{ marginRight: 6, marginBottom: 6 }}
+        />
+      )
+    }
+    return <MotiView
+      key={key}
+      from={{ opacity: 0, translateY: 6 }}
+      animate={{ opacity: 1, translateY: 6 }}
+      transition={{
+        type: "timing",
+        duration: 250,
+        delay: index * animationDelay
+      }}
+      style={{ marginRight: 6, marginBottom: 6 }}
+    >
+      <Entypo name={iconName} size={size} color={color} />
+    </MotiView >
+      ;
+  }
+
   return (
     <View className="flex-row flex-wrap mt-3">
-      {filledIcons.map((_, idx) => (
-        <Entypo
-          key={`filled-${idx}`}
-          name="star"
-          size={size}
-          color={filledColor}
-          style={{ marginRight: 6, marginBottom: 6 }}
-        />
-      ))}
+      {filledIcons.map((_, idx) =>
+        renderIcon(`filled-${idx}`, "star", filledColor, idx)
+      )}
 
-      {emptyIcons.map((_, idx) => (
-        <Entypo
-          key={`empty-${idx}`}
-          name="star-outlined"
-          size={size}
-          color={emptyColor}
-          style={{ marginRight: 6, marginBottom: 6 }}
-        />
-      ))}
+      {emptyIcons.map((_, idx) =>
+        renderIcon(`empty-${idx}`, "star-outlined", emptyColor, idx)
+      )}
     </View>
   );
 }
