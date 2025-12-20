@@ -2,9 +2,9 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { StampProgress } from "@/components/stamps/StampProgress";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
+import { router } from "expo-router";
 import { useEffect } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
-import { router } from "expo-router";
 
 export default function RewardTrackerScreen() {
 
@@ -16,16 +16,8 @@ export default function RewardTrackerScreen() {
     fetchStampCards();
   }, [])
 
-  // router.push({
-  //   pathname: `/profile/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
-  //   params: {
-  //     stampDefinitionId: item.id, 
-  //     title: item.title 
-  //   }
-  // })
-
   const renderStampCardItem = ({ item }: { item: StampCard }) => (
-    <Pressable 
+    <Pressable
       className="mb-4 active:opacity-80"
       onPress={() => router.push({
         pathname: `/tracker/stamps/details/[stampCardId]`,
@@ -46,24 +38,28 @@ export default function RewardTrackerScreen() {
   );
 
   return (
-    <View className="flex-1 bg-gray-50 p-4">
-      <Text className="text-2xl font-bold mb-4 text-gray-900">
-        Rewards Tracker
-      </Text>
-      <View>
-        {loadingStampCards ? (
-          <LoadingOverlay />
-        ) : (
-          <FlatList
-            data={inProgressStampCards}
-            keyExtractor={(item) => item.id}
-            renderItem={renderStampCardItem}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
-      </View>
+    <View className="pt-6 flex-1 bg-white">
+      <FlatList
+        data={inProgressStampCards}
+        keyExtractor={(item) => item.id}
+        renderItem={renderStampCardItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 40 }}
+        ListHeaderComponent={
+          <View className="bg-white border-b border-gray-200">
+            <View className="flex-row items-center justify-between px-4 py-4">
+              <Text className="text-xl font-semibold text-center flex-1">
+                Rewards Tracker
+              </Text>
+            </View>
+          </View>
+        }
+        stickyHeaderIndices={[0]}
+
+        ListEmptyComponent={loadingStampCards ? <LoadingOverlay /> : null}
+      />
     </View>
 
-  )
+  );
 }
 
