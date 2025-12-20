@@ -1,4 +1,5 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { StampProgress } from "@/components/stamps/StampProgress";
 import { useAuthContext } from "@/lib/context/auth";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
@@ -23,7 +24,7 @@ export default function RewardTrackerScreen() {
         <Text className="text-md font-light text-gray-900">
           {item.stampDefinition?.title}
         </Text>
-
+        <StampProgress card={item} />
       </View>
     </Pressable>
 
