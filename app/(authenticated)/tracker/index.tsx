@@ -4,6 +4,7 @@ import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
 import { useEffect } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
+import { router } from "expo-router";
 
 export default function RewardTrackerScreen() {
 
@@ -15,8 +16,24 @@ export default function RewardTrackerScreen() {
     fetchStampCards();
   }, [])
 
+  // router.push({
+  //   pathname: `/profile/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
+  //   params: {
+  //     stampDefinitionId: item.id, 
+  //     title: item.title 
+  //   }
+  // })
+
   const renderStampCardItem = ({ item }: { item: StampCard }) => (
-    <Pressable className="mb-4 active:opacity-80">
+    <Pressable 
+      className="mb-4 active:opacity-80"
+      onPress={() => router.push({
+        pathname: `/tracker/stamps/details/[stampCardId]`,
+        params: {
+          stampCardId: item.id
+        }
+      })}
+    >
       <View className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
         <Text className="text-2xl font-bold">{item.stampDefinition.business.name}</Text>
         <Text className="text-md font-light text-gray-900">
