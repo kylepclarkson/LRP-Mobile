@@ -1,4 +1,4 @@
-import { StampCard } from '@/types/types';
+import { StampCard } from "@/types/stamps";
 import camelcaseKeys from 'camelcase-keys';
 import React, { createContext, useContext, useEffect } from 'react';
 import { getStampCards } from '../services/stamps.service';
@@ -22,7 +22,6 @@ export function RewardsProvider(
 
   useEffect(() => {
     if (!user) {
-      console.debug("RewardsProvider: no user - skipping StampCard fetch");
       return;
     }
     // fetchStampCards();

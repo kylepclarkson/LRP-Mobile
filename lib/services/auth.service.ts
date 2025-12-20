@@ -1,5 +1,5 @@
 import { get, paths, post } from '@/lib/services/api/api';
-import { AuthenticatedUser, StampCard } from '@/types/types';
+import { AuthenticatedUser } from '@/types/types';
 import { deleteTokens, getRefreshToken, saveTokens } from './token.service';
 
 

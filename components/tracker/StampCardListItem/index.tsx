@@ -1,4 +1,4 @@
-import { StampCard } from '@/types/types';
+import { StampCard } from "@/types/stamps";
 import { Pressable, Text, View } from 'react-native';
 import { ProgressBar, computeStampCardProgress } from '../ProgressBar';
 

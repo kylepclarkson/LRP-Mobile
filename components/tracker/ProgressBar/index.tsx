@@ -1,5 +1,5 @@
 // ProgressBar.tsx
-import { StampCard } from '@/types/types';
+import { StampCard } from "@/types/stamps";
 import React, { useEffect, useRef } from 'react';
 import {
   AccessibilityProps,

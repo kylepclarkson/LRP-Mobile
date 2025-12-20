@@ -138,6 +138,7 @@ export const paths = {
     stampRecords: `stamps/stamp-records/`
   },
   stamps: {
+    stampCardList: (queryString?: string) => queryString ? `stamps/stamp-cards?${queryString}` : `stamps/stamp-cards/`,
     stampRecordUpdateState: (id: string) => `stamps/stamp-records/${id}/`,
     stampRecordClaim: (id: string) => `stamps/stamp-records/${id}/claim/`
   },

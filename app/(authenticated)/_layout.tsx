@@ -31,7 +31,7 @@ export default function AuthenticatedLayout() {
         }}>
       </Tabs.Screen>
       <Tabs.Screen
-        name="reward-tracker"
+        name="tracker"
         options={{
           title: "Tracker",
           tabBarIcon: ({ color, size }) => (

@@ -42,14 +42,6 @@ export type StampDefinition = {
 }
 export const getStampDefinitionLabel = (def: StampDefinition) => def.title;
 
-export type StampCard = {
-  id: string,
-  state: string,
-  createdAt: Date,
-  stampDefinition: StampDefinition,
-  stampRecords: StampRecord[],
-}
-
 export type StampRecord = {
   id: string,
 }

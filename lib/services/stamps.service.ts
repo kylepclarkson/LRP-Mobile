@@ -1,14 +1,15 @@
 import { get, patch, paths, post } from '@/lib/services/api/api';
-import { StampCard, Transaction } from '@/types/types';
+import { StampCard } from "@/types/stamps";
+import { Transaction } from '@/types/types';
 
 
 /** Retrieve the current user's StampCards. By default, it retrieves all 
  * StampCards that are not in a terminal state.
  */
-export async function getStampCards(): Promise<StampCard[]> {
-  console.debug("Fetching StampCards");
+export async function getStampCards(queryString?: string): Promise<StampCard[]> {
+  console.debug(`Fetching StampCards w/ queryString=${queryString}`);
   try {
-    const data = await get<StampCard[]>(paths.rewards.stampTokens);
+    const data = await get<StampCard[]>(paths.stamps.stampCardList(queryString));
     return data;
   } catch (error) {
     console.error("Error fetching StampCards:", error);
