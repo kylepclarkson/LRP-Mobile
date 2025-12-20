@@ -1,4 +1,4 @@
-import { StampDefinition } from "@/types/types";
+import { StampDefinition } from "@/types/stamps";
 import { Pressable, Text, View } from "react-native";
 
 type Props = {

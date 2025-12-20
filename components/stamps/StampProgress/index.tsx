@@ -19,24 +19,28 @@ export function StampProgress({
   filledColor = "#16a34a",
   emptyColor = "#9ca3af",
   animate = false,
-  animationDelay = 60
+  animationDelay = 60,
 }: StampProgressProps) {
-  const earned = card.stampRecords.length;
-  const required = card.stampDefinition.stampsRequired;
+  const earned = card.stampRecords.length
+  const required = card.stampDefinition.stampsRequired
 
-  const filledIcons = Array.from({ length: earned });
-  const emptyIcons = Array.from({ length: required - earned });
+  // ✅ Build a single ordered list
+  const items = Array.from({ length: required }).map((_, i) => ({
+    key: `stamp-${i}`,
+    filled: i < earned,
+  }))
 
   const renderIcon = (
-    key: string,
-    iconName: React.ComponentProps<typeof Entypo>["name"],
-    color: string,
+    item: { key: string; filled: boolean },
     index: number
   ) => {
+    const iconName = item.filled ? "star" : "star-outlined"
+    const color = item.filled ? filledColor : emptyColor
+
     if (!animate) {
       return (
         <Entypo
-          key={key}
+          key={item.key}
           name={iconName}
           size={size}
           color={color}
@@ -44,31 +48,27 @@ export function StampProgress({
         />
       )
     }
-    return <MotiView
-      key={key}
-      from={{ opacity: 0, translateY: 6 }}
-      animate={{ opacity: 1, translateY: 6 }}
-      transition={{
-        type: "timing",
-        duration: 250,
-        delay: index * animationDelay
-      }}
-      style={{ marginRight: 6, marginBottom: 6 }}
-    >
-      <Entypo name={iconName} size={size} color={color} />
-    </MotiView >
-      ;
+
+    return (
+      <MotiView
+        key={item.key}
+        from={{ opacity: 0, translateY: 6 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{
+          type: "timing",
+          duration: 250,
+          delay: index * animationDelay,
+        }}
+        style={{ marginRight: 6, marginBottom: 6 }}
+      >
+        <Entypo name={iconName} size={size} color={color} />
+      </MotiView>
+    )
   }
 
   return (
     <View className="flex-row flex-wrap mt-3">
-      {filledIcons.map((_, idx) =>
-        renderIcon(`filled-${idx}`, "star", filledColor, idx)
-      )}
-
-      {emptyIcons.map((_, idx) =>
-        renderIcon(`empty-${idx}`, "star-outlined", emptyColor, idx)
-      )}
+      {items.map((item, idx) => renderIcon(item, idx))}
     </View>
-  );
+  )
 }

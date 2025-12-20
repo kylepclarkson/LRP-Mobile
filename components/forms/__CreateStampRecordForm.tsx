@@ -1,7 +1,8 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from "@/lib/services/stamps.service";
-import { EmployeeGroup, getEmployeeGroupLabel, getStampDefinitionLabel, StampDefinition } from "@/types/types";
+import { StampDefinition } from "@/types/stamps";
+import { EmployeeGroup, getEmployeeGroupLabel, getStampDefinitionLabel } from "@/types/types";
 import React, { JSX, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import QRCode from 'react-native-qrcode-svg';

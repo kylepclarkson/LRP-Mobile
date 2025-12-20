@@ -1,5 +1,5 @@
 import { get, paths } from '@/lib/services/api/api';
-import { StampDefinition } from '@/types/types';
+import { StampDefinition } from "@/types/stamps";
 
 export async function getStampDefinitions(businessId: string, params?: string): Promise<StampDefinition[]> {
   console.debug(`Fetching StampDefinitions for business_id=${businessId}, params=${params}`);

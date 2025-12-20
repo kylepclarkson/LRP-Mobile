@@ -1,4 +1,4 @@
-import { StampDefinition, StampRecord } from "./types"
+import { Business } from "./types"
 
 
 export type StampRecordQRCode = {
@@ -26,3 +26,20 @@ export type StampCard = {
 export type StampReward = {
   id: string,
 }
+
+export type StampDefinition = {
+  id: string
+  title: string
+  description: string
+  progressionText: string
+  redemptionText: string
+  stampsRequired: number
+  createdAt: Date
+  state: StampDefinitionState
+  business: Business
+}
+export type StampRecord = {
+  id: string
+}
+export type StampDefinitionState = 'active' | 'sunset' | 'inactive'
+

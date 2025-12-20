@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/lib/context/auth";
-import { EmployeeGroup, StampDefinition } from "@/types/types";
+import { StampDefinition } from "@/types/stamps";
+import { EmployeeGroup } from "@/types/types";
 import camelcaseKeys from "camelcase-keys";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getStampDefinitions } from "../services/api/businesses.service";

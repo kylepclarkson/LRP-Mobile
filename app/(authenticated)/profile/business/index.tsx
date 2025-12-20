@@ -3,7 +3,7 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import { useBusinessContext } from "@/lib/context/business";
 import { getStampDefinitions } from "@/lib/services/api/businesses.service";
-import { StampDefinition } from "@/types/types";
+import { StampDefinition } from "@/types/stamps";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router } from "expo-router";
 import React, { JSX, useRef } from "react";
@@ -69,8 +69,8 @@ export default function BusinessRewardsScreen() {
                 router.push({
                   pathname: `/profile/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
                   params: {
-                    stampDefinitionId: item.id, 
-                    title: item.title 
+                    stampDefinitionId: item.id,
+                    title: item.title
                   }
                 })
                 await bottomSheetRef.current?.dismiss();
