@@ -1,4 +1,4 @@
-import { UserRewardQRCode } from "@/components/common/UserRewardQRCode";
+import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
@@ -38,7 +38,7 @@ export default function ProfileScreen() {
   const UserRewardQRSheetContent = () => (
     <View className="w-full mt-10">
       <View className="p-4">
-        <UserRewardQRCode payload={{ userId: user!.id }} size={200} />
+        <UserRewardBadge payload={{ userId: user!.id }} size={200} />
       </View>
       <Text className="text-center mt-1 font-light text-gray-500">
         Show to Aandeg merchant to claim your reward!
@@ -62,7 +62,7 @@ export default function ProfileScreen() {
           onPress={openUserRewardQRSheet}
           className="w-full">
           <View className="w-full items-center">
-            <UserRewardQRCode payload={{ userId: "Hello" }} />
+            <UserRewardBadge payload={{ userId: "Hello" }} />
             <Text className="text-center text-gray-500 mt-1 font-light italic">
               Press to expand
             </Text>

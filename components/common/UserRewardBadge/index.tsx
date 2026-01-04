@@ -1,17 +1,17 @@
-import { UserRewardQRPayload } from "@/types/user";
+import { UserRewardBadgePayload } from "@/types/user";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 
-type UserRewardQRCodeProps = {
-  payload: UserRewardQRPayload;
+type UserRewardBadgeProps = {
+  payload: UserRewardBadgePayload;
   size?: number;
 }
 
-export function UserRewardQRCode({
+export function UserRewardBadge({
   payload,
   size
-}: UserRewardQRCodeProps) {
+}: UserRewardBadgeProps) {
 
   return (
     <View className="w-full items-center justify-center">
