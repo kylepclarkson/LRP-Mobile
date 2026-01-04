@@ -37,12 +37,13 @@ export default function ProfileScreen() {
   }, [sheetContent]);
 
   const UserRewardQRSheetContent = () => (
-    <View className="w-full mt-10">
+    <View className="w-full mt-10 mx-auto px-2">
+      <Text className="text-center my-4 text-2xl font-bold">Your Aandeg reward badge</Text>
       <View className="p-4">
         <UserRewardBadge payload={{ userId: user!.id }} size={200} />
       </View>
-      <Text className="text-center mt-1 font-light text-gray-500">
-        Show to Aandeg merchant to claim your reward!
+      <Text className="text-center mt-1 text-lg">
+        Present your badge to an Aandeg client to collect your rewards 🚀
       </Text>
     </View>
   );
