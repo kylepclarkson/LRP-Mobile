@@ -1,7 +1,7 @@
 import { UserRewardQRCode } from "@/components/common/UserRewardQRCode";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
-import BottomSheet from "@gorhom/bottom-sheet";
+import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { JSX, useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -11,74 +11,67 @@ export default function ProfileScreen() {
   const { user } = useAuthContext();
   const { activeEmployeeGroup, setActiveEmployeeGroup } = useBusinessContext();
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<TrueSheet>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
 
-  const openBottomSheet = (renderContent: JSX.Element) => {
-    setSheetContent(renderContent);
-  };
-  const closeBottomSheet = () => {
-    bottomSheetRef.current?.close();
-  }
   const isFocused = useIsFocused();
+
   // Close sheet when navigating away. 
   useEffect(() => {
-    if (!isFocused) {
-      closeBottomSheet();
+    const closeBottomSheet = async () => {
+      if (!isFocused) {
+        await bottomSheetRef.current?.dismiss();
+      }
     }
+    closeBottomSheet();
   }, [isFocused]);
 
   useEffect(() => {
-    if (sheetContent) {
-      bottomSheetRef.current?.expand();
+    const openBottomSheet = async () => {
+      if (sheetContent) {
+        await bottomSheetRef.current?.present();
+      }
     }
+    openBottomSheet();
   }, [sheetContent]);
 
+  const UserRewardQRSheetContent = () => (
+    <View className="w-full mt-10">
+      <View className="p-4">
+        <UserRewardQRCode payload={{ userId: user!.id }} size={200} />
+      </View>
+      <Text className="text-center mt-1 font-light text-gray-500">
+        Show to Aandeg merchant to claim your reward!
+      </Text>
+    </View>
+  );
+
+  const openUserRewardQRSheet = () => {
+    console.debug("Opening user reward QR sheet");
+    setSheetContent(<UserRewardQRSheetContent />);
+  }
+
   return (
-    <View className="flex-row">
-      <View className="flex-1">
-        <Text className="text-3xl font-bold">Hello {user?.firstName}</Text>
+    <View className="flex-row p-2">
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-xl font-bold">Hello {user?.firstName}</Text>
+        <Text className="text-md">Welcome back</Text>
       </View>
       <View className="flex-1">
-        <Pressable className="w-full ">
-          <View className="w-full items-center p-4s">
+        <Pressable
+          onPress={openUserRewardQRSheet}
+          className="w-full">
+          <View className="w-full items-center">
             <UserRewardQRCode payload={{ userId: "Hello" }} />
-            <Text className="text-center text-gray-500 mt-1 font-light">
-              Show to merchant
+            <Text className="text-center text-gray-500 mt-1 font-light italic">
+              Press to expand
             </Text>
           </View>
         </Pressable>
       </View>
+      <TrueSheet ref={bottomSheetRef} detents={[0.8]}>
+        {sheetContent}
+      </TrueSheet>
     </View>
-    // <SharedPageWrapper>
-    //   <View className="flex-row justify-between items-center mb-6">
-    //     <View className="pl-2">
-    //       <Text className="text-3xl font-bold">Aandeg</Text>
-    //       <Text className="text-sm italic text-gray-500">Customer Loyalty App</Text>
-    //     </View>
-    //     {/* TODO Nativewind 5 does not seem to work for images */}
-    //     <Image
-    //       source={require('../../../assets/images/aandeg-icon.png')}
-    //       alt="Aandeg logo"
-    //       style={{ width: 60, height: 60, borderRadius: 50, backgroundColor: 'black' }}
-    //     />
-    //   </View>
-    //   <Text className="text-2xl font-bold text-gray-900 mb-4">
-    //     Hello {user!.firstName}
-    //   </Text>
-
-    //   {/* Employee Group Selector */}
-    //   {(isEmployee(user) && activeEmployeeGroup) && (
-    //     <EmployeeComponent
-    //       openBottomSheet={openBottomSheet}
-    //       closeBottomSheet={closeBottomSheet}
-    //     />
-    //   )}
-    //   <CommonBottomSheet
-    //     ref={bottomSheetRef}
-    //     content={sheetContent}
-    //     onClose={closeBottomSheet}
-    //   />
-    // </SharedPageWrapper>
   )
 }
