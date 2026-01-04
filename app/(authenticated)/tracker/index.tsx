@@ -1,4 +1,5 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { PageHeader } from "@/components/common/PageHeader";
 import { StampProgress } from "@/components/stamps/StampProgress";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
@@ -45,15 +46,7 @@ export default function RewardTrackerScreen() {
         renderItem={renderStampCardItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 40 }}
-        ListHeaderComponent={
-          <View className="bg-white border-b border-gray-200">
-            <View className="flex-row items-center justify-between px-4 py-4">
-              <Text className="text-xl font-semibold text-center flex-1">
-                Rewards Tracker
-              </Text>
-            </View>
-          </View>
-        }
+        ListHeaderComponent={<PageHeader headerText="Your Stamp Cards" />}
         stickyHeaderIndices={[0]}
 
         ListEmptyComponent={loadingStampCards ? <LoadingOverlay /> : null}

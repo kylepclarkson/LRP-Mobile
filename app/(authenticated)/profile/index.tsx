@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/common/PageHeader";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
@@ -52,26 +53,29 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View className="flex-row p-2">
-      <View className="flex-1 items-center justify-center">
-        <Text className="text-xl font-bold">Hello {user?.firstName}</Text>
-        <Text className="text-md">Welcome back</Text>
+    <>
+      <PageHeader headerText="Profile" />
+      <View className="flex-row px-2 mt-4">
+        <View className="flex-1 items-center justify-center">
+          <Text className="text-xl font-bold">Hello {user?.firstName}</Text>
+          <Text className="text-md">Welcome back</Text>
+        </View>
+        <View className="flex-1">
+          <Pressable
+            onPress={openUserRewardQRSheet}
+            className="w-full">
+            <View className="w-full items-center">
+              <UserRewardBadge payload={{ userId: "Hello" }} />
+              <Text className="text-center text-gray-500 mt-1 font-light italic">
+                Press to expand
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+        <TrueSheet ref={bottomSheetRef} detents={[0.8]}>
+          {sheetContent}
+        </TrueSheet>
       </View>
-      <View className="flex-1">
-        <Pressable
-          onPress={openUserRewardQRSheet}
-          className="w-full">
-          <View className="w-full items-center">
-            <UserRewardBadge payload={{ userId: "Hello" }} />
-            <Text className="text-center text-gray-500 mt-1 font-light italic">
-              Press to expand
-            </Text>
-          </View>
-        </Pressable>
-      </View>
-      <TrueSheet ref={bottomSheetRef} detents={[0.8]}>
-        {sheetContent}
-      </TrueSheet>
-    </View>
+    </>
   )
 }

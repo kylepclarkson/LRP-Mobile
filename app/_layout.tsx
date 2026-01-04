@@ -14,8 +14,6 @@ function InitialLayout() {
 
   const { user, isLoadingUser } = useAuthContext();
 
-  console.debug("InitialLayout render - user:", user, "isLoadingUser:", isLoadingUser);
-
   return (
     <Stack>
       <Stack.Protected guard={!user}>
