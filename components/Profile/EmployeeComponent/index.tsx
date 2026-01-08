@@ -1,31 +1,21 @@
+import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import ElevatedCard from "@/components/common/ElevatedCard";
-import { FormSelectable } from "@/components/forms/FormSelectable";
-import { renderSelectableList } from "@/components/forms/RenderSelectableList";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
-import { EmployeeGroup, getEmployeeGroupLabel } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { JSX } from "react";
 import { Pressable, Text, View } from "react-native";
 
-type EmployeeComponentProps = {
-  openBottomSheet: (renderContent: JSX.Element) => void,
-  closeBottomSheet: () => void,
-}
 
 /**
  * 
  */
-export function EmployeeComponent({
-  openBottomSheet,
-  closeBottomSheet
-}: EmployeeComponentProps) {
+export function EmployeeComponent() {
 
   const { user } = useAuthContext();
-  const { activeEmployeeGroup, setActiveEmployeeGroup } = useBusinessContext();
+  const { businessMode, setBusinessMode } = useBusinessContext();
 
-  if (!user || !activeEmployeeGroup) {
+  if (!user) {
     return null;
   }
 
@@ -40,24 +30,7 @@ export function EmployeeComponent({
           <Ionicons name="chevron-forward" size={24} color="black" />
         </Pressable>
       </View>
-      <FormSelectable<EmployeeGroup>
-        label="Select business to create a stamp record for"
-        placeholder="Select an employee group"
-        activeItem={activeEmployeeGroup}
-        getLabel={getEmployeeGroupLabel}
-        onOpen={() =>
-          openBottomSheet(
-            renderSelectableList(
-              user!.employeeGroups,
-              getEmployeeGroupLabel,
-              (item) => {
-                setActiveEmployeeGroup(item);
-                closeBottomSheet();
-              }
-            )
-          )
-        }
-      />
+      <BusinessModeToggle businessMode={businessMode} setBusinessMode={setBusinessMode} />
     </ElevatedCard>
   );
 }

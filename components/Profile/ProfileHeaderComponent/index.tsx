@@ -1,0 +1,8 @@
+
+
+export function ProfileHeaderComponent() {
+
+  return (
+    <></>
+  )
+}

@@ -1,3 +1,4 @@
+import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import { PageHeader } from "@/components/common/PageHeader";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { useAuthContext } from "@/lib/context/auth";
@@ -10,7 +11,7 @@ import { Pressable, Text, View } from "react-native";
 export default function ProfileScreen() {
 
   const { user } = useAuthContext();
-  const { activeEmployeeGroup, setActiveEmployeeGroup } = useBusinessContext();
+  const { businessMode, setBusinessMode } = useBusinessContext();
 
   const bottomSheetRef = useRef<TrueSheet>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
@@ -72,6 +73,9 @@ export default function ProfileScreen() {
               </Text>
             </View>
           </Pressable>
+        </View>
+        <View>
+          <BusinessModeToggle businessMode={businessMode} setBusinessMode={setBusinessMode} />
         </View>
         <TrueSheet ref={bottomSheetRef} detents={[0.8]}>
           {sheetContent}
