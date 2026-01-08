@@ -1,5 +1,5 @@
 
 
 export const BusinessUrls = {
-  userRoles: () => `/businesses/roles`,
+  userRoles: () => `businesses/roles`,
 }

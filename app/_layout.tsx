@@ -14,12 +14,13 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 function InitialLayout() {
 
   const { user, isLoadingUser } = useAuthContext();
+  const { businessMode, activeBusinessRole } = useBusinessContext();
 
   if (isLoadingUser) {
     return <LoadingOverlay />
   }
 
-  console.debug("Rendering InitialLayout with user:", user?.employeeGroups.length);
+  console.debug("Rendering InitialLayout. User is set?", !!user);
   return (
     <Stack>
       {/* Unauthenticated  */}
@@ -29,13 +30,13 @@ function InitialLayout() {
       </Stack.Protected>
 
       {/* Authenticated customer user */}
-      <Stack.Protected guard={!!user && user.employeeGroups.length === 0}>
+      <Stack.Protected guard={!!user && !businessMode}>
         <Stack.Screen name="(customer)" options={{ headerShown: false }} />
       </Stack.Protected>
     
       {/* Authenticated employee user */}
       {/* TODO implement stack. */}
-      <Stack.Protected guard={!!user && user.employeeGroups.length > 0}>
+      <Stack.Protected guard={!!user && businessMode}>
         <Stack.Screen name="(employee)" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
