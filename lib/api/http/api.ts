@@ -1,5 +1,5 @@
 import { objectToCamel, objectToSnake } from "ts-case-convert";
-import { deleteTokens, getAccessToken } from "../token.service";
+import { deleteTokens, getAccessToken } from "../../services/token.service";
 import { refreshManager } from "./refreshManager";
 
 export class ApiError extends Error {
@@ -131,6 +131,7 @@ export const paths = {
       }
       return path;
     },
+    businessRoles: `businesses/roles/`
   },
   rewards: {
     stampTokens: `stamps/stamp-cards/`,

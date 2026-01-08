@@ -1,5 +1,5 @@
 import { AuthProvider, useAuthContext } from "@/lib/context/auth";
-import { BusinessProvider } from "@/lib/context/business";
+import { BusinessProvider, useBusinessContext } from "@/lib/context/business";
 import { RewardsProvider } from "@/lib/context/rewards";
 import { Stack } from "expo-router";
 import React from "react";
@@ -9,19 +9,34 @@ import Toast from "react-native-toast-message";
 
 import { StampsProvider } from "@/lib/context/stamps";
 import "./global.css";
+import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 
 function InitialLayout() {
 
   const { user, isLoadingUser } = useAuthContext();
 
+  if (isLoadingUser) {
+    return <LoadingOverlay />
+  }
+
+  console.debug("Rendering InitialLayout with user:", user?.employeeGroups.length);
   return (
     <Stack>
+      {/* Unauthenticated  */}
       <Stack.Protected guard={!user}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
       </Stack.Protected>
-      <Stack.Protected guard={!!user}>
-        <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+
+      {/* Authenticated customer user */}
+      <Stack.Protected guard={!!user && user.employeeGroups.length === 0}>
+        <Stack.Screen name="(customer)" options={{ headerShown: false }} />
+      </Stack.Protected>
+    
+      {/* Authenticated employee user */}
+      {/* TODO implement stack. */}
+      <Stack.Protected guard={!!user && user.employeeGroups.length > 0}>
+        <Stack.Screen name="(employee)" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );

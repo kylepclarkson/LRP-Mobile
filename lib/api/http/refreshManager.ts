@@ -1,6 +1,6 @@
 
-import { TokenPair } from '../auth.service';
-import { deleteTokens, getRefreshToken, saveTokens } from '../token.service';
+import { TokenPair } from '../../services/auth.service';
+import { deleteTokens, getRefreshToken, saveTokens } from '../../services/token.service';
 import { ApiError, paths, post, request } from './api';
 
 /**

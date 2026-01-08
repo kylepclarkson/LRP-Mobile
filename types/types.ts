@@ -1,3 +1,4 @@
+import { Business } from "./businesses"
 import { StampDefinition } from "./stamps"
 
 /**
@@ -11,6 +12,10 @@ export type AuthenticatedUser = {
   employeeGroups: EmployeeGroup[]
 }
 
+export type UserAppMode = {
+
+}
+
 export type UserDetails = {
   user: AuthenticatedUser,
   employeeGroups: EmployeeGroup[]
@@ -22,11 +27,6 @@ export type EmployeeGroup = {
   business: Business
 }
 export const getEmployeeGroupLabel = (group: EmployeeGroup) => `${group.business.name} - ${group.name}`;
-
-export type Business = {
-  id: string,
-  name: string,
-}
 
 export const getStampDefinitionLabel = (def: StampDefinition) => def.title;
 

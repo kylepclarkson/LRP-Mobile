@@ -1,4 +1,4 @@
-import { get, patch, paths, post } from '@/lib/services/api/api';
+import { get, patch, paths, post } from '@/lib/api/http/api';
 import { StampCard } from "@/types/stamps";
 import { Transaction } from '@/types/types';
 

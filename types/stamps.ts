@@ -1,4 +1,4 @@
-import { Business } from "./types"
+import { Business } from "./businesses"
 
 
 export type StampRecordQRCode = {

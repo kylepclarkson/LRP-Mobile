@@ -1,8 +1,8 @@
 import ElevatedCard from "@/components/common/ElevatedCard";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
+import { getStampDefinitions } from "@/lib/api/businesses/businesses.service";
 import { useBusinessContext } from "@/lib/context/business";
-import { getStampDefinitions } from "@/lib/services/api/businesses.service";
 import { StampDefinition } from "@/types/stamps";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router } from "expo-router";

@@ -3,7 +3,7 @@ import { StampDefinition } from "@/types/stamps";
 import { EmployeeGroup } from "@/types/types";
 import camelcaseKeys from "camelcase-keys";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getStampDefinitions } from "../services/api/businesses.service";
+import { getStampDefinitions } from "../api/businesses/businesses.service";
 
 type BusinessContextType = {
   activeEmployeeGroup: EmployeeGroup | null;
