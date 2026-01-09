@@ -7,9 +7,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
+import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { StampsProvider } from "@/lib/context/stamps";
 import "./global.css";
-import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 
 function InitialLayout() {
 
@@ -33,11 +33,11 @@ function InitialLayout() {
       <Stack.Protected guard={!!user && !businessMode}>
         <Stack.Screen name="(customer)" options={{ headerShown: false }} />
       </Stack.Protected>
-    
+
       {/* Authenticated employee user */}
       {/* TODO implement stack. */}
       <Stack.Protected guard={!!user && businessMode}>
-        <Stack.Screen name="(employee)" options={{ headerShown: false }} />
+        <Stack.Screen name="(business-user)" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
