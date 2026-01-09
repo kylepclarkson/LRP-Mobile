@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/common/PageHeader";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
-import { CustomerProfileHeader } from "@/components/Profile/CustomerProfileHeader";
+import { CustomerProfileHeader } from "@/components/Profile/CustomerUserProfileHeader";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessContext } from "@/lib/context/business";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";

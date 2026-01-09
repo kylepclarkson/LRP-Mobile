@@ -1,5 +1,5 @@
 // app/index.tsx
-import { EmployeeComponent } from '@/components/Profile/EmployeeComponent';
+import { EmployeeComponent } from '@/components/Profile/BusinessUserProfileHeader';
 
 export default function BusinessUserProfileScreen() {
   return (
