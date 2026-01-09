@@ -14,9 +14,9 @@ type BusinessMembershipContextType = {
   businessMode: boolean;
   setBusinessMode: React.Dispatch<React.SetStateAction<boolean>>;
 
-  stampDefinitions: StampDefinition[] | null;
-  activeStampDefinition: StampDefinition | null;
-  setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
+  // stampDefinitions: StampDefinition[] | null;
+  // activeStampDefinition: StampDefinition | null;
+  // setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
 }
 
 const BusinessMembershipContext = createContext<BusinessMembershipContextType | undefined>(undefined);
@@ -25,9 +25,7 @@ const BusinessMembershipContext = createContext<BusinessMembershipContextType | 
  * The BusinessMembershipProvider provides business-related context, including the user's active business role (if any), 
  * the active business' rewards, stamps, information, etc. 
  */
-export function BusinessMembershipProvider(
-  { children }: { children: React.ReactNode }
-) {
+export function BusinessMembershipProvider({ children }: { children: React.ReactNode }) {
 
   const { user } = useAuthContext();
 
@@ -81,10 +79,7 @@ export function BusinessMembershipProvider(
       activeBusinessRole,
       setActiveBusinessRole,
       businessMode,
-      setBusinessMode,
-      stampDefinitions,
-      activeStampDefinition,
-      setActiveStampDefinition
+      setBusinessMode
     }}>
       {children}
     </BusinessMembershipContext.Provider>
@@ -94,7 +89,7 @@ export function BusinessMembershipProvider(
 export function useBusinessMembershipContext() {
   const context = useContext(BusinessMembershipContext);
   if (context === undefined) {
-    throw new Error("useBusinessMembershipContext must be used within a BusinessContextProvider");
+    throw new Error("useBusinessMembershipContext must be used within a BusinessMembershipProvider");
   }
   return context;
 }

@@ -8,6 +8,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { BusinessResourceProvider } from "@/lib/context/business-resource";
 import { StampsProvider } from "@/lib/context/stamps";
 import "./global.css";
 
@@ -50,12 +51,14 @@ export default function RootLayout() {
         <GestureHandlerRootView>
           <AuthProvider>
             <BusinessMembershipProvider>
-              <RewardsProvider>
-                <StampsProvider>
-                  <InitialLayout />
-                  <Toast />
-                </StampsProvider>
-              </RewardsProvider>
+              <BusinessResourceProvider>
+                <RewardsProvider>
+                  <StampsProvider>
+                    <InitialLayout />
+                    <Toast />
+                  </StampsProvider>
+                </RewardsProvider>
+              </BusinessResourceProvider>
             </BusinessMembershipProvider>
           </AuthProvider>
         </GestureHandlerRootView>
