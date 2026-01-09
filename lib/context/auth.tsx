@@ -30,7 +30,6 @@ export function AuthProvider(
   { children }: { children: React.ReactNode }
 ) {
 
-  // const { setActiveEmployeeGroup } = useBusinessContext();
   // An authenticated user, null if not authenticated
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   // If fetching user is in a loading state
@@ -56,9 +55,6 @@ export function AuthProvider(
         const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
         console.debug("setting user:", camelAuthenticatedUser);
         setUser(camelAuthenticatedUser);
-        // if (camelAuthenticatedUser.employeeGroups.length > 0) {
-        //   setActiveEmployeeGroup(camelAuthenticatedUser.employeeGroups[0]);
-        // }
       } catch (error) {
         setUser(null);
         return;

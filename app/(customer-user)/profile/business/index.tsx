@@ -1,8 +1,6 @@
 import ElevatedCard from "@/components/common/ElevatedCard";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
-import { getStampDefinitions } from "@/lib/api/businesses/businesses.service";
-import { useBusinessContext } from "@/lib/context/business";
 import { StampDefinition } from "@/types/stamps";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router } from "expo-router";
@@ -12,37 +10,12 @@ import { FlatList, Pressable, Text, View } from "react-native";
 
 export default function BusinessRewardsScreen() {
 
-  const { activeEmployeeGroup } = useBusinessContext();
-
   const bottomSheetRef = useRef<TrueSheet>(null);
 
   const [sheetContent, setSheetContent] = React.useState<JSX.Element | null>(null);
   const [stampDefinitions, setStampDefinitions] = React.useState<StampDefinition[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  if (!activeEmployeeGroup) {
-    return null;
-  }
-
-  // Fetch stamp definitions
-  React.useEffect(() => {
-    const fetchStampDefinitions = async () => {
-      console.debug(`Fetching stamp definitions for business rewards screen. business_id=${activeEmployeeGroup.business.id}`);
-      setLoading(true);
-      let response: StampDefinition[] = [];
-      try {
-        response = await getStampDefinitions(activeEmployeeGroup.business.id);
-      } catch (error) {
-        console.error("Error fetching stamp definitions for business rewards screen", error);
-      } finally {
-        setLoading(false);
-      }
-      // console.debug("Response", response)
-      setStampDefinitions(response);
-    };
-
-    fetchStampDefinitions();
-  }, [activeEmployeeGroup]);
 
   React.useEffect(() => {
     const openBottomSheet = async () => {
@@ -107,8 +80,7 @@ export default function BusinessRewardsScreen() {
     <>
       <SharedPageWrapper>
         <ElevatedCard>
-          <Text className="text-3xl font-bold mb-2">{activeEmployeeGroup.business.name} Rewards</Text>
-          <Text className="text-md italic text-gray-500">Role: {activeEmployeeGroup.name}</Text>
+          <></>
         </ElevatedCard>
 
         <ElevatedCard className="mt-4">

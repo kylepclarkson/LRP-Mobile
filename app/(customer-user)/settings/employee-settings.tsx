@@ -1,15 +1,12 @@
 import { useAuthContext } from '@/lib/context/auth';
-import { useBusinessContext } from '@/lib/context/business';
 import { EmployeeGroup } from '@/types/types';
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
-// Props: pass in userName, employeeGroups, activeEmployeeGroup, and onSelect
 export default function EmployeeGroupsMenu() {
 
   const { user } = useAuthContext();
-  const { activeEmployeeGroup, setActiveEmployeeGroup } = useBusinessContext();
 
   // Synthetic "Customer role"
   const syntheticCustomerGroup: EmployeeGroup = {
@@ -21,12 +18,9 @@ export default function EmployeeGroupsMenu() {
   const listGroups: EmployeeGroup[] = [syntheticCustomerGroup, ...(user?.employeeGroups ?? [])];
 
   const renderItem = ({ item }: { item: EmployeeGroup }) => {
-    const isActive =
-      (activeEmployeeGroup === null && item.id === "customer") ||
-      activeEmployeeGroup?.id === item.id;
+    const isActive = false;
     return (
       <Pressable
-        onPress={() => setActiveEmployeeGroup(item.id === "customer" ? null : item)}
         className={`px-4 py-3 border-b border-gray-200 active:bg-gray-50 ${isActive ? "bg-blue-100" : "bg-white"
           }`}
       >

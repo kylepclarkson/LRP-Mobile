@@ -22,8 +22,6 @@ type CurrencyData = {
 export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
   const { user } = useAuthContext();
   const {
-    activeEmployeeGroup,
-    setActiveEmployeeGroup,
     activeStampDefinition,
     setActiveStampDefinition,
     stampDefinitions
@@ -90,7 +88,7 @@ export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
         </>
       ) : (
         <>
-          {activeEmployeeGroup && <FormSelectable<EmployeeGroup>
+          {/* {activeEmployeeGroup && <FormSelectable<EmployeeGroup>
             label="Active employee group"
             placeholder="Select an employee group"
             activeItem={activeEmployeeGroup}
@@ -101,7 +99,7 @@ export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
               onClose();
             }}
             onOpen={onOpen}
-          />}
+          />} */}
           {(activeStampDefinition && stampDefinitions) && <FormSelectable<StampDefinition>
             label="Active stamp record"
             placeholder="Select a stamp definition"

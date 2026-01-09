@@ -101,7 +101,6 @@ export default function CreateStampRecord() {
 
 
   const {
-    activeEmployeeGroup,
     activeStampDefinition,
     setActiveStampDefinition,
     stampDefinitions
@@ -116,7 +115,7 @@ export default function CreateStampRecord() {
             Create Stamp Record
           </Text>
           <Text className="text-sm text-gray-600 mt-1">
-            Business: {activeEmployeeGroup?.business.name}
+            Business: 
           </Text>
         </View>
 
