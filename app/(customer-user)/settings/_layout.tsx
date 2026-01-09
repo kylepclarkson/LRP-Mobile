@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/common/PageHeader";
 import { Stack } from "expo-router";
 
 export default function SettingsLayout() {
@@ -5,7 +6,9 @@ export default function SettingsLayout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ headerShown: false }}
+        options={{
+          header: () => <PageHeader headerText="Settings" />
+        }}
       />
       <Stack.Screen
         name="employee-settings"

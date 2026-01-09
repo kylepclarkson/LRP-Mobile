@@ -12,7 +12,6 @@ export default function ProfileScreen() {
   
   return (
     <>
-      <PageHeader headerText="Profile" />
       <CustomerProfileHeader />
     </>
   )

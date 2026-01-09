@@ -1,5 +1,4 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import { PageHeader } from "@/components/common/PageHeader";
 import { StampProgress } from "@/components/stamps/StampProgress";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
@@ -46,7 +45,7 @@ export default function RewardTrackerScreen() {
         renderItem={renderStampCardItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 40 }}
-        ListHeaderComponent={<PageHeader headerText="Your Stamp Cards" />}
+        // ListHeaderComponent={<PageHeader headerText="Your Stamp Cards" />}
         stickyHeaderIndices={[0]}
 
         ListEmptyComponent={loadingStampCards ? <LoadingOverlay /> : null}
