@@ -31,7 +31,7 @@ function InitialLayout() {
 
       {/* Authenticated customer user */}
       <Stack.Protected guard={!!user && !businessMode}>
-        <Stack.Screen name="(customer)" options={{ headerShown: false }} />
+        <Stack.Screen name="(customer-user)" options={{ headerShown: false }} />
       </Stack.Protected>
 
       {/* Authenticated employee user */}
