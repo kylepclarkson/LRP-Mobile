@@ -1,11 +1,10 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { BusinessRole } from "@/types/businesses";
 import { StampDefinition } from "@/types/stamps";
-import { EmployeeGroup } from "@/types/types";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessService } from "../api/businesses/businesses.service";
 
-type BusinessContextType = {
+type BusinessMembershipContextType = {
 
   userBusinessRoles: BusinessRole[];
   loadingUserBusinessRoles: boolean;
@@ -20,13 +19,13 @@ type BusinessContextType = {
   setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
 }
 
-const BusinessContext = createContext<BusinessContextType | undefined>(undefined);
+const BusinessMembershipContext = createContext<BusinessMembershipContextType | undefined>(undefined);
 
 /**
- * The BusinessProvider provides business-related context, including the user's active business role (if any), 
+ * The BusinessMembershipProvider provides business-related context, including the user's active business role (if any), 
  * the active business' rewards, stamps, information, etc. 
  */
-export function BusinessProvider(
+export function BusinessMembershipProvider(
   { children }: { children: React.ReactNode }
 ) {
 
@@ -76,7 +75,7 @@ export function BusinessProvider(
 
 
   return (
-    <BusinessContext.Provider value={{
+    <BusinessMembershipContext.Provider value={{
       userBusinessRoles,
       loadingUserBusinessRoles,
       activeBusinessRole,
@@ -88,14 +87,14 @@ export function BusinessProvider(
       setActiveStampDefinition
     }}>
       {children}
-    </BusinessContext.Provider>
+    </BusinessMembershipContext.Provider>
   )
 }
 
-export function useBusinessContext() {
-  const context = useContext(BusinessContext);
+export function useBusinessMembershipContext() {
+  const context = useContext(BusinessMembershipContext);
   if (context === undefined) {
-    throw new Error("useBusinessContext must be used within a BusinessContextProvider");
+    throw new Error("useBusinessMembershipContext must be used within a BusinessContextProvider");
   }
   return context;
 }

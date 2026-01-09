@@ -1,5 +1,5 @@
 import { AuthProvider, useAuthContext } from "@/lib/context/auth";
-import { BusinessProvider, useBusinessContext } from "@/lib/context/business";
+import { BusinessMembershipProvider, useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { RewardsProvider } from "@/lib/context/rewards";
 import { Stack } from "expo-router";
 import React from "react";
@@ -14,7 +14,7 @@ import "./global.css";
 function InitialLayout() {
 
   const { user, isLoadingUser } = useAuthContext();
-  const { businessMode, activeBusinessRole } = useBusinessContext();
+  const { businessMode, activeBusinessRole } = useBusinessMembershipContext();
 
   if (isLoadingUser) {
     return <LoadingOverlay />
@@ -49,14 +49,14 @@ export default function RootLayout() {
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView>
           <AuthProvider>
-            <BusinessProvider>
+            <BusinessMembershipProvider>
               <RewardsProvider>
                 <StampsProvider>
                   <InitialLayout />
                   <Toast />
                 </StampsProvider>
               </RewardsProvider>
-            </BusinessProvider>
+            </BusinessMembershipProvider>
           </AuthProvider>
         </GestureHandlerRootView>
       </SafeAreaView>

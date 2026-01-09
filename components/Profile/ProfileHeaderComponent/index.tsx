@@ -1,7 +1,7 @@
 import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { useAuthContext } from "@/lib/context/auth";
-import { useBusinessContext } from "@/lib/context/business";
+import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ export function ProfileHeaderComponent() {
 
 
   const { user } = useAuthContext();
-  const { businessMode, setBusinessMode } = useBusinessContext();
+  const { businessMode, setBusinessMode } = useBusinessMembershipContext();
 
   const bottomSheetRef = useRef<TrueSheet>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);

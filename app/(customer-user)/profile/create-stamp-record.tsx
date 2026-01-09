@@ -3,7 +3,7 @@ import { CurrencyInput } from '@/components/forms/CurrencyInput';
 import { FormSelectable } from '@/components/forms/FormSelectable';
 import { renderSelectableList } from '@/components/forms/RenderSelectableList';
 import StampRecordScanDurationBar from '@/components/stamps/StampRecordScanDurationBar';
-import { useBusinessContext } from '@/lib/context/business';
+import { useBusinessMembershipContext } from '@/lib/context/business-membership';
 import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from '@/lib/services/stamps.service';
 import { StampDefinition } from "@/types/stamps";
 import { getStampDefinitionLabel } from '@/types/types';
@@ -104,7 +104,7 @@ export default function CreateStampRecord() {
     activeStampDefinition,
     setActiveStampDefinition,
     stampDefinitions
-  } = useBusinessContext();
+  } = useBusinessMembershipContext();
 
   return (
     <View className="flex-1 bg-gray-50">
@@ -115,7 +115,7 @@ export default function CreateStampRecord() {
             Create Stamp Record
           </Text>
           <Text className="text-sm text-gray-600 mt-1">
-            Business: 
+            Business:
           </Text>
         </View>
 

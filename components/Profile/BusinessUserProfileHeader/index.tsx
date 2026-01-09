@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/lib/context/auth";
-import { useBusinessContext } from "@/lib/context/business";
+import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import { Text, View } from "react-native";
@@ -13,7 +13,7 @@ const StyledPicker = styled(Picker<string>);
 export function EmployeeComponent() {
 
   const { user } = useAuthContext();
-  const { activeBusinessRole, setActiveBusinessRole, userBusinessRoles } = useBusinessContext();
+  const { activeBusinessRole, setActiveBusinessRole, userBusinessRoles } = useBusinessMembershipContext();
 
   if (!user || !activeBusinessRole) {
     return null;

@@ -1,8 +1,8 @@
 import { useAuthContext } from "@/lib/context/auth";
-import { useBusinessContext } from "@/lib/context/business";
+import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { CreateStampCardRequest, CreateStampCardResponse, createStampRecord } from "@/lib/services/stamps.service";
 import { StampDefinition } from "@/types/stamps";
-import { EmployeeGroup, getEmployeeGroupLabel, getStampDefinitionLabel } from "@/types/types";
+import { getStampDefinitionLabel } from "@/types/types";
 import React, { JSX, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import QRCode from 'react-native-qrcode-svg';
@@ -25,7 +25,7 @@ export default function CreateStampRecordForm({ onOpen, onClose }: Props) {
     activeStampDefinition,
     setActiveStampDefinition,
     stampDefinitions
-  } = useBusinessContext();
+  } = useBusinessMembershipContext();
 
   const DEFAULT_CURRENCY_DATA: CurrencyData = { value: 0, isValid: true };
 

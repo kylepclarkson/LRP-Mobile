@@ -1,11 +1,11 @@
 import { PageHeader } from "@/components/common/PageHeader";
-import { useBusinessContext } from "@/lib/context/business";
+import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { Stack } from "expo-router";
 
 
 export default function BusinessLayout() {
 
-  const { activeBusinessRole } = useBusinessContext();
+  const { activeBusinessRole } = useBusinessMembershipContext();
 
   if (!activeBusinessRole) {
     return null;
