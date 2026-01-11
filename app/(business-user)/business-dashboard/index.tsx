@@ -37,7 +37,6 @@ export function StampDefinitionList({ data, onPress }: StampDefinitionListProps)
   )
 }
 
-
 export default function BusinessScreen() {
 
   const { activeBusinessRole } = useBusinessMembershipContext();

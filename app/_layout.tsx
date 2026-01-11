@@ -3,6 +3,7 @@ import { BusinessMembershipProvider, useBusinessMembershipContext } from "@/lib/
 import { RewardsProvider } from "@/lib/context/rewards";
 import { Stack } from "expo-router";
 import React from "react";
+import "react-native-gesture-handler";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
@@ -48,7 +49,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-        <GestureHandlerRootView>
+        <GestureHandlerRootView style={{ flex: 1 }}>
           <AuthProvider>
             <BusinessMembershipProvider>
               <BusinessResourceProvider>
