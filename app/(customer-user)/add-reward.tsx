@@ -1,5 +1,5 @@
+import StampRecordScanner from "@/components/businesses/stamps/StampRecordScanner";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import StampRecordScanner from "@/components/stamps/StampRecordScanner";
 import { useStampRecordQRCode } from "@/lib/hooks/useStampRecordQRCode";
 import { claimStampRecord } from "@/lib/services/stamps.service";
 import { StampRecordQRCode } from "@/types/stamps";

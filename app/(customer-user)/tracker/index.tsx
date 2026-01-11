@@ -1,5 +1,5 @@
+import { StampProgress } from "@/components/businesses/stamps/StampProgress";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import { StampProgress } from "@/components/stamps/StampProgress";
 import { useStampsContext } from "@/lib/context/stamps";
 import { StampCard, StampCardState } from "@/types/stamps";
 import { router } from "expo-router";

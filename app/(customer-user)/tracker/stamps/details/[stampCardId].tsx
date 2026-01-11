@@ -1,4 +1,4 @@
-import { StampProgress } from '@/components/stamps/StampProgress';
+import { StampProgress } from '@/components/businesses/stamps/StampProgress';
 import { useStampsContext } from '@/lib/context/stamps';
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";

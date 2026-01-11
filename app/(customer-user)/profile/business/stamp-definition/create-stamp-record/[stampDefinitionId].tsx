@@ -1,9 +1,9 @@
 
 
+import { StampRecordDisplay } from "@/components/businesses/stamps/StampRecordDisplay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm";
 import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types";
-import { StampRecordDisplay } from "@/components/stamps/StampRecordDisplay";
 import { paths } from "@/lib/api/http/api";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { createStampRecord, StampRecordState, stampRecordUpdateState } from "@/lib/services/stamps.service";
