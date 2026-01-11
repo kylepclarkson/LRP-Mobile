@@ -2,6 +2,7 @@ import { useBusinessMembershipContext } from "@/lib/context/business-membership"
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { StampDefinition } from "@/types/stamps";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 type StampDefinitionListProps = {
@@ -68,6 +69,7 @@ export default function BusinessScreen() {
         {/* Stamps */}
         <Pressable
           className="px-4 py-4 active:opacity-70"
+          onPress={() => router.push("/(business-user)/stamp-definitions")}
         >
           <View className="flex-row items-center">
             <FontAwesome5 name="stamp" size={28} color="#374151" />

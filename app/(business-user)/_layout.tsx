@@ -32,6 +32,9 @@ export default function BusinessUserLayout() {
           )
         }}>
       </Tabs.Screen>
+
+      {/* Non Tab screens from child folders */}
+      <Tabs.Screen name="stamp-definitions" options={{ href: null }} />
     </Tabs>
   );
 }
