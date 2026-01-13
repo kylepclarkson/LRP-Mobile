@@ -1,3 +1,4 @@
+import { parseBadgePayload } from "@/lib/badges/customerBadge";
 import { BarcodeScanningResult, CameraView, useCameraPermissions } from "expo-camera";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -29,10 +30,18 @@ export default function StampRecordScanner({
       <CameraView
         // className="absolute inset-0"   // Tailwind: fills the parent
         style={{ width: "100%", height: "100%" }}
-        onBarcodeScanned={(scanningResult: BarcodeScanningResult) => {
-          if (!scanned) {
-            setScanned(true);
-            onScanned(scanningResult);
+        // onBarcodeScanned={(scanningResult: BarcodeScanningResult) => {
+        //   if (!scanned) {
+        //     setScanned(true);
+        //     onScanned(scanningResult);
+        //   }
+        // }}
+        onBarcodeScanned={(result) => {
+          const payload = parseBadgePayload(result.data);
+          if (!payload) {
+            // TODO add error validation
+            setScanned(false);
+            return
           }
         }}
         barcodeScannerSettings={{

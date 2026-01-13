@@ -57,8 +57,7 @@ function SheetContent({
 }
 
 export default function StampDefinitionsScreen() {
-  const { stampDefinitions, loadingStampDefinitions } =
-    useBusinessResourceContext()
+  const { stampDefinitions, loadingStampDefinitions } = useBusinessResourceContext()
 
   const sheetRef = useRef<TrueSheet>(null)
   const [stampDefinition, setStampDefinition] = useState<StampDefinition | null>(null)
@@ -81,7 +80,7 @@ export default function StampDefinitionsScreen() {
   const navigateToCreateStampRecordScreen = async (def: StampDefinition) => {
     setStampDefinition(null)
     router.push({
-      pathname: "/(business-user)/stamp-records/create",
+      pathname: "/(business-user)/stamp-records/create/transaction-details",
       params: { stampDefinitionId: def.id },
     })
     await sheetRef.current?.dismiss()
