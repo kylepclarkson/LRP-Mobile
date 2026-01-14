@@ -1,7 +1,8 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay"
 import CreateStampRecordForm from "@/components/forms/CreateStampRecordForm"
+import { CreateStampRecordFormData } from "@/components/forms/CreateStampRecordForm/types"
 import { useBusinessResourceContext } from "@/lib/context/business-resource"
-import { useLocalSearchParams } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { useMemo } from "react"
 import { Text, View } from "react-native"
 
@@ -31,6 +32,18 @@ export default function CreateStampRecordScreen() {
     )
   }
 
+  const handleFormSubmission = (values: CreateStampRecordFormData) => {
+    router.push({
+      pathname: "/(business-user)/stamp-records/create/scan-customer",
+      params: {
+        stampDefinitionId,
+        amount: values.currencyAmount,
+        currency: values.currencyCode,
+        notes: values.details ?? ""
+      }
+    })
+  }
+
   return (
     <View className="flex-1 px-6 py-4">
       <Text className="text-2xl font-bold text-gray-900">
@@ -39,7 +52,7 @@ export default function CreateStampRecordScreen() {
 
       <Text className="mt-2 text-gray-700">{stampDefinition.title}</Text>
       <CreateStampRecordForm
-        onSubmit={async () => console.debug("on submit called")}
+        onSubmit={handleFormSubmission}
       />
 
     </View>

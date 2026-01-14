@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import { View, Text } from "react-native"
 import { CameraView, useCameraPermissions } from "expo-camera"
+import { useEffect, useState } from "react"
+import { Text, View } from "react-native"
 
 type BadgeScannerProps = {
   onScanned: (customerId: string) => void
@@ -14,6 +14,7 @@ export function BadgeScanner({ onScanned }: BadgeScannerProps) {
 
   // Request permission on mount
   useEffect(() => {
+    console.debug("permission granted?", permission?.granted)
     if (!permission?.granted) {
       requestPermission()
     }
@@ -40,14 +41,13 @@ export function BadgeScanner({ onScanned }: BadgeScannerProps) {
 
   return (
     <CameraView
-      className="flex-1"
+      style={{ width: "100%", height: "100%" }}
       barcodeScannerSettings={{
         barcodeTypes: ["qr"],
       }}
       onBarcodeScanned={(result) => {
         if (scanned) return
         setScanned(true)
-
         const customerId = result.data
         onScanned(customerId)
       }}

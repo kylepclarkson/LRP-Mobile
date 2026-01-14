@@ -13,7 +13,7 @@ const StyledPicker = styled(Picker<CurrencyCode>);
 const inputClass = "border border-gray-300 rounded bg-white text-base";
 
 type CreateStampRecordFormProps = {
-  onSubmit: (data: CreateStampRecordFormData) => Promise<void>;
+  onSubmit: (data: CreateStampRecordFormData) => void;
   isSubmitting?: boolean;
 };
 

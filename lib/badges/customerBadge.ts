@@ -38,8 +38,7 @@ export function parseBadgePayload(raw: string): UserBadgePayload | null {
     const parsed = JSON.parse(raw);
     if (
       parsed._namespace === "aandeg" &&
-      parsed._type === "customer-badge" &&
-      typeof parsed.customerId === "string"
+      parsed._type === "customer-badge"
     ) {
       return parsed as UserBadgePayload;
     }
