@@ -7,12 +7,13 @@ export type RoleDefinition = {
 /** A business within Aandeg */
 export type Business = {
   id: string
-  name: string
+  name: string,
+  description: string
 }
 
 /** A specific role instance tied to a user and business */
 export type BusinessRole = {
-  id: string, 
+  id: string,
   role: RoleDefinition,
   business: Business
 }

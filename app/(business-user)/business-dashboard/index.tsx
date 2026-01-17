@@ -1,99 +1,108 @@
+import { Section, SectionCard, SectionRow } from "@/design-system";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
-import { StampDefinition } from "@/types/stamps";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
-type StampDefinitionListProps = {
-  data: StampDefinition[],
-  onPress: (item: StampDefinition) => void
-}
 
-export function StampDefinitionList({ data, onPress }: StampDefinitionListProps) {
+function SectionWithRows({
+  title,
+  subtitle,
+  rows,
+}: {
+  title: string
+  subtitle?: string
+  rows: {
+    icon: React.ReactNode
+    label: string
+    onPress?: () => void
+  }[]
+}) {
   return (
-    <View className="flex">
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingVertical: 8 }}
-        ItemSeparatorComponent={() => (
-          <View className="h-[1px] bg-gray-200 mx-4" />
-        )}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => onPress?.(item)}
-            className="px-4 py-3 active:opacity-70"
-          >
-            <View className="flex-row items-center justify-between">
-              <Text className="text-base font-medium text-gray-900">
-                {item.title}
-              </Text>
-            </View>
-          </Pressable>
-        )}
-      />
-    </View>
+    <Section title={title} subtitle={subtitle}>
+      <SectionCard>
+        {rows.map((row, index) => (
+          <SectionRow
+            key={row.label}
+            icon={row.icon}
+            label={row.label}
+            onPress={row.onPress}
+            showDivider={index < rows.length - 1}
+          />
+        ))}
+      </SectionCard>
+    </Section>
   )
 }
 
+
 export default function BusinessScreen() {
+  const { activeBusinessRole } = useBusinessMembershipContext()
+  const { stampDefinitions } = useBusinessResourceContext()
 
-  const { activeBusinessRole } = useBusinessMembershipContext();
-  const { stampDefinitions } = useBusinessResourceContext();
-
-  if (!stampDefinitions) {
-    return;
+  if (!stampDefinitions || !activeBusinessRole) {
+    return null
   }
+
+  const business = activeBusinessRole.business
 
   return (
     <View className="flex-1 px-4 py-6">
-      {/* Header */}
+
+      {/* Business details */}
       <View className="mb-6">
-        <Text className="text-2xl font-bold text-gray-900">
-          {activeBusinessRole?.business.name} Rewards
+        <Text className="text-3xl font-bold text-gray-900">
+          {business.name}
         </Text>
-
-        <Text className="text-lg text-gray-700 mt-1">
-          Available Rewards
-        </Text>
-
-        <Text className="text-sm text-gray-500 mt-0.5">
-          Select a reward type to issue
+        <Text className="text-md text-gray-900">
+          {business.description}
         </Text>
       </View>
 
-      {/* Reward Types List */}
-      <View className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        {/* Stamps */}
-        <Pressable
-          className="px-4 py-4 active:opacity-70"
-          onPress={() => router.push("/(business-user)/stamp-definitions")}
-        >
-          <View className="flex-row items-center">
-            <FontAwesome5 name="stamp" size={28} color="#374151" />
-            <Text className="ml-3 text-base font-medium text-gray-900">
-              Stamps
-            </Text>
-          </View>
-        </Pressable>
+      <SectionWithRows
+        title="Catalog"
+        subtitle="View catalog of items offered"
+        rows={[
+          {
+            icon: <FontAwesome5 name="book-open" size={28} color="#374151" />,
+            label: "Catalog",
+            onPress: () => router.push("/(business-user)/stamp-definitions"),
+          },
+        ]}
+      />
 
-        {/* Divider */}
-        <View className="h-[1px] bg-gray-200" />
+      <SectionWithRows
+        title="Offers"
+        subtitle="View available offers"
+        rows={[
+          {
+            icon: <FontAwesome5 name="tags" size={28} color="#374151" />,
+            label: "Offers",
+            onPress: () => router.push("/(business-user)/stamp-definitions"),
+          },
+        ]}
+      />
 
-        {/* Points */}
-        <Pressable
-          className="px-4 py-4 active:opacity-70"
-        >
-          <View className="flex-row items-center">
-            <FontAwesome5 name="coins" size={28} color="#374151" />
-            <Text className="ml-3 text-base font-medium text-gray-900">
-              Points
-            </Text>
-          </View>
-        </Pressable>
-      </View>
+      <SectionWithRows
+        title="Available Rewards"
+        subtitle="Select a reward type to issue"
+        rows={[
+          {
+            icon: <FontAwesome5 name="stamp" size={28} color="#374151" />,
+            label: "Stamps",
+            onPress: () => router.push("/(business-user)/stamp-definitions"),
+          },
+          {
+            icon: <FontAwesome5 name="coins" size={28} color="#374151" />,
+            label: "Points",
+            onPress: () => { },
+          },
+        ]}
+      />
+
     </View>
-
   )
-} 
+}
+
+
