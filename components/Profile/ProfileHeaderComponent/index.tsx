@@ -11,7 +11,7 @@ export function ProfileHeaderComponent() {
 
 
   const { user } = useAuthContext();
-  const { businessMode, userBusinessRoles, setBusinessMode } = useBusinessMembershipContext();
+  const { isBusinessUser, businessMode, setBusinessMode } = useBusinessMembershipContext();
 
   const bottomSheetRef = useRef<TrueSheet>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
@@ -57,7 +57,7 @@ export function ProfileHeaderComponent() {
 
   return (
     <View className="flex">
-      {userBusinessRoles.length !== 0 && (
+      {isBusinessUser && (
         <View className="flex-row justify-between items-center my-4 rounded-2xl p-4 bg-gray-200">
           <View className="flex">
             <Text className="text-md">Switch to business mode</Text>

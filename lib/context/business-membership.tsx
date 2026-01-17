@@ -10,10 +10,9 @@ type BusinessMembershipContextType = {
   loadingUserBusinessRoles: boolean;
   activeBusinessRole: BusinessRole | null;
   setActiveBusinessRole: React.Dispatch<React.SetStateAction<BusinessRole | null>>;
-
+  isBusinessUser: boolean;
   businessMode: boolean;
   setBusinessMode: React.Dispatch<React.SetStateAction<boolean>>;
-
   // stampDefinitions: StampDefinition[] | null;
   // activeStampDefinition: StampDefinition | null;
   // setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
@@ -74,7 +73,8 @@ export function BusinessMembershipProvider({ children }: { children: React.React
     refreshRoles();
   }, [refreshRoles]);
 
-
+  // Return true if user is a business user for conditionally rendering business UXs. 
+  const isBusinessUser = userBusinessRoles.length > 0;
 
   return (
     <BusinessMembershipContext.Provider value={{
@@ -82,6 +82,7 @@ export function BusinessMembershipProvider({ children }: { children: React.React
       loadingUserBusinessRoles,
       activeBusinessRole,
       setActiveBusinessRole,
+      isBusinessUser,
       businessMode,
       setBusinessMode
     }}>

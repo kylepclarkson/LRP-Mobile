@@ -1,4 +1,5 @@
-import { Switch } from "react-native";
+import { cn } from "@/lib/util";
+import { Pressable, Text } from "react-native";
 
 interface ModeToggleProps {
   businessMode: boolean;
@@ -10,11 +11,25 @@ interface ModeToggleProps {
  */
 export function BusinessModeToggle({ businessMode, setBusinessMode }: ModeToggleProps) {
   return (
-    <Switch
-      value={businessMode}
-      onValueChange={() => setBusinessMode(!businessMode)}
-      trackColor={{ false: "#d1d5db", true: "#2563eb" }}
-      thumbColor={businessMode ? "#ffffff" : "#f4f4f5"}
-    ></Switch>
+    <Pressable
+      onPress={() => setBusinessMode(!businessMode)}
+      className={cn(
+        "px-4 py-2 rounded-lg border",
+        businessMode
+          ? "bg-blue-600 border-blue-700"
+          : "bg-gray-200 border-gray-300"
+      )}
+    >
+      <Text
+        className={cn(
+          "font-medium",
+          businessMode ? "text-white" : "text-gray-700"
+        )}
+      >
+        {businessMode ? "Business Mode" : "Customer Mode"}
+      </Text>
+    </Pressable>
+
+
   )
 }
