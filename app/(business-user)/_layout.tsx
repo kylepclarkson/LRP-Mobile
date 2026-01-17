@@ -1,4 +1,4 @@
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import { Feather, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 export default function BusinessUserLayout() {
@@ -32,6 +32,20 @@ export default function BusinessUserLayout() {
           )
         }}>
       </Tabs.Screen>
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="menu"
+              size={size}
+              color={color}
+            />
+          )
+        }}
+      />
+
 
       {/* Non Tab screens from child folders */}
       <Tabs.Screen name="stamp-definitions" options={{ href: null }} />

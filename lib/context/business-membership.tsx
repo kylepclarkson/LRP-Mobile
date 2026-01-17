@@ -47,17 +47,21 @@ export function BusinessMembershipProvider({ children }: { children: React.React
   const refreshRoles = useCallback(async () => {
     console.debug("Refreshing user business roles");
     if (!user) {
+      console.debug("Clearing user business roles")
       setUserBusinessRoles([]);
       return;
     }
     try {
       setLoadingUserBusinessRoles(true);
       const data = await BusinessService.getUserRoles();
-      console.debug("Fetched user business roles", data);
+      console.debug("Fetched user business roles=", data);
       setUserBusinessRoles(data);
       // TODO: We assume the first role is the active one. This should be improved with user preferences.
       if (data.length > 0) {
+        console.debug("Setting active user business role to", data[0])
         setActiveBusinessRole(data[0]);
+      } else {
+        setUserBusinessRoles([])
       }
     } catch (err) {
       console.error("Error fetching user business roles", err);

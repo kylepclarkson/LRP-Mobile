@@ -11,7 +11,7 @@ export function ProfileHeaderComponent() {
 
 
   const { user } = useAuthContext();
-  const { businessMode, setBusinessMode } = useBusinessMembershipContext();
+  const { businessMode, userBusinessRoles, setBusinessMode } = useBusinessMembershipContext();
 
   const bottomSheetRef = useRef<TrueSheet>(null);
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
@@ -57,20 +57,22 @@ export function ProfileHeaderComponent() {
 
   return (
     <View className="flex">
-      <View className="flex-row justify-between items-center my-4 rounded-2xl p-4 bg-gray-200">
-        <View className="flex">
-          <Text className="text-md">Switch to business mode</Text>
-          <Text className="font-light italic">Issue and review rewards</Text>
+      {userBusinessRoles.length !== 0 && (
+        <View className="flex-row justify-between items-center my-4 rounded-2xl p-4 bg-gray-200">
+          <View className="flex">
+            <Text className="text-md">Switch to business mode</Text>
+            <Text className="font-light italic">Issue and review rewards</Text>
+          </View>
+          <BusinessModeToggle businessMode={businessMode} setBusinessMode={setBusinessMode} />
         </View>
-        <BusinessModeToggle businessMode={businessMode} setBusinessMode={setBusinessMode} />
-      </View>
-      <View className="flex-row">
-        <View className="flex-1 items-start">
+      )}
+      <View className="flex-row justify-around">
+        <View className="flex">
           <Text className="text-xl font-bold">Hello {user?.firstName}</Text>
           <Text className="text-md">Welcome back</Text>
         </View>
         {!businessMode && (
-          <View className="flex-1">
+          <View className="flex">
             <Pressable
               onPress={() => setSheetContent(<UserRewardQRSheetContent />)}
               className="w-full">
