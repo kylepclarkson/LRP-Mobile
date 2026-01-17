@@ -19,7 +19,7 @@ export function BusinessModeToggle({ businessMode, setBusinessMode }: ModeToggle
       )}
     >
       <Text className={businessMode ? "text-white" : "text-gray-800"}>
-        {businessMode ? "Business Mode" : "Personal Mode"}
+        {businessMode ? "Customer Mode" : "Business Mode"}
       </Text>
     </Pressable>
 
