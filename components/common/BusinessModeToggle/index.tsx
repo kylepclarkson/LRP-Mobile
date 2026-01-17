@@ -14,22 +14,14 @@ export function BusinessModeToggle({ businessMode, setBusinessMode }: ModeToggle
     <Pressable
       onPress={() => setBusinessMode(!businessMode)}
       className={cn(
-        "px-4 py-2 rounded-lg border",
-        businessMode
-          ? "bg-blue-600 border-blue-700"
-          : "bg-gray-200 border-gray-300"
+        "px-5 py-2 rounded-full",
+        businessMode ? "bg-blue-600" : "bg-gray-300"
       )}
     >
-      <Text
-        className={cn(
-          "font-medium",
-          businessMode ? "text-white" : "text-gray-700"
-        )}
-      >
-        {businessMode ? "Business Mode" : "Customer Mode"}
+      <Text className={businessMode ? "text-white" : "text-gray-800"}>
+        {businessMode ? "Business Mode" : "Personal Mode"}
       </Text>
     </Pressable>
-
 
   )
 }
