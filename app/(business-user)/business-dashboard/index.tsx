@@ -67,7 +67,7 @@ export default function BusinessScreen() {
           {
             icon: <FontAwesome5 name="book-open" size={28} color="#374151" />,
             label: "Catalog",
-            onPress: () => router.push("/(business-user)/stamp-definitions"),
+            onPress: () => router.push("/(business-user)/business-dashboard/catalog"),
           },
         ]}
       />

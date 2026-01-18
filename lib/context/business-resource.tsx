@@ -2,10 +2,13 @@ import { useBusinessMembershipContext } from "@/lib/context/business-membership"
 import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessResourceService } from "../api/business-resource/business-resource.service";
+import { CatalogItem } from "../api/business-resource/business-resource.types";
 
 type BusinessResourceContextType = {
   stampDefinitions: StampDefinition[];
   loadingStampDefinitions: boolean;
+  catalogItems: CatalogItem[];
+  loadingCatalogItems: boolean;
 }
 
 const BusinessResourceContext = createContext<BusinessResourceContextType | undefined>(undefined);
@@ -22,6 +25,11 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
   const [stampDefinitions, setStampDefinitions] = useState<StampDefinition[]>([]);
   const [loadingStampDefinitions, setLoadingStampDefinitions] = useState<boolean>(false);
 
+  // Catalog items for the current business
+  const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
+  const [loadingCatalogItems, setLoadingCatalogItems] = useState<boolean>(false);
+
+  /** Call backend to fetch stamp definitions.  */
   const refreshStampDefinitions = useCallback(async () => {
     console.debug("Refreshing stamp definitions");
     if (!activeBusinessRole || !activeBusinessRole.business) {
@@ -43,11 +51,34 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
     refreshStampDefinitions();
   }, [refreshStampDefinitions]);
 
+  /** Call backend to fetch catalog items */
+  const refreshCatalogItems = useCallback(async () => {
+    if (!activeBusinessRole || !activeBusinessRole.business) {
+      setCatalogItems([]);
+      return;
+    }
+    try {
+      setLoadingCatalogItems(true);
+      const data = await BusinessResourceService.getCatalogItems(activeBusinessRole.business.id);
+      setCatalogItems(data);
+    } catch (err) {
+      console.error(`Error fetching catalog items for ${activeBusinessRole.business.id}`);
+    } finally {
+      setLoadingCatalogItems(false);
+    }
+  }, [activeBusinessRole]);
+
+  useEffect(() => {
+    refreshCatalogItems();
+  }, [refreshCatalogItems])
+
 
   return (
     <BusinessResourceContext.Provider value={{
       stampDefinitions,
-      loadingStampDefinitions
+      loadingStampDefinitions,
+      catalogItems,
+      loadingCatalogItems
     }}>
       {children}
     </BusinessResourceContext.Provider>

@@ -1,6 +1,8 @@
 
-
 export const BusinessResourceUrls = {
+  /**
+   * Fetches stamp definitions for a business. 
+   */
   stampDefinitions: (
     businessId: string | number,
     params?: Record<string, string | number | boolean | undefined>
@@ -17,4 +19,11 @@ export const BusinessResourceUrls = {
     const qs = query.toString()
     return qs ? `${base}?${qs}` : base
   },
+
+  /** Retrieve catalog items for a specific business. */
+  catalogItems: (
+    businessId: string | number,
+  ) => {
+    return `businesses/${businessId}/items/`
+  }
 }
