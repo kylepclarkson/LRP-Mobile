@@ -2,13 +2,15 @@ import { useBusinessMembershipContext } from "@/lib/context/business-membership"
 import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessResourceService } from "../api/business-resource/business-resource.service";
-import { CatalogItem } from "../api/business-resource/business-resource.types";
+import { CatalogItem, OfferDefinition } from "../api/business-resource/business-resource.types";
 
 type BusinessResourceContextType = {
   stampDefinitions: StampDefinition[];
   loadingStampDefinitions: boolean;
   catalogItems: CatalogItem[];
   loadingCatalogItems: boolean;
+  offerDefinitions: OfferDefinition[];
+  loadingOfferDefinitions: boolean;
 }
 
 const BusinessResourceContext = createContext<BusinessResourceContextType | undefined>(undefined);
@@ -28,6 +30,10 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
   // Catalog items for the current business
   const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
   const [loadingCatalogItems, setLoadingCatalogItems] = useState<boolean>(false);
+
+  // Offer definitions for the current business
+  const [offerDefinitions, setOfferDefinitions] = useState<OfferDefinition[]>([]);
+  const [loadingOfferDefinitions, setLoadingOfferDefinitions] = useState<boolean>(false);
 
   /** Call backend to fetch stamp definitions.  */
   const refreshStampDefinitions = useCallback(async () => {
@@ -73,13 +79,37 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
     refreshCatalogItems();
   }, [refreshCatalogItems])
 
+  /** Call backend to fetch offer definitions */
+  const refreshOfferDefinitions = useCallback(async () => {
+    console.debug("Refreshing offer definitions items");
+    if (!activeBusinessRole || !activeBusinessRole.business) {
+      setOfferDefinitions([]);
+      return;
+    }
+    try {
+      setLoadingOfferDefinitions(true);
+      const data = await BusinessResourceService.getOfferDefinitions(activeBusinessRole.business.id);
+      setOfferDefinitions(data);
+    } catch (err) {
+      console.error(`Error fetching offer definitions for business=${activeBusinessRole.business.id}`);
+    } finally {
+      setLoadingOfferDefinitions(false);
+    }
+  }, [activeBusinessRole]);
+
+  useEffect(() => {
+    refreshOfferDefinitions();
+  }, [refreshOfferDefinitions])
+
 
   return (
     <BusinessResourceContext.Provider value={{
       stampDefinitions,
       loadingStampDefinitions,
       catalogItems,
-      loadingCatalogItems
+      loadingCatalogItems,
+      offerDefinitions,
+      loadingOfferDefinitions
     }}>
       {children}
     </BusinessResourceContext.Provider>

@@ -25,5 +25,12 @@ export const BusinessResourceUrls = {
     businessId: string | number,
   ) => {
     return `businesses/${businessId}/items/`
-  }
+  },
+
+  /** Retrieve offer definitions for a specific business. */
+  offerDefinitions: (
+    businessId: string | number,
+  ) => {
+    return `businesses/${businessId}/offer-definitions/`
+  },
 }
