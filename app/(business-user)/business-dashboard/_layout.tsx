@@ -18,6 +18,11 @@ export default function BusinessLayout() {
         options={{
           header: () => <PageHeader headerText={`${activeBusinessRole.business.name} - Dashboard`} />
         }} />
+
+      <Stack.Screen
+        name="catalog"
+        options={{ headerShown: false }}
+      />
     </Stack>
   )
 }

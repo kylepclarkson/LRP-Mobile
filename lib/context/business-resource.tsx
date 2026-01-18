@@ -53,6 +53,7 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
 
   /** Call backend to fetch catalog items */
   const refreshCatalogItems = useCallback(async () => {
+    console.debug("Refreshing catalog items");
     if (!activeBusinessRole || !activeBusinessRole.business) {
       setCatalogItems([]);
       return;
@@ -62,7 +63,7 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
       const data = await BusinessResourceService.getCatalogItems(activeBusinessRole.business.id);
       setCatalogItems(data);
     } catch (err) {
-      console.error(`Error fetching catalog items for ${activeBusinessRole.business.id}`);
+      console.error(`Error fetching catalog items for business=${activeBusinessRole.business.id}`);
     } finally {
       setLoadingCatalogItems(false);
     }
