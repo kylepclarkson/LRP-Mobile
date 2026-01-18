@@ -79,7 +79,7 @@ export default function BusinessScreen() {
           {
             icon: <FontAwesome5 name="tags" size={28} color="#374151" />,
             label: "Offers",
-            onPress: () => router.push("/(business-user)/stamp-definitions"),
+            onPress: () => router.push("/(business-user)/business-dashboard/offers"),
           },
         ]}
       />
