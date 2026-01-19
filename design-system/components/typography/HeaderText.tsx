@@ -12,7 +12,8 @@ const levelStyles = {
   1: "text-3xl font-bold",
   2: "text-2xl font-semibold",
   3: "text-xl font-semibold",
-  4: "text-lg font-medium",
+  // 4: "text-lg font-medium",
+  4: "text-lg font-base",
 }
 
 /**
@@ -20,6 +21,8 @@ const levelStyles = {
  * This issue may be rooted in the bundler or have nativewind handles typography classnames.
  * 
  * This function assists in ensuring text with white space is loaded correctly. 
+ * 
+ * Issue seems to be in 'font-medium' class.
  */
 function normalizeTextChildren(children: React.ReactNode): React.ReactNode {
   // If it's a plain string, wrap it in a template literal
@@ -45,7 +48,7 @@ export function HeaderText({ children, level = 1, className, ...props }: HeaderT
       {...props}
       className={cn(levelStyles[level], "text-gray-900", className)}
     >
-      {normalizeTextChildren(children)}
+      {children}
     </Text>
   )
 }

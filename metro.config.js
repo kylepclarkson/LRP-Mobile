@@ -7,4 +7,5 @@ const { withNativewind } = require("nativewind/metro");
 const config = getDefaultConfig(__dirname);
 
 /** withStorybook Adds the config that storybook uses */
-module.exports = withNativewind(withStorybook(config));
+// module.exports = withNativewind(withStorybook(config));
+module.exports = withNativewind(config, { input: './global.css' });
