@@ -1,5 +1,6 @@
 import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
+import { HeaderText } from "@/design-system";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
@@ -67,9 +68,9 @@ export function ProfileHeaderComponent() {
         </View>
       )}
       <View className="flex-row justify-around">
-        <View className="flex">
-          <Text className="text-xl font-bold">Hello {user?.firstName}</Text>
-          <Text className="text-md">Welcome back</Text>
+        <View className="flex justify-center items-center">
+          <HeaderText level={2}>Hello {user.firstName}</HeaderText>
+          <HeaderText level={4}>Welcome back</HeaderText>
         </View>
         {!businessMode && (
           <View className="flex">
