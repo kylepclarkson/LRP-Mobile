@@ -1,6 +1,8 @@
 import { StampCard } from "@/types/stamps";
 import camelcaseKeys from 'camelcase-keys';
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { RewardsService } from "../api/rewards/rewards.service";
+import { OfferReward } from "../api/rewards/rewards.types";
 import { getStampCards } from '../services/stamps.service';
 import { useAuthContext } from './auth';
 
@@ -9,6 +11,10 @@ type RewardsContextType = {
   stampCards: StampCard[] | [];
   fetchStampCards: () => Promise<void>;
   isLoading: boolean;
+
+  offerRewards: OfferReward[],
+  loadingOfferRewards: boolean,
+
 };
 
 const RewardsContext = createContext<RewardsContextType | undefined>(undefined);
@@ -19,6 +25,42 @@ export function RewardsProvider(
   const { user } = useAuthContext();
   const [stampCards, setStampCards] = React.useState<StampCard[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  // Offer rewards for the current user
+  const [offerRewards, setOfferRewards] = useState<OfferReward[]>([]);
+  const [loadingOfferRewards, setLoadingOfferRewards] = useState<boolean>(false);
+
+  const refreshOfferRewards = useCallback(async () => {
+    if (!user) {
+      console.debug("Clearing offer rewards");
+      setOfferRewards([]);
+      return;
+    }
+    try {
+      setLoadingOfferRewards(true);
+      const data = await RewardsService.getOfferRewards();
+      // Convert dates
+      setOfferRewards(data.map((offerRewardRaw) => {
+        console.debug(offerRewardRaw);
+        return {
+          ...offerRewardRaw,
+          issuedAt: new Date(offerRewardRaw.issuedAt),
+          expiresAt: offerRewardRaw.expiresAt ? new Date(offerRewardRaw.expiresAt) : undefined,
+          redeemedAt: offerRewardRaw.redeemedAt ? new Date(offerRewardRaw.redeemedAt) : undefined,
+        }
+      }));
+      console.debug("Fetched offer rewards");
+    } catch (err) {
+      console.error("Error fetching offer rewards", err);
+    } finally {
+      setLoadingOfferRewards(false);
+    }
+    // 
+  }, [user]);
+  useEffect(() => {
+    refreshOfferRewards();
+  }, [refreshOfferRewards]);
+
 
   useEffect(() => {
     if (!user) {
@@ -44,7 +86,9 @@ export function RewardsProvider(
     <RewardsContext.Provider value={{
       isLoading,
       stampCards,
-      fetchStampCards
+      fetchStampCards,
+      offerRewards,
+      loadingOfferRewards
     }}>
       {children}
     </RewardsContext.Provider>

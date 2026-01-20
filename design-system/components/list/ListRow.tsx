@@ -5,6 +5,7 @@ export interface ListRowProps {
   title: string
   subtitle?: string
   right?: ReactNode
+  bottom?: ReactNode
   onPress?: () => void
   showDivider?: boolean
 }
@@ -13,6 +14,7 @@ export function ListRow({
   title,
   subtitle,
   right,
+  bottom,
   onPress,
   showDivider = false,
 }: ListRowProps) {
@@ -27,6 +29,11 @@ export function ListRow({
             <Text className="text-base font-medium text-gray-900">{title}</Text>
             {subtitle && (
               <Text className="text-sm text-gray-600 mt-0.5">{subtitle}</Text>
+            )}
+            {bottom && (
+              <View className="mt-2">
+                {bottom}
+              </View>
             )}
           </View>
 
