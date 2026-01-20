@@ -2,7 +2,35 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
 import { OfferReward } from "@/lib/api/rewards/rewards.types";
 import { useRewardsContext } from "@/lib/context/rewards";
+import React from "react";
 import { Text, View } from "react-native";
+
+interface StatusPillProps {
+  offerReward: OfferReward
+}
+
+const statusColors = {
+  earned: "bg-blue-300",
+  redeemed: "bg-orange-300",
+  expired: "bg-red-300",
+} as const
+
+const statusText = {
+  earned: "Earned",
+  redeemed: "Redeemed",
+  expired: "Expired"
+}
+
+function StatusPill({ offerReward }: StatusPillProps) {
+
+  return (
+    <View className={`px-2 py-1 rounded-full self-start ${statusColors[offerReward.status]}`}>
+      <Text className="text-xs font-medium text-gray-700">
+        {statusText[offerReward.status]}
+      </Text>
+    </View>
+  )
+}
 
 export default function RewardsScreen() {
 
@@ -40,14 +68,7 @@ export default function RewardsScreen() {
               key={item.id}
               title={item.offerDefinition.title}
               subtitle={item.offerDefinition.description}
-              bottom={
-                <View className="px-2 py-1 bg-gray-200 rounded-full self-start">
-                  <Text className="text-xs font-medium text-gray-700">
-                    {item.status}
-                  </Text>
-                </View>
-
-              }
+              bottom={<StatusPill offerReward={item} />}
               onPress={() =>
                 console.debug(`item=${item.id}`)
                 // router.push(
