@@ -1,16 +1,15 @@
 import { PageHeader } from "@/components/common/PageHeader"
 import { Stack } from "expo-router"
 
-export default function CatalogLayout() {
+export default function OfferIdLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="create-offer-reward"
         options={{
-          header: () => <PageHeader headerText={`Offers`} />
+          header: () => <PageHeader headerText={`Create offer reward`} />
         }}
       />
-      <Stack.Screen name="[id]" options={{ headerShown: false }} />
     </Stack>
   )
 }

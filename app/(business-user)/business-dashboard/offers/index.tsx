@@ -1,9 +1,11 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
+import { PrimaryButton } from "@/design-system/components/buttons/PrimaryButton";
 import { OfferDefinition } from "@/lib/api/business-resource/business-resource.types";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
+import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -16,18 +18,21 @@ function OfferPreviewSheet({
   onClose: () => void
 }) {
   return (
-    <View className="p-4">
+    <View className="mt-4 p-4">
       <HeaderText level={3}>{offer.title}</HeaderText>
       <BodyText className="mt-1 text-gray-600">{offer.description}</BodyText>
 
       <View className="mt-6">
-        {/* <Pressable
+        <PrimaryButton
           title="Create Reward"
           onPress={() => {
-            onClose()
-            router.push(`/offers/${offer.id}/create-reward`)
+            onClose();
+            router.push({
+              pathname: "/(business-user)/business-dashboard/offers/[id]/create-offer-reward",
+              params: { id: offer.id }
+            })
           }}
-        /> */}
+        />
       </View>
     </View>
   )
@@ -94,7 +99,7 @@ export default function OffersScreen() {
           ))}
         </ListCard>
       )}
-      <TrueSheet ref={sheetRef} detents={[0.8]}>
+      <TrueSheet ref={sheetRef} detents={['auto']}>
         {selectedOffer && (
           <OfferPreviewSheet
             offer={selectedOffer}
