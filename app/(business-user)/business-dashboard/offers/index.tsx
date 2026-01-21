@@ -3,8 +3,35 @@ import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
 import { OfferDefinition } from "@/lib/api/business-resource/business-resource.types";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
+import { TrueSheet } from "@lodev09/react-native-true-sheet";
+import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 
+
+function OfferPreviewSheet({
+  offer,
+  onClose,
+}: {
+  offer: OfferDefinition
+  onClose: () => void
+}) {
+  return (
+    <View className="p-4">
+      <HeaderText level={3}>{offer.title}</HeaderText>
+      <BodyText className="mt-1 text-gray-600">{offer.description}</BodyText>
+
+      <View className="mt-6">
+        {/* <Pressable
+          title="Create Reward"
+          onPress={() => {
+            onClose()
+            router.push(`/offers/${offer.id}/create-reward`)
+          }}
+        /> */}
+      </View>
+    </View>
+  )
+}
 
 export default function OffersScreen() {
 
@@ -13,6 +40,19 @@ export default function OffersScreen() {
 
   if (!activeBusinessRole) {
     return;
+  }
+
+  const sheetRef = useRef<TrueSheet>(null);
+  const [selectedOffer, setSelectedOffer] = useState<OfferDefinition | null>(null);
+
+  const openSheet = (offer: OfferDefinition) => {
+    setSelectedOffer(offer);
+    sheetRef.current?.present();
+  }
+
+  const closeSheet = () => {
+    sheetRef.current?.dismiss();
+    setSelectedOffer(null);
   }
 
   return (
@@ -48,18 +88,20 @@ export default function OffersScreen() {
               key={offer.id}
               title={offer.title}
               subtitle={offer.description}
-              onPress={() =>
-                console.debug(`offerDefinitionId=${offer.id}`)
-                // router.push(
-                //   `/(business-user)/business-dashboard/offers/${offer.id}`
-                // )
-              }
+              onPress={() => openSheet(offer)}
               showDivider={index < offerDefinitions.length - 1}
             />
           ))}
         </ListCard>
       )}
-
+      <TrueSheet ref={sheetRef} detents={[0.8]}>
+        {selectedOffer && (
+          <OfferPreviewSheet
+            offer={selectedOffer}
+            onClose={closeSheet}
+          />
+        )}
+      </TrueSheet>
     </View>
   )
 
