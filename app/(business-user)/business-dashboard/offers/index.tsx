@@ -1,7 +1,6 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
-import { PrimaryButton } from "@/design-system/components/buttons/PrimaryButton";
-import { OfferDefinition } from "@/lib/api/business-resource/business-resource.types";
+import { BodyText, HeaderText, ListCard, ListRow, PrimaryButton, } from "@/design-system";
+import { OfferDefinition, OfferTypeText } from "@/lib/api/business-resource/business-resource.types";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
@@ -10,6 +9,10 @@ import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 
 
+
+/**
+ * Bottom sheet content rendering offer definition details. 
+ */
 function OfferPreviewSheet({
   offer,
   onClose,
@@ -17,10 +20,39 @@ function OfferPreviewSheet({
   offer: OfferDefinition
   onClose: () => void
 }) {
+
+  /** Render offer rules details conditioned on offerType.  */
+  function OfferRules({ offer }: { offer: OfferDefinition }) {
+    switch (offer.offerType) {
+      case "free_item":
+        return (
+          <BodyText className="text-gray-700">
+            Required purchase: {offer.rules.requiredPurchase}
+          </BodyText>
+        )
+
+      case "percent_discount":
+        return (
+          <BodyText className="text-gray-700">
+            Discount: {offer.rules.percent}%
+          </BodyText>
+        )
+
+      case "amount_discount":
+        return (
+          <BodyText className="text-gray-700">
+            Amount off: ${offer.rules.amount}
+          </BodyText>
+        )
+    }
+  }
+
   return (
     <View className="mt-4 p-4">
-      <HeaderText level={3}>{offer.title}</HeaderText>
+      <HeaderText level={2}>{offer.title}</HeaderText>
+      <BodyText className="mt-1 text-gray-600">Offer type: {OfferTypeText[offer.offerType]}</BodyText>
       <BodyText className="mt-1 text-gray-600">{offer.description}</BodyText>
+      <View className="mt-1"><OfferRules offer={offer} /></View>
 
       <View className="mt-6">
         <PrimaryButton
