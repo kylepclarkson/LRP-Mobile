@@ -7,7 +7,7 @@ export default function OfferIdLayout() {
       <Stack.Screen
         name="create-offer-reward"
         options={{
-          header: () => <PageHeader headerText={`Create offer reward`} />
+          header: () => <PageHeader headerText={`Create reward`} />
         }}
       />
     </Stack>

@@ -53,11 +53,10 @@ export function BusinessMembershipProvider({ children }: { children: React.React
     try {
       setLoadingUserBusinessRoles(true);
       const data = await BusinessService.getUserRoles();
-      console.debug("Fetched user business roles=", data);
+      console.debug("Fetched user business roles");
       setUserBusinessRoles(data);
       // TODO: We assume the first role is the active one. This should be improved with user preferences.
       if (data.length > 0) {
-        console.debug("Setting active user business role to", data[0])
         setActiveBusinessRole(data[0]);
       } else {
         setUserBusinessRoles([])
