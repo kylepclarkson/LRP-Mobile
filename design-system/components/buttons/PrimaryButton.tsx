@@ -1,48 +1,13 @@
-import { ReactNode } from "react"
-import { ActivityIndicator, Pressable, Text } from "react-native"
+import { BaseButton, BaseButtonProps } from "./BaseButton"
 
-interface PrimaryButtonProps {
-  title?: string
-  children?: ReactNode
-  onPress?: () => void
-  disabled?: boolean
-  loading?: boolean
-  className?: string
-}
+export interface PrimaryButtonProps extends BaseButtonProps {}
 
-export function PrimaryButton({
-  title,
-  children,
-  onPress,
-  disabled = false,
-  loading = false,
-  className = "",
-}: PrimaryButtonProps) {
-  const isDisabled = disabled || loading
-
+export function PrimaryButton(props: PrimaryButtonProps) {
   return (
-    <Pressable
-      // TODO - Content within TrueSheet does not seem to work for onPress. onPressIn seems to work. 
-      onPressIn={onPress}
-      disabled={isDisabled}
-      className={`
-        bg-blue-600 
-        px-4 py-3 
-        rounded-lg 
-        items-center 
-        justify-center 
-        active:opacity-80 
-        ${isDisabled ? "opacity-50" : ""} 
-        ${className}
-      `}
-    >
-      {loading ? (
-        <ActivityIndicator color="white" />
-      ) : (
-        <Text className="text-white font-medium text-base">
-          {children ?? title}
-        </Text>
-      )}
-    </Pressable>
+    <BaseButton
+      {...props}
+      backgroundClassName={`bg-blue-600 ${props.backgroundClassName ?? ""}`}
+      textClassName={`text-white ${props.textClassName ?? ""}`}
+    />
   )
 }
