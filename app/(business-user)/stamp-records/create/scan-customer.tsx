@@ -1,4 +1,3 @@
-import { BadgeScanner } from "@/components/businesses/shared/BadgeScanner"
 import { parseBadgePayload } from "@/lib/badges/customerBadge"
 import { router, useLocalSearchParams } from "expo-router"
 import { useState } from "react"
@@ -21,14 +20,6 @@ export default function ScanCustomerForStampRecord() {
       setError("This QR code is not a valid Aandeg customer badge.")
       throw new Error("Invalid badge")
     }
-
-    router.replace({
-      pathname: "/(business-user)/business-dashboard",
-      params: {
-        ...params,
-        userId: payload.userId,
-      },
-    })
   }
 
   return (
@@ -52,7 +43,7 @@ export default function ScanCustomerForStampRecord() {
       </View>
 
       {/* Scanner */}
-      <BadgeScanner onScanned={handleScanned} />
+      {/* <AandegQRCodeScanner onScanned={handleScanned} /> */}
 
       {/* Error message (optional) */}
       {error && (

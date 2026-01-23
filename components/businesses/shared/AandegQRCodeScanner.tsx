@@ -2,11 +2,17 @@ import { CameraView, useCameraPermissions } from "expo-camera"
 import { useEffect, useState } from "react"
 import { ActivityIndicator, Pressable, Text, View } from "react-native"
 
-type BadgeScannerProps = {
-  onScanned: (rawValue: string) => Promise<void> | void
+type AandegQRCodeScannerProps<T> = {
+  parse: (raw: string) => T | null
+  onValid: (payload: T) => Promise<void> | void
+  invalidMessage?: string
 }
 
-export function BadgeScanner({ onScanned }: BadgeScannerProps) {
+export function AandegQRCodeScanner<T>({
+  parse,
+  onValid,
+  invalidMessage = "Invalid QR code. Please try again.",
+}: AandegQRCodeScannerProps<T>) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanned, setScanned] = useState(false)
   const [validating, setValidating] = useState(false)
@@ -28,7 +34,7 @@ export function BadgeScanner({ onScanned }: BadgeScannerProps) {
           Camera permission required
         </Text>
         <Text className="text-gray-600 mt-2 text-center">
-          Please enable camera access to scan customer badges.
+          Please enable camera access to scan QR codes.
         </Text>
       </View>
     )
@@ -42,9 +48,16 @@ export function BadgeScanner({ onScanned }: BadgeScannerProps) {
     setError(null)
 
     try {
-      await onScanned(raw)
+      const payload = parse(raw)
+
+      if (!payload) {
+        setError(invalidMessage)
+        throw new Error("Invalid QR payload")
+      }
+
+      await onValid(payload)
     } catch {
-      setError("Invalid badge. Please try again.")
+      // Reset so user can try again
       setScanned(false)
     } finally {
       setValidating(false)
@@ -172,7 +185,7 @@ export function BadgeScanner({ onScanned }: BadgeScannerProps) {
               zIndex: 10,
             }}
           >
-            Align the badge inside the frame
+            Align the QR code inside the frame
           </Text>
         )}
 

@@ -8,8 +8,6 @@ import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 
-
-
 /**
  * Bottom sheet content rendering offer definition details. 
  */

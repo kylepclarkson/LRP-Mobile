@@ -1,19 +1,19 @@
 import { createUserBadgePayload, stringifyBadgePayload } from "@/lib/badges/customerBadge";
+import { AuthenticatedUser } from "@/types/types";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 
 type UserRewardBadgeProps = {
-  userId: string;
+  user: AuthenticatedUser;
   size?: number;
 }
 
 export function UserRewardBadge({
-  userId,
+  user,
   size
 }: UserRewardBadgeProps) {
-
-  const payload = createUserBadgePayload(userId);
+  const payload = createUserBadgePayload(user.id, user.firstName, user.lastName);
   const value = stringifyBadgePayload(payload);
 
   return (

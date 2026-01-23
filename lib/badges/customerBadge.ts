@@ -7,18 +7,22 @@ export type UserBadgePayload = {
   _type: "customer-badge";
   _version: 1;
   userId: string;
+  firstName: string;
+  lastName: string;
   generatedAt: string;
 };
 
 /**
  * Create a UserBadgePayload instance. 
  */
-export function createUserBadgePayload(userId: string): UserBadgePayload {
+export function createUserBadgePayload(userId: string, firstName: string, lastName: string): UserBadgePayload {
   return {
     _namespace: "aandeg",
     _type: "customer-badge",
     _version: 1,
     userId,
+    firstName,
+    lastName,
     generatedAt: new Date().toISOString()
   }
 }

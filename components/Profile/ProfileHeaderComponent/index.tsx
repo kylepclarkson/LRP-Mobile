@@ -18,12 +18,14 @@ export function ProfileHeaderComponent() {
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
   const isFocused = useIsFocused();
 
+  if (!user) return;
+
   // The content of the user reward QR bottom sheet.
   const UserRewardQRSheetContent = () => (
     <View className="w-full mt-10 mx-auto px-2">
       <Text className="text-center my-4 text-2xl font-bold">Your Aandeg reward badge</Text>
       <View className="p-4">
-        <UserRewardBadge userId={user!.id} size={200} />
+        <UserRewardBadge user={user} size={200} />
       </View>
       <Text className="text-center mt-1 text-lg">
         Present your badge to an Aandeg affiliated merchant to collect your rewards 🚀
@@ -78,7 +80,7 @@ export function ProfileHeaderComponent() {
               onPress={() => setSheetContent(<UserRewardQRSheetContent />)}
               className="w-full">
               <View className="w-full items-center">
-                <UserRewardBadge userId={user.id} />
+                <UserRewardBadge user={user} />
                 <Text className="text-center text-gray-500 mt-1 font-light italic">
                   Press to expand
                 </Text>
