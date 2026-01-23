@@ -2,6 +2,7 @@ import { CustomerBadgeScanner } from "@/components/businesses/shared/CustomerBad
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { HeaderText } from "@/design-system";
 import { PrimaryButton } from "@/design-system/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/design-system/components/buttons/SecondaryButton";
 import { FormTextField } from "@/design-system/components/form/FormTextField";
 import { useCreateOfferRewardForm } from "@/hooks/forms/create-offer-reward/useCreateOfferRewardForm";
 import { OfferTypeText } from "@/lib/api/business-resource/business-resource.types";
@@ -72,7 +73,7 @@ export default function CreateOfferRewardScreen() {
         />
       ) : (
         <View className="flex-row gap-4 mt-6">
-          <PrimaryButton
+          <SecondaryButton
             title="Clear badge"
             className="flex-1"
             onPress={() => form.clearForm()}
@@ -80,7 +81,7 @@ export default function CreateOfferRewardScreen() {
           <PrimaryButton
             title="Create reward"
             className="flex-1"
-            onPress={() => form.submit(offerDefinition.id)}
+            onPress={async () => await form.submit(offerDefinition.id)}
           />
         </View>
       )}
@@ -88,7 +89,7 @@ export default function CreateOfferRewardScreen() {
         {scannerOpen && (
           <View style={{ height: "100%", backgroundColor: "black" }}>
             <CustomerBadgeScanner
-              onScanned={(payload) => {
+              onScanned={async (payload) => {
                 form.applyBadgePayload(payload)
                 closeScanner()
               }}
