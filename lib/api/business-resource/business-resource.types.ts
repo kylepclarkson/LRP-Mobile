@@ -1,3 +1,4 @@
+import { Business } from "@/types/businesses"
 
 
 
@@ -18,12 +19,8 @@ export type OfferType = keyof OfferRulesMap
 export type OfferDefinition = {
   id: string,
   title: string,
+  business: Business,
   description: string,
-  // Note: Snake case matches backend values. 
-  // offerType: OfferType
-  // offerType: "free_item" | "percent_discount" | "amount_discount",
-  // rules: any // TODO convert to proper json type. 
-  // rules: OfferRulesMap[OfferType]
 } & {
   [K in OfferType]: {
     offerType: K
@@ -38,3 +35,22 @@ export const OfferTypeText = {
   percent_discount: "Percent discount",
   amount_discount: "Amount discount"
 } as const;
+
+
+/**
+ * Representation of OfferReward instance. 
+ */
+export type OfferReward = {
+  id: string,
+  offerDefinition: OfferDefinition,
+}
+
+/**
+ * Request body for creating the create OfferReward API. 
+ */
+export type CreateOfferRewardRequest = {
+  offerDefinitionId: string,
+  ownerId: string
+  issuanceMechanismType: "manual" | "stamp_program"
+  expiresAt?: string
+}

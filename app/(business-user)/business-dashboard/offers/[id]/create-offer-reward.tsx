@@ -81,7 +81,7 @@ export default function CreateOfferRewardScreen() {
           <PrimaryButton
             title="Create reward"
             className="flex-1"
-            onPress={async () => await form.submit(offerDefinition.id)}
+            onPress={async () => await form.submit(offerDefinition.business.id, offerDefinition.id)}
           />
         </View>
       )}

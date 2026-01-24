@@ -33,4 +33,14 @@ export const BusinessResourceUrls = {
   ) => {
     return `businesses/${businessId}/offer-definitions/`
   },
+
+
+  /**
+   * Create an offer reward instance for this business. 
+   */
+  createOfferReward: (
+    businessId: string,
+  ) => {
+    return `businesses/${businessId}/offer-rewards/`
+  }
 }
