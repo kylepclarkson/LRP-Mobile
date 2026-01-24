@@ -3,7 +3,7 @@ import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
 import { OfferReward } from "@/lib/api/rewards/rewards.types";
 import { useRewardsContext } from "@/lib/context/rewards";
 import React from "react";
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 interface StatusPillProps {
   offerReward: OfferReward
@@ -62,23 +62,29 @@ export default function RewardsScreen() {
 
       {/* List */}
       {!loadingOfferRewards && offerRewards.length > 0 && (
-        <ListCard>
-          {offerRewards.map((item: OfferReward, index: number) => (
-            <ListRow
-              key={item.id}
-              title={item.offerDefinition.title}
-              subtitle={item.offerDefinition.description}
-              bottom={<StatusPill offerReward={item} />}
-              onPress={() =>
-                console.debug(`item=${item.id}`)
-                // router.push(
-                //   // `/(business-user)/business-dashboard/catalog/${encodeURIComponent(item.name)}`
-                // )
-              }
-              showDivider={index < offerRewards.length - 1}
+        <View className="flex-1">
+          <ListCard>
+            <FlatList
+              data={offerRewards}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item, index }) => (
+                <ListRow
+                  key={item.id}
+                  title={item.offerDefinition.title}
+                  subtitle={item.offerDefinition.description}
+                  bottom={<StatusPill offerReward={item} />}
+                  onPress={() =>
+                    console.debug(`item=${item.id}`)
+                    // router.push(
+                    //   // `/(business-user)/business-dashboard/catalog/${encodeURIComponent(item.name)}`
+                    // )
+                  }
+                  showDivider={index < offerRewards.length - 1}
+                />
+              )}
             />
-          ))}
-        </ListCard>
+          </ListCard>
+        </View>
       )}
     </View>
   )
