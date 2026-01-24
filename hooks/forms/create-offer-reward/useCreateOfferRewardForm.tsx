@@ -21,13 +21,14 @@ export function useCreateOfferRewardForm() {
     setError(null);
   }
 
-  async function submit(businessId: string, offerDefinitionId: string) {
+  async function submit(businessId: string, offerDefinitionId: string): Promise<boolean> {
     console.debug(`submitting form called offerDefinitionId=${offerDefinitionId}`);
 
     if (!offerDefinitionId || !customerId) {
       setError("Customer ID is missing");
-      return;
+      return false;
     }
+    setIsSubmitting(true);
     try {
       const payload: CreateOfferRewardRequest = {
         offerDefinitionId: offerDefinitionId,
@@ -35,13 +36,15 @@ export function useCreateOfferRewardForm() {
         ownerId: customerId
       }
 
-      const res = await BusinessResourceService.createOfferReward(businessId, payload);
-      console.debug("Result=", JSON.stringify(res));
+      await BusinessResourceService.createOfferReward(businessId, payload);
+      return true;
     } catch (err) {
       console.debug("Error received");
       setError("Unable to create offer reward");
+      return false;
+    } finally {
+      setIsSubmitting(false);
     }
-
   }
 
   return {
@@ -49,7 +52,6 @@ export function useCreateOfferRewardForm() {
     customerFullName,
     isSubmitting,
     error,
-
     submit,
     applyBadgePayload,
     clearForm
