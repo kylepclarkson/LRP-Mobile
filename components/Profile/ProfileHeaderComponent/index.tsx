@@ -3,6 +3,7 @@ import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { HeaderText } from "@/design-system";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
+import { useNotificationsContext } from "@/lib/context/notifications";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -18,6 +19,8 @@ export function ProfileHeaderComponent() {
   const [sheetContent, setSheetContent] = useState<JSX.Element | null>(null);
   const isFocused = useIsFocused();
 
+  const { onOfferRewardCreated } = useNotificationsContext();
+
   if (!user) return;
 
   // The content of the user reward QR bottom sheet.
@@ -32,6 +35,15 @@ export function ProfileHeaderComponent() {
       </Text>
     </View>
   );
+
+  useEffect(() => {
+    if (!onOfferRewardCreated) return;
+    onOfferRewardCreated(async () => {
+      if (!isFocused) {
+        await bottomSheetRef.current?.dismiss();
+      }
+    })
+  }, [onOfferRewardCreated]);
 
   // Close bottom sheet when page becomes focused. 
   useEffect(() => {
