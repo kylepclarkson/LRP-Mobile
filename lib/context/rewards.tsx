@@ -14,7 +14,7 @@ type RewardsContextType = {
 
   offerRewards: OfferReward[],
   loadingOfferRewards: boolean,
-
+  refreshOfferRewards: () => Promise<void>
 };
 
 const RewardsContext = createContext<RewardsContextType | undefined>(undefined);
@@ -41,7 +41,6 @@ export function RewardsProvider(
       const data = await RewardsService.getOfferRewards();
       // Convert dates
       setOfferRewards(data.map((offerRewardRaw) => {
-        console.debug(offerRewardRaw);
         return {
           ...offerRewardRaw,
           issuedAt: new Date(offerRewardRaw.issuedAt),
@@ -88,7 +87,8 @@ export function RewardsProvider(
       stampCards,
       fetchStampCards,
       offerRewards,
-      loadingOfferRewards
+      loadingOfferRewards,
+      refreshOfferRewards
     }}>
       {children}
     </RewardsContext.Provider>

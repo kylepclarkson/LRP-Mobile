@@ -9,6 +9,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { BottomSheetProvider } from "@/lib/context/bottom-sheet";
 import { BusinessResourceProvider } from "@/lib/context/business-resource";
 import { NotificationProvider } from "@/lib/context/notifications";
 import { StampsProvider } from "@/lib/context/stamps";
@@ -54,18 +55,20 @@ export default function RootLayout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <AuthProvider>
             <WebSocketProvider>
-              <NotificationProvider>
+              <BottomSheetProvider>
                 <BusinessMembershipProvider>
                   <BusinessResourceProvider>
                     <RewardsProvider>
                       <StampsProvider>
-                        <InitialLayout />
-                        <Toast />
+                        <NotificationProvider>
+                          <InitialLayout />
+                          <Toast />
+                        </NotificationProvider>
                       </StampsProvider>
                     </RewardsProvider>
                   </BusinessResourceProvider>
                 </BusinessMembershipProvider>
-              </NotificationProvider>
+              </BottomSheetProvider>
             </WebSocketProvider>
           </AuthProvider>
         </GestureHandlerRootView>

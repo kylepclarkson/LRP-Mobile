@@ -1,6 +1,7 @@
 import { useWebSocket } from "@/lib/context/websocket";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
+import { useRewardsContext } from "./rewards";
 
 
 type NotificationContextType = {
@@ -13,6 +14,8 @@ export function NotificationProvider(
   { children }: { children: React.ReactNode }
 ) {
   const { events } = useWebSocket();
+  const { refreshOfferRewards } = useRewardsContext();
+
   // callback listeners
   const [listeners] = useState<((payload: any) => void)[]>([]);
 
@@ -30,9 +33,11 @@ export function NotificationProvider(
     }
 
     events.on("offer_reward_created", handleOfferRewardCreated);
+    events.on("offer_reward_created", refreshOfferRewards);
 
     return () => {
       events.off("offer_reward_created", handleOfferRewardCreated);
+      events.off("offer_reward_created", refreshOfferRewards);
     };
   }, [events, listeners]);
 
