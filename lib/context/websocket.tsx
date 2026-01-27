@@ -27,13 +27,32 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
+  const reconnectAttempts = useRef(0);
+  const appIsActive = useRef(true);
+
   // Load access token
   useEffect(() => {
     async function loadToken() {
       getAccessToken().then(setToken)
     }
     loadToken();
-  }, [])
+  }, []);
+
+  // Exponential backoff reconnection. 
+  const scheduleReconnect = useCallback(() => {
+    if (!user || !token) return;        // don't reconnect if logged out
+    if (!appIsActive.current) return;   // don't reconnect in background
+    if (wsRef.current) return;          // don't reconnect if already connected
+
+    const delay = Math.min(1000 * 2 ** reconnectAttempts.current, 30000);
+    console.debug(`WS: Reconnecting in ${delay}ms`);
+
+    setTimeout(() => {
+      reconnectAttempts.current += 1;
+      connect();
+    }, delay);
+  }, [user, token]);
+
 
   const connect = useCallback(() => {
     if (!user || !token) {
@@ -54,6 +73,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
 
     socket.onopen = () => {
       console.debug("WS: Connected");
+      reconnectAttempts.current = 0;
       setIsConnected(true);
 
       // Example: auto-subscribe to user channels
@@ -72,10 +92,12 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
       console.debug("WS: Disconnected");
       setIsConnected(false);
       wsRef.current = null;
+      scheduleReconnect();
     };
 
     socket.onerror = (err) => {
-      console.error("WS: Error", err);
+      console.warn("WS: Error", err);
+      // onclosed is invoked - attempt to reconnect
     };
 
     socket.onmessage = (event) => {
@@ -123,6 +145,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
   // Reconnect when token/user changes
   useEffect(() => {
     disconnect();
+    reconnectAttempts.current = 0;
     connect();
   }, [token, user, connect, disconnect]);
 
