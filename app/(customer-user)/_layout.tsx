@@ -2,7 +2,6 @@ import { LoadingOverlay } from '@/components/common/LoadingOverlay';
 import { useAuthContext } from '@/lib/context/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from "expo-router";
 import React from 'react';
 
@@ -37,19 +36,6 @@ export default function AuthenticatedLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="progress-star"
-              size={size}
-              color={color}
-            />
-          )
-        }}>
-      </Tabs.Screen>
-      <Tabs.Screen
-        name="add-reward"
-        options={{
-          title: "Add reward",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="add"
               size={size}
               color={color}
             />
