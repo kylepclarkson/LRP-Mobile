@@ -34,7 +34,7 @@ function StatusPill({ offerReward }: StatusPillProps) {
 
 export default function RewardsScreen() {
 
-  const { offerRewards, loadingOfferRewards } = useRewardsContext();
+  const { offerRewards, loadingOfferRewards, refreshOfferRewards } = useRewardsContext();
 
   return (
     <View className="flex-1 px-4 py-6">
@@ -67,6 +67,8 @@ export default function RewardsScreen() {
             <FlatList
               data={offerRewards}
               keyExtractor={(item) => item.id}
+              refreshing={loadingOfferRewards}
+              onRefresh={refreshOfferRewards}
               renderItem={({ item, index }) => (
                 <ListRow
                   key={item.id}
