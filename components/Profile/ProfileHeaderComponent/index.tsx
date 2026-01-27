@@ -10,8 +10,7 @@ import { Pressable, Text, View } from "react-native";
 
 export function ProfileHeaderComponent() {
   const { user } = useAuthContext();
-  const { isBusinessUser, businessMode, setBusinessMode } =
-    useBusinessMembershipContext();
+  const { isBusinessUser, businessMode, setBusinessMode } = useBusinessMembershipContext();
 
   const { onOfferRewardCreated } = useNotificationsContext();
   const { open, close } = useBottomSheetContext();
@@ -38,10 +37,11 @@ export function ProfileHeaderComponent() {
   // Close the sheet when a reward is issued
   // TODO - this does not seem to work. Need to debug. 
   useEffect(() => {
+    console.debug("onOfferRewardCreated useEffect called", onOfferRewardCreated);
     if (!onOfferRewardCreated) return;
-    onOfferRewardCreated(() => {
+    return onOfferRewardCreated(() => {
       close();
-    });
+    })
   }, [onOfferRewardCreated, close]);
 
   return (

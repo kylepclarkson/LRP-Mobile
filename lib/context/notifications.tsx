@@ -1,5 +1,5 @@
 import { useWebSocket } from "@/lib/context/websocket";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useRewardsContext } from "./rewards";
 
@@ -15,10 +15,15 @@ export function NotificationProvider(
 ) {
   const { events } = useWebSocket();
   const { refreshOfferRewards } = useRewardsContext();
+  
+  /**
+   * Store listeners in a ref, not state, as state arrays do not retrigger re-renders. 
+   */
+  const listenersRef = useRef<((payload: any) => void)[]>([]);
 
-  // callback listeners
-  const [listeners] = useState<((payload: any) => void)[]>([]);
-
+  /**
+   * Handle WebSocket events from the server. 
+   */
   useEffect(() => {
     function handleOfferRewardCreated(payload) {
       console.debug("payload=", payload)
@@ -29,7 +34,7 @@ export function NotificationProvider(
         position: "top",
         visibilityTime: 4000,
       });
-      listeners.forEach((fn) => fn(payload));
+      listenersRef.current.forEach((fn) => fn(payload));
     }
 
     events.on("offer_reward_created", handleOfferRewardCreated);
@@ -39,11 +44,17 @@ export function NotificationProvider(
       events.off("offer_reward_created", handleOfferRewardCreated);
       events.off("offer_reward_created", refreshOfferRewards);
     };
-  }, [events, listeners]);
+  }, [events]);
 
-  // Allows provider users to register for notification events. 
+  /**
+   * Register a listener. 
+   * Returns an unsubscribe function so components may unsubscribe on clean up. 
+   */
   const registerListener = (handler: (payload: any) => void) => {
-    listeners.push(handler);
+    listenersRef.current = listenersRef.current.filter(fn => fn !== handler);
+    return () => {
+      listenersRef.current = listenersRef.current.filter(fn => fn !== handler);
+    }
   }
 
   return (
