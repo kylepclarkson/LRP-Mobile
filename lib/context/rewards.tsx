@@ -1,6 +1,6 @@
 import { StampCard } from "@/types/stamps";
 import camelcaseKeys from 'camelcase-keys';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { RewardsService } from "../api/rewards/rewards.service";
 import { OfferReward } from "../api/rewards/rewards.types";
 import { getStampCards } from '../services/stamps.service';
@@ -23,6 +23,8 @@ export function RewardsProvider(
   { children }: { children: React.ReactNode }
 ) {
   const { user } = useAuthContext();
+  // Provide a reference to the user to avoid stale closure issues. 
+  const userRef = useRef(user);
   const [stampCards, setStampCards] = React.useState<StampCard[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -30,8 +32,12 @@ export function RewardsProvider(
   const [offerRewards, setOfferRewards] = useState<OfferReward[]>([]);
   const [loadingOfferRewards, setLoadingOfferRewards] = useState<boolean>(false);
 
+  useEffect(() => {
+    userRef.current = user;
+  }, [user])
+
   const refreshOfferRewards = useCallback(async () => {
-    if (!user) {
+    if (!userRef.current) {
       console.debug("Clearing offer rewards");
       setOfferRewards([]);
       return;
@@ -54,11 +60,11 @@ export function RewardsProvider(
     } finally {
       setLoadingOfferRewards(false);
     }
-    // 
-  }, [user]);
+  }, []);
+
   useEffect(() => {
     refreshOfferRewards();
-  }, [refreshOfferRewards]);
+  }, [user]);
 
 
   useEffect(() => {
