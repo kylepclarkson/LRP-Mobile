@@ -1,6 +1,6 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { BodyText, HeaderText, ListCard, ListRow, PrimaryButton, } from "@/design-system";
-import { OfferDefinition, OfferTypeText } from "@/lib/api/offers/offers.types";
+import { OfferDefinition, OfferTypeText } from "@/lib/api/rewards/rewards.types";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";

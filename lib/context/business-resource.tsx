@@ -3,7 +3,7 @@ import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessResourceService } from "../api/business-resource/business-resource.service";
 import { CatalogItem } from "../api/business-resource/business-resource.types";
-import { OfferDefinition } from "../api/offers/offers.types";
+import { OfferDefinition } from "../api/rewards/rewards.types";
 
 type BusinessResourceContextType = {
   stampDefinitions: StampDefinition[];

@@ -1,6 +1,7 @@
 import { get, post } from "@/lib/api/http/api";
 import { StampDefinition } from "@/types/stamps";
-import { OfferDefinition, OfferReward } from "../offers/offers.types";
+import { OfferReward } from "../offers/offers.types";
+import { OfferDefinition } from "../rewards/rewards.types";
 import { CatalogItem, CreateOfferRewardRequest } from "./business-resource.types";
 import { BusinessResourceUrls } from "./business-resource.urls";
 

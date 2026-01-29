@@ -4,5 +4,6 @@ import { RewardsUrls } from '@/lib/api/rewards/rewards.urls';
 
 export const RewardsService = {
   getOfferRewards: () => get<OfferReward[]>(RewardsUrls.offerRewards()),
+  getOfferReward: (offerRewardId: string) => get<OfferReward>(RewardsUrls.offerRewardDetail(offerRewardId)),
 }
 
