@@ -43,6 +43,9 @@ export const OfferTypeText = {
 export type OfferReward = {
   id: string,
   offerDefinition: OfferDefinition,
+  issuedAt: Date,
+  redeemedAt?: Date,
+  expiresAt?: Date,
 }
 
 /**

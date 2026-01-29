@@ -2,6 +2,7 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
 import { OfferReward } from "@/lib/api/rewards/rewards.types";
 import { useRewardsContext } from "@/lib/context/rewards";
+import { router } from "expo-router";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 
@@ -76,10 +77,10 @@ export default function RewardsScreen() {
                   subtitle={item.offerDefinition.description}
                   bottom={<StatusPill offerReward={item} />}
                   onPress={() =>
-                    console.debug(`item=${item.id}`)
-                    // router.push(
-                    //   // `/(business-user)/business-dashboard/catalog/${encodeURIComponent(item.name)}`
-                    // )
+                    router.push({
+                      pathname: "/(customer-user)/rewards/[id]/offer-rewards-details",
+                      params: { id: item.id }
+                    })
                   }
                   showDivider={index < offerRewards.length - 1}
                 />

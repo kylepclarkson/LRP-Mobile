@@ -10,6 +10,7 @@ export default function RewardsLayout() {
           header: () => <PageHeader headerText="Your rewards" />
         }}
       />
+      <Stack.Screen name="[id]" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -44,7 +44,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     if (!appIsActive.current) return;   // don't reconnect in background
     if (wsRef.current) return;          // don't reconnect if already connected
 
-    const delay = Math.min(1000 * 2 ** reconnectAttempts.current, 30000);
+    const delay = Math.min(1000 * 2 ** reconnectAttempts.current, 3000);
     console.debug(`WS: Reconnecting in ${delay}ms`);
 
     setTimeout(() => {
