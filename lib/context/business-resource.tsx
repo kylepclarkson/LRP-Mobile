@@ -2,7 +2,8 @@ import { useBusinessMembershipContext } from "@/lib/context/business-membership"
 import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessResourceService } from "../api/business-resource/business-resource.service";
-import { CatalogItem, OfferDefinition } from "../api/business-resource/business-resource.types";
+import { CatalogItem } from "../api/business-resource/business-resource.types";
+import { OfferDefinition } from "../api/offers/offers.types";
 
 type BusinessResourceContextType = {
   stampDefinitions: StampDefinition[];

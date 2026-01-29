@@ -5,7 +5,7 @@ import { PrimaryButton } from "@/design-system/components/buttons/PrimaryButton"
 import { SecondaryButton } from "@/design-system/components/buttons/SecondaryButton";
 import { FormTextField } from "@/design-system/components/form/FormTextField";
 import { useCreateOfferRewardForm } from "@/hooks/forms/create-offer-reward/useCreateOfferRewardForm";
-import { OfferTypeText } from "@/lib/api/business-resource/business-resource.types";
+import { OfferTypeText } from "@/lib/api/offers/offers.types";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router, useLocalSearchParams } from "expo-router";

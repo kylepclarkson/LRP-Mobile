@@ -1,4 +1,4 @@
-import { OfferDefinition } from "@/lib/api/business-resource/business-resource.types"
+import { OfferDefinition } from "@/lib/api/offers/offers.types"
 
 export type CreateOfferRewardFormState = {
   offerDefinition: OfferDefinition | null,

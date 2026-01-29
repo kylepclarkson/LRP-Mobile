@@ -1,5 +1,5 @@
 import { HeaderText } from "@/design-system";
-import { OfferTypeText } from "@/lib/api/business-resource/business-resource.types";
+import { OfferTypeText } from "@/lib/api/offers/offers.types";
 import { useRewardsContext } from "@/lib/context/rewards";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";

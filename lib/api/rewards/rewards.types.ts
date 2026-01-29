@@ -1,4 +1,4 @@
-import { OfferDefinition } from "../business-resource/business-resource.types"
+import { OfferDefinition } from "../offers/offers.types"
 
 export interface OfferReward {
   id: string
