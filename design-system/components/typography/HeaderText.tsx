@@ -4,7 +4,7 @@ import { Text, TextProps } from "react-native";
 
 export interface HeaderTextProps extends TextProps {
   children: ReactNode
-  level?: 1 | 2 | 3 | 4
+  level?: 1 | 2 | 3 | 4 | 5 | 6
   className?: string
 }
 
@@ -14,6 +14,8 @@ const levelStyles = {
   3: "text-xl font-semibold",
   // 4: "text-lg font-medium",
   4: "text-lg font-base",
+  5: "text-md font-base",
+  6: "text-sm font-light"
 }
 
 /**

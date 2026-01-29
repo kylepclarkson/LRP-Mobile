@@ -1,7 +1,8 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import { BodyText, HeaderText, ListCard, ListRow } from "@/design-system";
+import { HeaderText, PressableListItem } from "@/design-system";
 import { OfferReward } from "@/lib/api/rewards/rewards.types";
 import { useRewardsContext } from "@/lib/context/rewards";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { router } from "expo-router";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
@@ -33,20 +34,36 @@ function StatusPill({ offerReward }: StatusPillProps) {
   )
 }
 
+function RewardsListHeader() {
+  return (
+    <View className="ml-2 py-4">
+      <HeaderText level={2} className="mb-1">Available rewards</HeaderText>
+    </View>
+  )
+}
+
+function OfferRewardsListItem({ offerReward }: { offerReward: OfferReward }) {
+  return (
+    <View className="flex-row justify-start items-center">
+      <View className="flex bg-gray-300 rounded-xl h-12 w-12 justify-center items-center">
+        <FontAwesome6 name="gift" size={24} />
+      </View>
+      <View className="flex ml-2">
+        <HeaderText level={3}>{offerReward.offerDefinition.title}</HeaderText>
+        <HeaderText level={6}>{offerReward.offerDefinition.business.name}</HeaderText>
+        <StatusPill offerReward={offerReward} />
+      </View>
+    </View>
+  )
+}
+
+
 export default function RewardsScreen() {
 
   const { offerRewards, loadingOfferRewards, refreshOfferRewards } = useRewardsContext();
 
   return (
-    <View className="flex-1 px-4 py-6">
-      {/* Header */}
-      <HeaderText level={1} className="mb-1">
-        Offers
-      </HeaderText>
-      <BodyText className="mb-6">
-        Available rewards
-      </BodyText>
-
+    <View className="flex-1">
       {/* Loading state */}
       {loadingOfferRewards && (
         <View className="mt-10 items-center">
@@ -64,29 +81,28 @@ export default function RewardsScreen() {
       {/* List */}
       {!loadingOfferRewards && offerRewards.length > 0 && (
         <View className="flex-1">
-          <ListCard>
-            <FlatList
-              data={offerRewards}
-              keyExtractor={(item) => item.id}
-              refreshing={loadingOfferRewards}
-              onRefresh={refreshOfferRewards}
-              renderItem={({ item, index }) => (
-                <ListRow
-                  key={item.id}
-                  title={item.offerDefinition.title}
-                  subtitle={item.offerDefinition.description}
-                  bottom={<StatusPill offerReward={item} />}
-                  onPress={() =>
-                    router.push({
-                      pathname: "/(customer-user)/rewards/[id]/offer-rewards-details",
-                      params: { id: item.id }
-                    })
-                  }
-                  showDivider={index < offerRewards.length - 1}
-                />
-              )}
-            />
-          </ListCard>
+          {/* <ListCard> */}
+          <FlatList
+            data={offerRewards}
+            keyExtractor={(item) => item.id}
+            ListHeaderComponent={RewardsListHeader}
+            refreshing={loadingOfferRewards}
+            onRefresh={refreshOfferRewards}
+            renderItem={({ item, index }) => (
+              <PressableListItem
+                key={item.id}
+                onPress={() =>
+                  router.push({
+                    pathname: "/(customer-user)/rewards/[id]/offer-rewards-details",
+                    params: { id: item.id }
+                  })
+                }
+                showDivider={index < offerRewards.length - 1}
+              >
+                <OfferRewardsListItem offerReward={item} />
+              </PressableListItem>
+            )}
+          />
         </View>
       )}
     </View>
