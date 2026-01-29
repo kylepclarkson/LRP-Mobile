@@ -53,7 +53,6 @@ export function AuthProvider(
       try {
         const authenticatedUser = await getUser();
         const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
-        console.debug("setting user:", camelAuthenticatedUser);
         setUser(camelAuthenticatedUser);
       } catch (error) {
         setUser(null);
@@ -74,7 +73,6 @@ export function AuthProvider(
       // TODO combine repeated code used above. 
       const authenticatedUser = await getUser();
       const camelAuthenticatedUser: AuthenticatedUser = camelcaseKeys(authenticatedUser, { deep: true }) as any as AuthenticatedUser;
-      console.debug("setting user:", camelAuthenticatedUser);
       setUser(camelAuthenticatedUser);
     } catch (error) {
       // Re-throw the error so it can be caught by the caller

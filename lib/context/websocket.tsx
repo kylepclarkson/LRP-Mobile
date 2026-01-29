@@ -27,6 +27,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
+  const MAX_RECONNECT_ATTEMPTS = 3;
   const reconnectAttempts = useRef(0);
   const appIsActive = useRef(true);
 
@@ -44,15 +45,20 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     if (!appIsActive.current) return;   // don't reconnect in background
     if (wsRef.current) return;          // don't reconnect if already connected
 
+    if (reconnectAttempts.current >= MAX_RECONNECT_ATTEMPTS) {
+      console.error("WS: Max reconnect attempts reached. Giving up.");
+      return;
+    }
+
+
     const delay = Math.min(1000 * 2 ** reconnectAttempts.current, 3000);
-    console.debug(`WS: Reconnecting in ${delay}ms`);
+    console.debug(`WS: Reconnecting in ${delay}ms. Attempt number ${reconnectAttempts.current}`);
 
     setTimeout(() => {
       reconnectAttempts.current += 1;
       connect();
     }, delay);
   }, [user, token]);
-
 
   const connect = useCallback(() => {
     if (!user || !token) {
