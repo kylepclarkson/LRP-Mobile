@@ -1,8 +1,8 @@
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
-import { HeaderText } from "@/design-system";
+import { BodyText, HeaderText, PrimaryButton } from "@/design-system";
 import { RewardsService } from "@/lib/api/rewards/rewards.service";
 import { OfferReward, OfferTypeText } from "@/lib/api/rewards/rewards.types";
-import { useRewardsContext } from "@/lib/context/rewards";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -11,9 +11,7 @@ export default function OfferRewardDetailPage() {
   const { id } = useLocalSearchParams<{
     id: string
   }>();
-  const { offerRewards } = useRewardsContext();
 
-  const reward = offerRewards.find((r) => r.id === id);
   const [offerReward, setOfferReward] = useState<OfferReward | null>(null);
   const [loadingOfferReward, setLoadingOfferReward] = useState<boolean>(false);
 
@@ -42,67 +40,55 @@ export default function OfferRewardDetailPage() {
     fetchOfferReward();
   }, []);
 
-
-  if (loadingOfferReward) {
-    return <LoadingOverlay />
-  } else if (!loadingOfferReward && offerReward) {
-    return (
-      <ScrollView className="flex-1 p-6">
-        {/* Title */}
-        <HeaderText level={2}>{offerReward?.offerDefinition.title}</HeaderText>
-        <Text className="text-gray-500 mt-1">{OfferTypeText[offerReward.offerDefinition.offerType]}</Text>
-
-        {/* Description */}
-        <View className="mt-6">
-          <HeaderText level={4}>Description</HeaderText>
-          <Text className="text-gray-700 mt-1 leading-relaxed">
-            {offerReward.offerDefinition.description}
-          </Text>
-        </View>
-
-        {/* Dates */}
-        <View className="mt-6">
-          <HeaderText level={4}>Timeline</HeaderText>
-
-          <Text className="text-gray-700 mt-1">
-            Issued:{" "}
-            <Text className="font-semibold">
-              {offerReward.issuedAt.toLocaleDateString()}
-            </Text>
-          </Text>
-
-          {offerReward.expiresAt && (
-            <Text className="text-gray-700 mt-1">
-              Expires:{" "}
-              <Text className="font-semibold">
-                {offerReward.expiresAt.toLocaleDateString()}
-              </Text>
-            </Text>
-          )}
-
-          {offerReward.redeemedAt && (
-            <Text className="text-gray-700 mt-1">
-              Redeemed:{" "}
-              <Text className="font-semibold">
-                {offerReward.redeemedAt.toLocaleDateString()}
-              </Text>
-            </Text>
-          )}
-        </View>
-
-        {/* Spacer */}
-        <View className="h-12" />
-      </ScrollView>
-    );
-  }
-
-  // Error scenario
   return (
-    <View className="flex-1 items-center justify-center p-6">
-      <HeaderText level={3}>Reward not found</HeaderText>
-      <Text className="text-gray-500 mt-2">
-        We couldn’t locate a reward with ID {id}.
-      </Text>
-    </View>
-  );
+    <>
+      {/* Loading state */}
+      {loadingOfferReward && (
+        <LoadingOverlay />
+      )}
+      {/* OfferReward not found */}
+      {!loadingOfferReward && !offerReward && (
+        <View className="flex-1 items-center justify-center p-6">
+          <HeaderText level={3}>Reward not found</HeaderText>
+          <Text className="text-gray-500 mt-2">
+            We couldn’t locate a reward with ID {id}.
+          </Text>
+        </View>
+      )}
+      {/* Render OfferReward */}
+      {!loadingOfferReward && offerReward && (
+        <ScrollView className="flex-1 p-2">
+          <View className="flex">
+            <View className="flex-row justify-start items-center my-2">
+              <View className="flex bg-gray-300 rounded-xl h-20 w-20 justify-center items-center">
+                <FontAwesome6 name="gift" size={40} />
+              </View>
+              <View className="flex ml-2">
+                <HeaderText level={2}>{offerReward.offerDefinition.title}</HeaderText>
+                <HeaderText level={3}>{offerReward.offerDefinition.business.name}</HeaderText>
+                <HeaderText level={5}>{OfferTypeText[offerReward.offerDefinition.offerType]}</HeaderText>
+              </View>
+            </View>
+            {/* */}
+            {offerReward.status === 'earned' && (
+              // TODO implement bottom sheet to render QR code. 
+              <View className="mt-4">
+                <PrimaryButton>
+                  Show reward code
+                </PrimaryButton>
+              </View>
+            )}
+            {/* Description */}
+            <View className="mt-4">
+              <HeaderText level={4}>Description</HeaderText>
+              <BodyText>
+                {offerReward.offerDefinition.description}
+              </BodyText>
+            </View>
+          </View>
+          {/* Spacer */}
+        </ScrollView>
+      )}
+    </>
+  )
 }
