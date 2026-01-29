@@ -28,11 +28,10 @@ export const OfferTypeText = {
   percent_discount: "Percent discount",
   amount_discount: "Amount discount"
 } as const
+
 /**
  * Representation of OfferReward instance.
  */
-
-
 export type OfferReward = {
   id: string
   offerDefinition: OfferDefinition
