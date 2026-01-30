@@ -1,6 +1,7 @@
 import type { SheetDetent } from "@lodev09/react-native-true-sheet";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import { View } from "react-native";
 
 
 type BottomSheetContextType = {
@@ -50,7 +51,9 @@ export function BottomSheetProvider(
         detents={detents}
         onDidDismiss={() => setIsOpen(false)}
       >
-        {content}
+        <View className="mt-8">
+          {content}
+        </View>
       </TrueSheet>
     </BottomSheetContext.Provider>
   )

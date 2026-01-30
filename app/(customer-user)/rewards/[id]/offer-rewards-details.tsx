@@ -28,6 +28,12 @@ function OfferRewardBadge({
         value={value}
         size={size}
       />
+      <View className="mt-4">
+        <HeaderText level={2} className="text-center">{offerReward.offerDefinition.title}</HeaderText>
+        <HeaderText level={4} className="text-center">{offerReward.offerDefinition.business.name}</HeaderText>
+        <HeaderText level={2} className="mt-4 text-center">Reward ID</HeaderText>
+        <HeaderText level={3}>{offerReward.id}</HeaderText>
+      </View>
     </View>
   )
 }
