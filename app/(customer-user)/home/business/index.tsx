@@ -40,7 +40,7 @@ export default function BusinessRewardsScreen() {
               onPress={async () => {
                 console.debug("Navigating to create stamp record screen for stamp definition", item.id);
                 router.push({
-                  pathname: `/profile/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
+                  pathname: `/home/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
                   params: {
                     stampDefinitionId: item.id,
                     title: item.title

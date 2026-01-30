@@ -1,6 +1,6 @@
 import { CustomerProfileHeader } from "@/components/Profile/CustomerUserProfileHeader";
 
-export default function ProfileScreen() {
+export default function CustomerUserHomeScreen() {
 
   return (
     <>

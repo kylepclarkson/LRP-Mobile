@@ -16,13 +16,13 @@ export default function AuthenticatedLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
-        name="profile"
+        name="home"
         options={{
-          title: "Profile",
+          title: "Home",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Feather
-              name="user"
+              name="home"
               size={size}
               color={color}
             />
