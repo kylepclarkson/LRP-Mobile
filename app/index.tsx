@@ -20,7 +20,7 @@ export default function Index() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1"
     >
-      <View className="flex-1 justify-center p-4 bg-background">
+      <View className="flex-1 justify-center p-4">
         <Text className="text-center mb-5 text-surface-foreground text-xl font-semibold">
           Welcome to Aandeg
         </Text>

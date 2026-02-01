@@ -1,6 +1,6 @@
 import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
-import { HeaderText } from "@/design-system";
+import { BodyText, HeaderText } from "@/design-system";
 import { useAuthContext } from "@/lib/context/auth";
 import { useBottomSheetContext } from "@/lib/context/bottom-sheet";
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
@@ -46,27 +46,13 @@ export function ProfileHeaderComponent() {
 
 
   return (
-    <View className="flex">
-      {isBusinessUser && (
-        <View className="flex-row justify-between items-center my-4 rounded-2xl p-4 bg-gray-200">
-          <View className="flex">
-            <Text className="text-md">Switch to business mode</Text>
-            <Text className="font-light italic">Issue and review rewards</Text>
+    <View className="h-full px-2 bg-background">
+      <View className="bg-primary-foreground rounded-b-2xl z-20 p-8 flex">
+        <View className="flex-row justify-around">
+          <View className="flex justify-center items-center">
+            <HeaderText level={2}>Hi {user.firstName} {user.lastName}</HeaderText>
+            <BodyText>Welcome back</BodyText>
           </View>
-          <BusinessModeToggle
-            businessMode={businessMode}
-            setBusinessMode={setBusinessMode}
-          />
-        </View>
-      )}
-
-      <View className="flex-row justify-around">
-        <View className="flex justify-center items-center">
-          <HeaderText level={2}>Hello {user.firstName}</HeaderText>
-          <HeaderText level={4}>Welcome back</HeaderText>
-        </View>
-
-        {!businessMode && (
           <View className="flex">
             <Pressable
               onPress={() =>
@@ -82,8 +68,22 @@ export function ProfileHeaderComponent() {
               </View>
             </Pressable>
           </View>
-        )}
+        </View>
       </View>
+      {isBusinessUser && (
+        <View className="bg-accent rounded-2xl pt-10 pb-4 px-4 -mt-8 z-10">
+          <View className="flex-row justify-between items-center">
+            <View className="flex">
+              <Text className="text-md">Switch to business mode</Text>
+              <Text className="font-light italic">Issue and review rewards</Text>
+            </View>
+            <BusinessModeToggle
+              businessMode={businessMode}
+              setBusinessMode={setBusinessMode}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 }

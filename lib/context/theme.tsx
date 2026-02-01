@@ -6,7 +6,7 @@ export const lightTheme = {
   "--color-primary-foreground": "255 255 255",
   "--color-accent": "196 122 58",
   "--color-accent-foreground": "255 255 255",
-  "--color-background": "#F7F5F2",
+  "--color-background": "247 245 242",
   "--color-surface": "255 255 255",
   "--color-surface-foreground": "26 26 26",
   "--color-border": "217 212 204",
@@ -34,10 +34,12 @@ export const darkTheme = {
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { colorScheme } = useColorScheme();
+  const theme = colorScheme === "dark" ? darkTheme : lightTheme;
+
   return (
-    <VariableContextProvider value={colorScheme === 'dark' ? darkTheme : lightTheme}>
+    <VariableContextProvider value={theme}>
       {children}
     </VariableContextProvider>
-  )
+  );
 }

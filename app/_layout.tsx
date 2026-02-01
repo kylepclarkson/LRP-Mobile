@@ -13,7 +13,7 @@ import { BottomSheetProvider } from "@/lib/context/bottom-sheet";
 import { BusinessResourceProvider } from "@/lib/context/business-resource";
 import { NotificationProvider } from "@/lib/context/notifications";
 import { StampsProvider } from "@/lib/context/stamps";
-import { ThemeProvider } from "@/lib/context/ThemeProvider";
+import { ThemeProvider } from "@/lib/context/theme";
 import { WebSocketProvider } from "@/lib/context/websocket";
 import { View } from "react-native";
 import "./global.css";
@@ -56,8 +56,8 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <View className="flex-1">
-            <ThemeProvider>
+          <ThemeProvider>
+            <View className="flex-1">
               <AuthProvider>
                 <WebSocketProvider>
                   <BottomSheetProvider>
@@ -76,8 +76,8 @@ export default function RootLayout() {
                   </BottomSheetProvider>
                 </WebSocketProvider>
               </AuthProvider>
-            </ThemeProvider>
-          </View>
+            </View>
+          </ThemeProvider>
         </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>

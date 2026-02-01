@@ -5,7 +5,7 @@
 @import "nativewind/theme";
 
 
-:root {
+/* :root {
     --color-primary: #2F5D50;
     --color-primary-foreground: #FFFFFF;
 
@@ -13,6 +13,7 @@
     --color-accent-foreground: #FFFFFF;
 
     --color-background: #F7F5F2;
+    --color-background-default: var(--color-background);
 
     --color-surface: #FFFFFF;
     --color-surface-foreground: #1A1A1A;
@@ -24,7 +25,7 @@
     --color-warning: #DFAF3A;
     --color-error: #B83A3A;
     --color-info: #3A6EA5;
-}
+} */
 
 /* 
 Base theme
@@ -53,7 +54,7 @@ Base theme
 /*
 Dark theme
 */
-.dark {
+/* .dark {
     --color-primary: #4C8A78;
     --color-primary-foreground: #FFFFFF;
 
@@ -72,4 +73,4 @@ Dark theme
     --color-warning: #F4C84A;
     --color-error: #D85C5C;
     --color-info: #5A8CC2;
-}
+} */
