@@ -4,6 +4,28 @@
 
 @import "nativewind/theme";
 
+
+:root {
+    --color-primary: #2F5D50;
+    --color-primary-foreground: #FFFFFF;
+
+    --color-accent: #C47A3A;
+    --color-accent-foreground: #FFFFFF;
+
+    --color-background: #F7F5F2;
+
+    --color-surface: #FFFFFF;
+    --color-surface-foreground: #1A1A1A;
+
+    --color-border: #D9D4CC;
+    --color-muted: #6E6A65;
+
+    --color-success: #3C7A4A;
+    --color-warning: #DFAF3A;
+    --color-error: #B83A3A;
+    --color-info: #3A6EA5;
+}
+
 /* 
 Base theme
 */

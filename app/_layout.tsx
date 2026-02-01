@@ -15,6 +15,7 @@ import { NotificationProvider } from "@/lib/context/notifications";
 import { StampsProvider } from "@/lib/context/stamps";
 import { ThemeProvider } from "@/lib/context/ThemeProvider";
 import { WebSocketProvider } from "@/lib/context/websocket";
+import { View } from "react-native";
 import "./global.css";
 
 function InitialLayout() {
@@ -53,28 +54,30 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={[{ flex: 1 }]} edges={["top"]}>
+      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <ThemeProvider>
-            <AuthProvider>
-              <WebSocketProvider>
-                <BottomSheetProvider>
-                  <BusinessMembershipProvider>
-                    <BusinessResourceProvider>
-                      <RewardsProvider>
-                        <StampsProvider>
-                          <NotificationProvider>
-                            <InitialLayout />
-                            <Toast />
-                          </NotificationProvider>
-                        </StampsProvider>
-                      </RewardsProvider>
-                    </BusinessResourceProvider>
-                  </BusinessMembershipProvider>
-                </BottomSheetProvider>
-              </WebSocketProvider>
-            </AuthProvider>
-          </ThemeProvider>
+          <View className="flex-1">
+            <ThemeProvider>
+              <AuthProvider>
+                <WebSocketProvider>
+                  <BottomSheetProvider>
+                    <BusinessMembershipProvider>
+                      <BusinessResourceProvider>
+                        <RewardsProvider>
+                          <StampsProvider>
+                            <NotificationProvider>
+                              <InitialLayout />
+                              <Toast />
+                            </NotificationProvider>
+                          </StampsProvider>
+                        </RewardsProvider>
+                      </BusinessResourceProvider>
+                    </BusinessMembershipProvider>
+                  </BottomSheetProvider>
+                </WebSocketProvider>
+              </AuthProvider>
+            </ThemeProvider>
+          </View>
         </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>

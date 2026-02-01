@@ -49,7 +49,7 @@ export default function LoginForm() {
   }
 
   return (
-    <View className="flex items-center justify-center bg-gray-50 px-6">
+    <View className="flex items-center justify-center px-6">
       <TextInput
         placeholder="Enter your email"
         value={email}
