@@ -3,3 +3,51 @@
 @import "tailwindcss/utilities.css";
 
 @import "nativewind/theme";
+
+/* 
+Base theme
+*/
+@theme {
+    --color-primary: #2F5D50;
+    --color-primary-foreground: #FFFFFF;
+
+    --color-accent: #C47A3A;
+    --color-accent-foreground: #FFFFFF;
+
+    --color-background: #F7F5F2;
+
+    --color-surface: #FFFFFF;
+    --color-surface-foreground: #1A1A1A;
+
+    --color-border: #D9D4CC;
+    --color-muted: #6E6A65;
+
+    --color-success: #3C7A4A;
+    --color-warning: #DFAF3A;
+    --color-error: #B83A3A;
+    --color-info: #3A6EA5;
+}
+
+/*
+Dark theme
+*/
+.dark {
+    --color-primary: #4C8A78;
+    --color-primary-foreground: #FFFFFF;
+
+    --color-accent: #E0A56A;
+    --color-accent-foreground: #1A1A1A;
+
+    --color-background: #1A1C1A;
+
+    --color-surface: #242624;
+    --color-surface-foreground: #F2F2F2;
+
+    --color-border: #3A3D3A;
+    --color-muted: #A8A8A8;
+
+    --color-success: #4FAF6F;
+    --color-warning: #F4C84A;
+    --color-error: #D85C5C;
+    --color-info: #5A8CC2;
+}

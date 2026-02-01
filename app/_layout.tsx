@@ -13,13 +13,14 @@ import { BottomSheetProvider } from "@/lib/context/bottom-sheet";
 import { BusinessResourceProvider } from "@/lib/context/business-resource";
 import { NotificationProvider } from "@/lib/context/notifications";
 import { StampsProvider } from "@/lib/context/stamps";
+import { ThemeProvider } from "@/lib/context/ThemeProvider";
 import { WebSocketProvider } from "@/lib/context/websocket";
 import "./global.css";
 
 function InitialLayout() {
 
   const { user, isLoadingUser } = useAuthContext();
-  const { businessMode, activeBusinessRole } = useBusinessMembershipContext();
+  const { businessMode } = useBusinessMembershipContext();
 
   if (isLoadingUser) {
     return <LoadingOverlay />
@@ -49,28 +50,31 @@ function InitialLayout() {
 }
 
 export default function RootLayout() {
+
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+      <SafeAreaView style={[{ flex: 1 }]} edges={["top"]}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <AuthProvider>
-            <WebSocketProvider>
-              <BottomSheetProvider>
-                <BusinessMembershipProvider>
-                  <BusinessResourceProvider>
-                    <RewardsProvider>
-                      <StampsProvider>
-                        <NotificationProvider>
-                          <InitialLayout />
-                          <Toast />
-                        </NotificationProvider>
-                      </StampsProvider>
-                    </RewardsProvider>
-                  </BusinessResourceProvider>
-                </BusinessMembershipProvider>
-              </BottomSheetProvider>
-            </WebSocketProvider>
-          </AuthProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <WebSocketProvider>
+                <BottomSheetProvider>
+                  <BusinessMembershipProvider>
+                    <BusinessResourceProvider>
+                      <RewardsProvider>
+                        <StampsProvider>
+                          <NotificationProvider>
+                            <InitialLayout />
+                            <Toast />
+                          </NotificationProvider>
+                        </StampsProvider>
+                      </RewardsProvider>
+                    </BusinessResourceProvider>
+                  </BusinessMembershipProvider>
+                </BottomSheetProvider>
+              </WebSocketProvider>
+            </AuthProvider>
+          </ThemeProvider>
         </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>

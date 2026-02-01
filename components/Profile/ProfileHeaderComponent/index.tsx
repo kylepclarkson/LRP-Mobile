@@ -44,6 +44,7 @@ export function ProfileHeaderComponent() {
     })
   }, [onOfferRewardCreated, close]);
 
+
   return (
     <View className="flex">
       {isBusinessUser && (
