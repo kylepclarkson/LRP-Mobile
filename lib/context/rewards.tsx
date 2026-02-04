@@ -1,17 +1,10 @@
-import { StampCard } from "@/types/stamps";
-import camelcaseKeys from 'camelcase-keys';
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { RewardsService } from "../api/rewards/rewards.service";
 import { OfferReward } from "../api/rewards/rewards.types";
-import { getStampCards } from '../services/stamps.service';
 import { useAuthContext } from './auth';
 
 
 type RewardsContextType = {
-  stampCards: StampCard[] | [];
-  fetchStampCards: () => Promise<void>;
-  isLoading: boolean;
-
   offerRewards: OfferReward[],
   loadingOfferRewards: boolean,
   refreshOfferRewards: () => Promise<void>
@@ -25,8 +18,6 @@ export function RewardsProvider(
   const { user } = useAuthContext();
   // Provide a reference to the user to avoid stale closure issues. 
   const userRef = useRef(user);
-  const [stampCards, setStampCards] = React.useState<StampCard[]>([]);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   // Offer rewards for the current user
   const [offerRewards, setOfferRewards] = useState<OfferReward[]>([]);
@@ -67,31 +58,8 @@ export function RewardsProvider(
   }, [user]);
 
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    // fetchStampCards();
-  }, [user]);
-
-  const fetchStampCards = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedStampCards = await getStampCards();
-      const x = camelcaseKeys(fetchedStampCards, { deep: true }) as unknown as StampCard[];
-      setStampCards(x);
-    } catch (error) {
-      console.error("Error fetching StampCards:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   return (
     <RewardsContext.Provider value={{
-      isLoading,
-      stampCards,
-      fetchStampCards,
       offerRewards,
       loadingOfferRewards,
       refreshOfferRewards
