@@ -56,3 +56,19 @@ To trigger a development build.
 1. Create build request (for Android) `eas build --profile development --platform android`
 
 
+## App styling
+
+This project uses Tailwind V4 for styling through NativeWind V5 integration. 
+The app attempts to provide consistent design through a collection of components within the [/design-system/](./design-system/) directory.
+When appropriate screens should utilize these components to provide consistent styling. 
+
+For UI styling like colors, radius, etc. themes are defined the theme provider class. 
+The philosophy for Aandeg's styles is based on themes provided by daisyUI - https://daisyui.com/theme-generator/
+
+### Colors
+
+- **base** colors provide the "background" for screens, pages, and components. It ranges from 100, 200, and 300 variants for different types of background - from lighter to darker - providing a sense of layers. 
+- **content** - colors are paired with other background colors (e.g. base, primary, secondary, etc.) and can be used for rendering text on top of these colors.  
+
+
+

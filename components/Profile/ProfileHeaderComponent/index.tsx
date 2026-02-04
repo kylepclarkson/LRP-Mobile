@@ -46,8 +46,8 @@ export function ProfileHeaderComponent() {
 
 
   return (
-    <View className="h-full px-2 bg-background">
-      <View className="bg-primary-foreground rounded-b-2xl z-20 p-8 flex">
+    <View className="h-full px-2 ">
+      <View className="bg-base-200 rounded-b-2xl z-20 p-8 flex">
         <View className="flex-row justify-around">
           <View className="flex justify-center items-center">
             <HeaderText level={2}>Hi {user.firstName} {user.lastName}</HeaderText>

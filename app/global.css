@@ -31,7 +31,8 @@
 Base theme
 */
 @theme {
-    --color-primary: #2F5D50;
+    
+    /* --color-primary: #2F5D50;
     --color-primary-foreground: #FFFFFF;
 
     --color-accent: #C47A3A;
@@ -48,7 +49,34 @@ Base theme
     --color-success: #3C7A4A;
     --color-warning: #DFAF3A;
     --color-error: #B83A3A;
-    --color-info: #3A6EA5;
+    --color-info: #3A6EA5; */
+
+    /* Bumblebee theme */
+    --color-base-100: #FFFFFF;
+    --color-base-200: #F7F7F7;
+    --color-base-300: #EBEBEB;
+
+    --color-primary: #FFD600;
+    --color-primary-content: #6B5C3F;
+
+    --color-secondary: #FFAA00;
+    --color-secondary-content: #704E2E;
+
+    --color-accent: #000000;
+    --color-accent-content: #FFFFFF;
+
+    --color-neutral: #5E5E5C;
+    --color-neutral-content: #EBEBEA;
+
+    --color-info: #0095FF;
+    --color-info-content: #00498C;
+    --color-success: #00B56C;
+    --color-success-content: #005837;
+    --color-warning: #FFBB00;
+    --color-warning-content: #734E25;
+    --color-error: #FF5538;
+    --color-error-content: #8C2F21;
+    /* End Bumblebee theme */
 }
 
 /*
