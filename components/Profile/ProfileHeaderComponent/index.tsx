@@ -1,4 +1,3 @@
-import { BusinessModeToggle } from "@/components/common/BusinessModeToggle";
 import { UserRewardBadge } from "@/components/common/UserRewardBadge";
 import { BodyText, HeaderText } from "@/design-system";
 import { useAuthContext } from "@/lib/context/auth";
@@ -47,13 +46,13 @@ export function ProfileHeaderComponent() {
 
   return (
     <View className="h-full px-2 ">
-      <View className="bg-base-200 rounded-b-2xl z-20 p-8 flex">
+      <View className="bg-base-200 rounded-2xl z-20 p-8 flex">
         <View className="flex-row justify-around">
           <View className="flex justify-center items-center">
             <HeaderText level={2}>Hi {user.firstName} {user.lastName}</HeaderText>
             <BodyText>Welcome back</BodyText>
           </View>
-          <View className="flex">
+          <View className="mx-2">
             <Pressable
               onPress={() =>
                 open(UserRewardQRSheetContent, [0.8]) // <— detents here
@@ -71,16 +70,20 @@ export function ProfileHeaderComponent() {
         </View>
       </View>
       {isBusinessUser && (
-        <View className="bg-accent rounded-2xl pt-10 pb-4 px-4 -mt-8 z-10">
+        <View className="bg-secondary rounded-2xl pt-10 pb-4 px-4 -mt-8 z-10">
           <View className="flex-row justify-between items-center">
             <View className="flex">
-              <Text className="text-md">Switch to business mode</Text>
-              <Text className="font-light italic">Issue and review rewards</Text>
+              <Text className="text-md text-secondary-content">Switch to business mode</Text>
+              <Text className="font-light italic text-secondary-content">Issue and review rewards</Text>
             </View>
-            <BusinessModeToggle
-              businessMode={businessMode}
-              setBusinessMode={setBusinessMode}
-            />
+            <Pressable
+              onPress={() => setBusinessMode(!businessMode)}
+              className="px-5 py-2 rounded-full border border-secondary-content"
+            >
+              <Text className="text-secondary-content">
+                {businessMode ? "Customer Mode" : "Business Mode"}
+              </Text>
+            </Pressable>
           </View>
         </View>
       )}
