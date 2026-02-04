@@ -46,17 +46,15 @@ export function ProfileHeaderComponent() {
 
   return (
     <View className="h-full px-2 ">
-      <View className="bg-base-200 rounded-2xl z-20 p-8 flex">
+      <View className="bg-base-200 rounded-2xl z-20 p-4 flex">
         <View className="flex-row justify-around">
           <View className="flex justify-center items-center">
-            <HeaderText level={2}>Hi {user.firstName} {user.lastName}</HeaderText>
+            <HeaderText level={3}>Hi {user.firstName} {user.lastName}</HeaderText>
             <BodyText>Welcome back</BodyText>
           </View>
           <View className="mx-2">
             <Pressable
-              onPress={() =>
-                open(UserRewardQRSheetContent, [0.8]) // <— detents here
-              }
+              onPress={() => open(UserRewardQRSheetContent, [0.8])}
               className="w-full"
             >
               <View className="w-full items-center">
