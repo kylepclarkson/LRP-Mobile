@@ -7,7 +7,7 @@ import { StampProgram } from "../api/stamps/stamps.types";
 
 type BusinessResourceContextType = {
   stampPrograms: StampProgram[];
-  loadingstampPrograms: boolean;
+  loadingStampPrograms: boolean;
   catalogItems: CatalogItem[];
   loadingCatalogItems: boolean;
   offerDefinitions: OfferDefinition[];
@@ -25,8 +25,8 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
 
   const { activeBusinessRole } = useBusinessMembershipContext();
   // The available stamp definitions for the current business
-  const [stampPrograms, setstampPrograms] = useState<StampProgram[]>([]);
-  const [loadingstampPrograms, setLoadingstampPrograms] = useState<boolean>(false);
+  const [stampPrograms, setStampPrograms] = useState<StampProgram[]>([]);
+  const [loadingStampPrograms, setLoadingStampPrograms] = useState<boolean>(false);
 
   // Catalog items for the current business
   const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
@@ -37,26 +37,26 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
   const [loadingOfferDefinitions, setLoadingOfferDefinitions] = useState<boolean>(false);
 
   /** Call backend to fetch stamp definitions.  */
-  const refreshstampPrograms = useCallback(async () => {
+  const refreshStampPrograms = useCallback(async () => {
     console.debug("Refreshing stamp definitions");
     if (!activeBusinessRole || !activeBusinessRole.business) {
-      setstampPrograms([]);
+      setStampPrograms([]);
       return;
     }
     try {
-      setLoadingstampPrograms(true);
-      const data = await BusinessResourceService.getstampPrograms(activeBusinessRole.business.id);
-      setstampPrograms(data);
+      setLoadingStampPrograms(true);
+      const data = await BusinessResourceService.getStampPrograms(activeBusinessRole.business.id);
+      setStampPrograms(data);
     } catch (err) {
       console.error(`Error fetching stamp definitions for ${activeBusinessRole.business.id}`);
     } finally {
-      setLoadingstampPrograms(false);
+      setLoadingStampPrograms(false);
     }
   }, [activeBusinessRole]);
 
   useEffect(() => {
-    refreshstampPrograms();
-  }, [refreshstampPrograms]);
+    refreshStampPrograms();
+  }, [refreshStampPrograms]);
 
   /** Call backend to fetch catalog items */
   const refreshCatalogItems = useCallback(async () => {
@@ -106,7 +106,7 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
   return (
     <BusinessResourceContext.Provider value={{
       stampPrograms,
-      loadingstampPrograms,
+      loadingStampPrograms,
       catalogItems,
       loadingCatalogItems,
       offerDefinitions,

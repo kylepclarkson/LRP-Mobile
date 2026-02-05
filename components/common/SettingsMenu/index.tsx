@@ -14,7 +14,6 @@ export default function SettingsMenu() {
   const { logout } = useAuthContext();
 
   const menuItems: MenuItem[] = [
-    { title: "Employee Settings", href: "./settings/employee-settings" },
     { title: "History", href: "./history" },
     { title: "Preferences", href: "./settings/preferences" }
   ];

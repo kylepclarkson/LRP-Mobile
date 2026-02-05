@@ -10,10 +10,6 @@ export default function SettingsLayout() {
           header: () => <PageHeader headerText="Settings" />
         }}
       />
-      <Stack.Screen
-        name="employee-settings"
-        options={{ headerShown: false }}
-      />
     </Stack>
   );
 }
