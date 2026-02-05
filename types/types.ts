@@ -28,7 +28,7 @@ export type EmployeeGroup = {
 }
 export const getEmployeeGroupLabel = (group: EmployeeGroup) => `${group.business.name} - ${group.name}`;
 
-export const getStampDefinitionLabel = (def: StampProgram) => def.title;
+export const getstampProgramLabel = (def: StampProgram) => def.title;
 
 export type Transaction = {
 

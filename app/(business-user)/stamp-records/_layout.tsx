@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { Stack } from "expo-router";
 
 
-export default function StampDefinitionsLayout() {
+export default function stampProgramsLayout() {
   return (
     <Stack>
       <Stack.Screen

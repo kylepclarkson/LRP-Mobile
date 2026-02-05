@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 export default function CreateStampRecordLayout() {
   return (
     <Stack>
-      <Stack.Screen name="[stampDefinitionId]" options={{ headerShown: false }} />
+      <Stack.Screen name="[stampProgramId]" options={{ headerShown: false }} />
     </Stack>
   );
 }

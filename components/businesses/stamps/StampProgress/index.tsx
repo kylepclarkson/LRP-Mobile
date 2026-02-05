@@ -22,7 +22,7 @@ export function StampProgress({
   animationDelay = 60,
 }: StampProgressProps) {
   const earned = card.stampRecords.length
-  const required = card.stampDefinition.stampsRequired
+  const required = card.stampProgram.stampsRequired
 
   // ✅ Build a single ordered list
   const items = Array.from({ length: required }).map((_, i) => ({

@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native"
 
 export default function ScanCustomerForStampRecord() {
   const params = useLocalSearchParams<{
-    stampDefinitionId: string
+    stampProgramId: string
     amount: string
     currency: string
     notes?: string

@@ -19,7 +19,7 @@ export type StampCard = {
   id: string
   state: string
   createdAt: Date
-  stampDefinition: StampProgram
+  stampProgram: StampProgram
   stampRecords: StampRecord[]
 }
 

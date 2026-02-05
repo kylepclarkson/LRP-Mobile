@@ -25,12 +25,12 @@ type ProgressBarProps = {
  * @returns A value between 0 and 100
  */
 export function computeStampCardProgress(stampCard: StampCard): number {
-  if (stampCard.stampDefinition.stampsRequired === 0) {
+  if (stampCard.stampProgram.stampsRequired === 0) {
     return 0;
-  } else if (stampCard.stampRecords.length >= stampCard.stampDefinition.stampsRequired) {
+  } else if (stampCard.stampRecords.length >= stampCard.stampProgram.stampsRequired) {
     return 100;
   } else {
-    return (stampCard.stampRecords.length / stampCard.stampDefinition.stampsRequired) * 100;
+    return (stampCard.stampRecords.length / stampCard.stampProgram.stampsRequired) * 100;
   }
 }
 

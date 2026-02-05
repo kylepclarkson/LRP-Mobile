@@ -18,7 +18,7 @@ export async function getStampCards(queryString?: string): Promise<StampCard[]> 
 }
 
 export type CreateStampCardRequest = {
-  stampDefinitionId: string;
+  stampProgramId: string;
   transaction: {
     amount: number,
     currencyCode: string,
@@ -26,7 +26,7 @@ export type CreateStampCardRequest = {
 }
 
 export type CreateStampCardResponse = {
-  stampDefinitionId: string,
+  stampProgramId: string,
   stampRecordId: string,
   createdAt: Date,
   claimBy: Date,
@@ -81,14 +81,14 @@ export async function stampRecordUpdateState(
 
 
 export type AssignStampCardRequest = {
-  stampDefinitionId: string
+  stampProgramId: string
 }
 
 /**
  * Assigns the StampCard for this ID to the current user by attaching it to an active StampCard 
  * owned by this customer. 
  * @param stampCardId - The ID of the StampCard to be assigned.
- * @param req - Contains the StampDefinition ID for which this StampCard was created for. 
+ * @param req - Contains the stampProgram ID for which this StampCard was created for. 
  * @returns 
  */
 export async function assignStampCard(stampCardId: string, req: AssignStampCardRequest) {

@@ -12,7 +12,7 @@ export const StampCardStory: StoryObj<typeof meta> = {
       id: '1',
       state: "in_progress",
       createdAt: new Date(),
-      stampDefinition: {
+      stampProgram: {
         id: "1",
         title: 'Buy 10 coffees, get 1 free',
         description: "This is a sample stamp card",

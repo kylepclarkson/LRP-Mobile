@@ -53,7 +53,7 @@
 
 //   // const handleCreateStampRecordPress = async () => {
 //   //   const req: CreateStampCardRequest = {
-//   //     stampDefinitionId: activeStampDefinition!.id,
+//   //     stampProgramId: activestampProgram!.id,
 //   //     transaction: {
 //   //       amount: currencyData.value,
 //   //       currencyCode: "CAD"
@@ -96,9 +96,9 @@
 
 
 //   // const {
-//   //   activeStampDefinition,
-//   //   setActiveStampDefinition,
-//   //   stampDefinitions
+//   //   activestampProgram,
+//   //   setActivestampProgram,
+//   //   stampPrograms
 //   // } = useBusinessMembershipContext();
 
 //   return (

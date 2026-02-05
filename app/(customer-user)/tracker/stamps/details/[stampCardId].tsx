@@ -19,10 +19,10 @@ export default function StampCardDetailPage() {
       {/* Header */}
       <View className="mb-6">
         <Text className="text-2xl font-bold text-gray-900">
-          {stampCard?.stampDefinition.title}
+          {stampCard?.stampProgram.title}
         </Text>
         <Text className="text-gray-500 mt-1">
-          {stampCard?.stampDefinition.business?.name}
+          {stampCard?.stampProgram.business?.name}
         </Text>
       </View>
 
@@ -46,35 +46,35 @@ export default function StampCardDetailPage() {
       </View>
 
       {/* Description */}
-      {stampCard?.stampDefinition.description && (
+      {stampCard?.stampProgram.description && (
         <Section title="About this reward">
-          <Text className="text-gray-700">{stampCard?.stampDefinition.description}</Text>
+          <Text className="text-gray-700">{stampCard?.stampProgram.description}</Text>
         </Section>
       )}
 
       {/* How to Earn */}
-      {stampCard?.stampDefinition.progressionText && (
+      {stampCard?.stampProgram.progressionText && (
         <Section title="How to earn stamps">
-          <Text className="text-gray-700">{stampCard?.stampDefinition.progressionText}</Text>
+          <Text className="text-gray-700">{stampCard?.stampProgram.progressionText}</Text>
         </Section>
       )}
 
       {/* How to Redeem */}
-      {stampCard?.stampDefinition.redemptionText && (
+      {stampCard?.stampProgram.redemptionText && (
         <Section title="How to redeem">
-          <Text className="text-gray-700">{stampCard?.stampDefinition.redemptionText}</Text>
+          <Text className="text-gray-700">{stampCard?.stampProgram.redemptionText}</Text>
         </Section>
       )}
 
       {/* Business Info */}
-      {/* {stampCard?.stampDefinition.business && (
+      {/* {stampCard?.stampProgram.business && (
         <Section title="Offered by">
           <Text className="text-gray-900 font-semibold">
-            {stampCard?.stampDefinition.business.name}
+            {stampCard?.stampProgram.business.name}
           </Text>
-          {stampCard?.stampDefinition.business.address && (
+          {stampCard?.stampProgram.business.address && (
             <Text className="text-gray-600 mt-1">
-              {stampCard?.stampDefinition.business.address}
+              {stampCard?.stampProgram.business.address}
             </Text>
           )}
         </Section>

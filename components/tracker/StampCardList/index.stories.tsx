@@ -8,7 +8,7 @@ const stampCardsData: StampCard[] = [
     id: '1',
     state: "in_progress",
     createdAt: new Date(),
-    stampDefinition: {
+    stampProgram: {
       id: "1",
       title: 'Free bag of dog food',
       description: "Buy 5 bags of FirstMates dog food and receive a free one.",
@@ -32,7 +32,7 @@ const stampCardsData: StampCard[] = [
     id: '2',
     state: "in_progress",
     createdAt: new Date(),
-    stampDefinition: {
+    stampProgram: {
       id: "1",
       title: 'Buy 5 coffees, get 1 free',
       description: "This is a sample stamp card",
@@ -58,7 +58,7 @@ const stampCardsData: StampCard[] = [
     id: '3',
     state: "in_progress",
     createdAt: new Date(),
-    stampDefinition: {
+    stampProgram: {
       id: "1",
       title: 'Free bag of dog food',
       description: "Buy 5 bags of FirstMates dog food and receive a free one.",
@@ -82,7 +82,7 @@ const stampCardsData: StampCard[] = [
     id: '4',
     state: "in_progress",
     createdAt: new Date(),
-    stampDefinition: {
+    stampProgram: {
       id: "1",
       title: 'Buy 5 coffees, get 1 free',
       description: "This is a sample stamp card",

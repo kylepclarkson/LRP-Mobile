@@ -7,7 +7,7 @@ import { BusinessResourceUrls } from "./business-resource.urls";
 
 
 export const BusinessResourceService = {
-  getStampDefinitions: (businessId: string, params?: any) => get<StampProgram[]>(BusinessResourceUrls.stampDefinitions(businessId, params)),
+  getstampPrograms: (businessId: string, params?: any) => get<StampProgram[]>(BusinessResourceUrls.stampPrograms(businessId, params)),
   getCatalogItems: (businessId: string) => get<CatalogItem[]>(BusinessResourceUrls.catalogItems(businessId)),
   getOfferDefinitions: (businessId: string) => get<OfferDefinition[]>(BusinessResourceUrls.offerDefinitions(businessId)),
 

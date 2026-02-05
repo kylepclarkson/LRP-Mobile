@@ -3,7 +3,7 @@ export const BusinessResourceUrls = {
   /**
    * Fetches stamp definitions for a business. 
    */
-  stampDefinitions: (
+  stampPrograms: (
     businessId: string | number,
     params?: Record<string, string | number | boolean | undefined>
   ) => {

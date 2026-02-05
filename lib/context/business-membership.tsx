@@ -13,9 +13,9 @@ type BusinessMembershipContextType = {
   isBusinessUser: boolean;
   businessMode: boolean;
   setBusinessMode: React.Dispatch<React.SetStateAction<boolean>>;
-  // stampDefinitions: StampDefinition[] | null;
-  // activeStampDefinition: StampDefinition | null;
-  // setActiveStampDefinition: React.Dispatch<React.SetStateAction<StampDefinition | null>>;
+  // stampPrograms: stampProgram[] | null;
+  // activestampProgram: stampProgram | null;
+  // setActivestampProgram: React.Dispatch<React.SetStateAction<stampProgram | null>>;
 }
 
 const BusinessMembershipContext = createContext<BusinessMembershipContextType | undefined>(undefined);
@@ -37,8 +37,8 @@ export function BusinessMembershipProvider({ children }: { children: React.React
   // TODO: This should be fetched from user preferences and an enum should be used instead of a boolean.
   const [businessMode, setBusinessMode] = useState<boolean>(false);
 
-  const [stampDefinitions, setStampDefinitions] = useState<StampProgram[] | null>(null);
-  const [activeStampDefinition, setActiveStampDefinition] = useState<StampProgram | null>(null);
+  const [stampPrograms, setstampPrograms] = useState<StampProgram[] | null>(null);
+  const [activestampProgram, setActivestampProgram] = useState<StampProgram | null>(null);
 
   /**
    * Set the user's business roles.

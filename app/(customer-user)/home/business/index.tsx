@@ -13,7 +13,7 @@ export default function BusinessRewardsScreen() {
   const bottomSheetRef = useRef<TrueSheet>(null);
 
   const [sheetContent, setSheetContent] = React.useState<JSX.Element | null>(null);
-  const [stampDefinitions, setStampDefinitions] = React.useState<StampProgram[]>([]);
+  const [stampPrograms, setstampPrograms] = React.useState<StampProgram[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
 
@@ -40,9 +40,9 @@ export default function BusinessRewardsScreen() {
               onPress={async () => {
                 console.debug("Navigating to create stamp record screen for stamp definition", item.id);
                 router.push({
-                  pathname: `/home/business/stamp-definition/create-stamp-record/[stampDefinitionId]`,
+                  pathname: `/home/business/stamp-definition/create-stamp-record/[stampProgramId]`,
                   params: {
-                    stampDefinitionId: item.id,
+                    stampProgramId: item.id,
                     title: item.title
                   }
                 })
@@ -86,7 +86,7 @@ export default function BusinessRewardsScreen() {
         <ElevatedCard className="mt-4">
           <Text className="text-xl font-bold mb-2">Available Rewards</Text>
           <FlatList
-            data={stampDefinitions}
+            data={stampPrograms}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => renderItem({ item })}
             ListEmptyComponent={EmptyList}

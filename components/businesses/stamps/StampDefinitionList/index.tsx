@@ -2,18 +2,18 @@ import { StampProgram } from "@/lib/api/stamps/stamps.types";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FlatList, Pressable, Text, View } from "react-native";
 
-type StampDefinitionListProps = {
-  stampDefinitions: StampProgram[],
+type stampProgramListProps = {
+  stampPrograms: StampProgram[],
   onPress: (item: StampProgram) => void
 }
 
 
-export function StampDefinitionList({ stampDefinitions, onPress }: StampDefinitionListProps) {
+export function stampProgramList({ stampPrograms, onPress }: stampProgramListProps) {
   return (
     <View className="px-4 mt-4">
       <View className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <FlatList
-          data={stampDefinitions}
+          data={stampPrograms}
           keyExtractor={(item) => item.id}
           scrollEnabled={false}
           ItemSeparatorComponent={() => (

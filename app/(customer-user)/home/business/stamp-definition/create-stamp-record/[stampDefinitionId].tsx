@@ -17,9 +17,9 @@ import Toast from "react-native-toast-message";
 
 export default function CreateStampRecordScreen() {
   const {
-    stampDefinitionId,
+    stampProgramId,
     title
-  } = useLocalSearchParams<{ stampDefinitionId: string, title: string }>();
+  } = useLocalSearchParams<{ stampProgramId: string, title: string }>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stampRecordClaimed, setStampRecordClaimed] = useState(false);
@@ -94,7 +94,7 @@ export default function CreateStampRecordScreen() {
 
     const createStampRecordRequest = async () => {
       const res = await createStampRecord({
-        stampDefinitionId,
+        stampProgramId,
         transaction: {
           amount: currencyAmount,
           currencyCode

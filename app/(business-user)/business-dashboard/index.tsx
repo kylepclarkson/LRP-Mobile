@@ -39,9 +39,9 @@ function SectionWithRows({
 
 export default function BusinessScreen() {
   const { activeBusinessRole } = useBusinessMembershipContext()
-  const { stampDefinitions } = useBusinessResourceContext()
+  const { stampPrograms } = useBusinessResourceContext()
 
-  if (!stampDefinitions || !activeBusinessRole) {
+  if (!stampPrograms || !activeBusinessRole) {
     return null
   }
 

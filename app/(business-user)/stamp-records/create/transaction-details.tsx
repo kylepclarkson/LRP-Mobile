@@ -7,19 +7,19 @@ import { useMemo } from "react"
 import { Text, View } from "react-native"
 
 export default function CreateStampRecordScreen() {
-  const { stampDefinitionId } = useLocalSearchParams<{ stampDefinitionId: string }>()
-  const { stampDefinitions, loadingStampDefinitions } = useBusinessResourceContext()
+  const { stampProgramId } = useLocalSearchParams<{ stampProgramId: string }>()
+  const { stampPrograms, loadingstampPrograms } = useBusinessResourceContext()
 
-  const stampDefinition = useMemo(() => {
-    if (!stampDefinitions) return null
-    return stampDefinitions.find(def => def.id === stampDefinitionId) ?? null
-  }, [stampDefinitions, stampDefinitionId])
+  const stampProgram = useMemo(() => {
+    if (!stampPrograms) return null
+    return stampPrograms.find(def => def.id === stampProgramId) ?? null
+  }, [stampPrograms, stampProgramId])
 
-  if (loadingStampDefinitions) {
+  if (loadingstampPrograms) {
     return <LoadingOverlay />
   }
 
-  if (!stampDefinition) {
+  if (!stampProgram) {
     return (
       <View className="flex-1 items-center justify-center px-6">
         <Text className="text-lg font-semibold text-gray-800">
@@ -36,7 +36,7 @@ export default function CreateStampRecordScreen() {
     router.push({
       pathname: "/(business-user)/stamp-records/create/scan-customer",
       params: {
-        stampDefinitionId,
+        stampProgramId,
         amount: values.currencyAmount,
         currency: values.currencyCode,
         notes: values.details ?? ""
@@ -50,7 +50,7 @@ export default function CreateStampRecordScreen() {
         Create Stamp Record
       </Text>
 
-      <Text className="mt-2 text-gray-700">{stampDefinition.title}</Text>
+      <Text className="mt-2 text-gray-700">{stampProgram.title}</Text>
       <CreateStampRecordForm
         onSubmit={handleFormSubmission}
       />
