@@ -1,12 +1,12 @@
 import { useBusinessMembershipContext } from "@/lib/context/business-membership";
-import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessResourceService } from "../api/business-resource/business-resource.service";
 import { CatalogItem } from "../api/business-resource/business-resource.types";
 import { OfferDefinition } from "../api/rewards/rewards.types";
+import { StampProgram } from "../api/stamps/stamps.types";
 
 type BusinessResourceContextType = {
-  stampDefinitions: StampDefinition[];
+  stampDefinitions: StampProgram[];
   loadingStampDefinitions: boolean;
   catalogItems: CatalogItem[];
   loadingCatalogItems: boolean;
@@ -25,7 +25,7 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
 
   const { activeBusinessRole } = useBusinessMembershipContext();
   // The available stamp definitions for the current business
-  const [stampDefinitions, setStampDefinitions] = useState<StampDefinition[]>([]);
+  const [stampDefinitions, setStampDefinitions] = useState<StampProgram[]>([]);
   const [loadingStampDefinitions, setLoadingStampDefinitions] = useState<boolean>(false);
 
   // Catalog items for the current business

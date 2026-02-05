@@ -1,5 +1,5 @@
+import { StampCard } from "@/lib/api/stamps/stamps.types";
 import { snapPointValues } from '@/lib/util';
-import { StampCard } from "@/types/stamps";
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';

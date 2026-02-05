@@ -1,4 +1,4 @@
-import { StampCard } from "@/types/stamps";
+import { StampCard } from "@/lib/api/stamps/stamps.types";
 import Entypo from '@expo/vector-icons/Entypo';
 import { MotiView } from "moti";
 import React from "react";

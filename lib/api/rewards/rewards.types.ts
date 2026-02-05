@@ -27,6 +27,7 @@ export type OfferDefinition = {
     rules: OfferRulesMap[K];
   };
 }[OfferType];
+
 /** Mapping from offerType value to readable text.  */
 export const OfferTypeText = {
   free_item: "Free item",

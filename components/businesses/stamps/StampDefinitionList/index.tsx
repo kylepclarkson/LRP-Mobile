@@ -1,10 +1,10 @@
-import { StampDefinition } from "@/types/stamps";
+import { StampProgram } from "@/lib/api/stamps/stamps.types";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 type StampDefinitionListProps = {
-  stampDefinitions: StampDefinition[],
-  onPress: (item: StampDefinition) => void
+  stampDefinitions: StampProgram[],
+  onPress: (item: StampProgram) => void
 }
 
 

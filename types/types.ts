@@ -1,5 +1,5 @@
+import { StampProgram } from "@/lib/api/stamps/stamps.types"
 import { Business } from "./businesses"
-import { StampDefinition } from "./stamps"
 
 /**
  * An authenticated user.
@@ -28,7 +28,7 @@ export type EmployeeGroup = {
 }
 export const getEmployeeGroupLabel = (group: EmployeeGroup) => `${group.business.name} - ${group.name}`;
 
-export const getStampDefinitionLabel = (def: StampDefinition) => def.title;
+export const getStampDefinitionLabel = (def: StampProgram) => def.title;
 
 export type Transaction = {
 

@@ -1,4 +1,4 @@
-import { StampCard } from "@/types/stamps";
+import { StampCard } from "@/lib/api/stamps/stamps.types";
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { Text, View } from 'react-native';

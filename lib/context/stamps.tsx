@@ -1,6 +1,6 @@
-import { StampCard } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { getStampCards } from "../services/stamps.service";
+import { StampsService } from "../api/stamps/stamps.service";
+import { StampCard } from "../api/stamps/stamps.types";
 import { useAuthContext } from "./auth";
 
 /**
@@ -9,8 +9,7 @@ import { useAuthContext } from "./auth";
 type StampsContextType = {
   stampCards: StampCard[];
   loadingStampCards: boolean;
-  errorStampCards: string | null;
-  fetchStampCards: (queryParams?: string) => Promise<void>;
+  refreshStampCards: (queryParams?: string) => Promise<void>;
 }
 
 const StampsContext = createContext<StampsContextType | undefined>(undefined);
@@ -25,10 +24,13 @@ export function StampsProvider(
   // Stamp card states
   const [stampCards, setStampCards] = useState<StampCard[]>([]);
   const [loadingStampCards, setLoadingStampCards] = useState<boolean>(false);
-  const [errorStampCards, setErrorStampCards] = useState<string | null>(null);
 
+  useEffect(() => {
+    userRef.current = user;
+  }, [user])
 
   const refreshStampCards = useCallback(async (queryParams?: string) => {
+    console.debug("Refreshing stamp cards");
     if (!userRef.current) {
       console.debug("Clearing stamp cards");
       setStampCards([]);
@@ -37,9 +39,10 @@ export function StampsProvider(
     try {
       setLoadingStampCards(true);
       // TODO implement and user stamps.service.ts w/ query params
-      const data = await getStampCards(queryParams);
+      // const data = await getStampCards(queryParams);
+      const data = await StampsService.getStampCards(queryParams);
       setStampCards(data);
-      console.debug("Fetched stamp cards");
+      console.debug("Fetched stamp cards", JSON.stringify(data));
     } catch (err) {
       console.error("Error fetching stamp cards", err);
       setErrorStampCards("Error fetching stamp cards");
@@ -54,37 +57,36 @@ export function StampsProvider(
 
 
   // --- TODO replace below with the above.
-  const fetchStampCards = useCallback(async (queryParams?: string) => {
-    setLoadingStampCards(true);
-    try {
-      const res = await getStampCards(queryParams);
-      setStampCards(res);
-    } catch (err) {
-      setStampCards([]);
-      setErrorStampCards("Error fetching stamp cards");
-    } finally {
-      setLoadingStampCards(false);
-    }
-  }, [user]);
+  // const fetchStampCards = useCallback(async (queryParams?: string) => {
+  //   setLoadingStampCards(true);
+  //   try {
+  //     const res = await getStampCards(queryParams);
+  //     setStampCards(res);
+  //   } catch (err) {
+  //     setStampCards([]);
+  //     setErrorStampCards("Error fetching stamp cards");
+  //   } finally {
+  //     setLoadingStampCards(false);
+  //   }
+  // }, [user]);
 
 
-  useEffect(() => {
-    if (!user) {
-      setStampCards([]);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!user) {
+  //     setStampCards([]);
+  //     return;
+  //   }
 
-    fetchStampCards();
+  //   fetchStampCards();
 
-  }, [user, fetchStampCards]);
+  // }, [user, fetchStampCards]);
   // --- ---
 
   return (
     <StampsContext.Provider value={{
       stampCards,
       loadingStampCards,
-      errorStampCards,
-      fetchStampCards
+      refreshStampCards,
     }}>
       {children}
     </StampsContext.Provider>

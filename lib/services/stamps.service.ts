@@ -1,6 +1,6 @@
 import { get, patch, paths, post } from '@/lib/api/http/api';
-import { StampCard } from "@/types/stamps";
 import { Transaction } from '@/types/types';
+import { StampCard } from "../api/stamps/stamps.types";
 
 
 /** Retrieve the current user's StampCards. By default, it retrieves all 

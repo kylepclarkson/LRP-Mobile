@@ -1,8 +1,8 @@
 import { useAuthContext } from "@/lib/context/auth";
 import { BusinessRole } from "@/types/businesses";
-import { StampDefinition } from "@/types/stamps";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { BusinessService } from "../api/businesses/businesses.service";
+import { StampProgram } from "../api/stamps/stamps.types";
 
 type BusinessMembershipContextType = {
 
@@ -37,8 +37,8 @@ export function BusinessMembershipProvider({ children }: { children: React.React
   // TODO: This should be fetched from user preferences and an enum should be used instead of a boolean.
   const [businessMode, setBusinessMode] = useState<boolean>(false);
 
-  const [stampDefinitions, setStampDefinitions] = useState<StampDefinition[] | null>(null);
-  const [activeStampDefinition, setActiveStampDefinition] = useState<StampDefinition | null>(null);
+  const [stampDefinitions, setStampDefinitions] = useState<StampProgram[] | null>(null);
+  const [activeStampDefinition, setActiveStampDefinition] = useState<StampProgram | null>(null);
 
   /**
    * Set the user's business roles.

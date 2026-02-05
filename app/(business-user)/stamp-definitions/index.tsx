@@ -1,7 +1,7 @@
 import { StampDefinitionList } from "@/components/businesses/stamps/StampDefinitionList"
 import { LoadingOverlay } from "@/components/common/LoadingOverlay"
+import { StampProgram } from "@/lib/api/stamps/stamps.types"
 import { useBusinessResourceContext } from "@/lib/context/business-resource"
-import { StampDefinition } from "@/types/stamps"
 import { TrueSheet } from "@lodev09/react-native-true-sheet"
 import { useIsFocused } from "@react-navigation/native"
 import { router } from "expo-router"
@@ -12,8 +12,8 @@ function SheetContent({
   stampDefinition,
   onCreatePress,
 }: {
-  stampDefinition: StampDefinition | null
-  onCreatePress: (d: StampDefinition) => void
+  stampDefinition: StampProgram | null
+  onCreatePress: (d: StampProgram) => void
 }) {
   if (!stampDefinition) return <View style={{ height: 1 }} />
 
@@ -60,7 +60,7 @@ export default function StampDefinitionsScreen() {
   const { stampDefinitions, loadingStampDefinitions } = useBusinessResourceContext()
 
   const sheetRef = useRef<TrueSheet>(null)
-  const [stampDefinition, setStampDefinition] = useState<StampDefinition | null>(null)
+  const [stampDefinition, setStampDefinition] = useState<StampProgram | null>(null)
 
   const isFocused = useIsFocused()
 
@@ -72,12 +72,12 @@ export default function StampDefinitionsScreen() {
     }
   }, [isFocused])
 
-  const openSheet = (def: StampDefinition) => {
+  const openSheet = (def: StampProgram) => {
     setStampDefinition(def)
     sheetRef.current?.present()
   }
 
-  const navigateToCreateStampRecordScreen = async (def: StampDefinition) => {
+  const navigateToCreateStampRecordScreen = async (def: StampProgram) => {
     setStampDefinition(null)
     router.push({
       pathname: "/(business-user)/stamp-records/create/transaction-details",

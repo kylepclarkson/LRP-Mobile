@@ -1,19 +1,19 @@
 import { StampProgress } from "@/components/businesses/stamps/StampProgress";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { StampCard, StampCardState } from "@/lib/api/stamps/stamps.types";
 import { useStampsContext } from "@/lib/context/stamps";
-import { StampCard, StampCardState } from "@/types/stamps";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 export default function RewardTrackerScreen() {
 
-  const { stampCards, fetchStampCards, loadingStampCards } = useStampsContext();
+  const { stampCards, loadingStampCards, refreshStampCards } = useStampsContext();
   // filter for cards that are in progress
   const inProgressStampCards = stampCards.filter(card => card.state === StampCardState.IN_PROGRESS)
 
   useEffect(() => {
-    fetchStampCards();
+    refreshStampCards();
   }, [])
 
   const renderStampCardItem = ({ item }: { item: StampCard }) => (

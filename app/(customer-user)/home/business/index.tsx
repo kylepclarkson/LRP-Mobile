@@ -1,7 +1,7 @@
 import ElevatedCard from "@/components/common/ElevatedCard";
 import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import SharedPageWrapper from "@/components/common/SharedPageWrapper";
-import { StampDefinition } from "@/types/stamps";
+import { StampProgram } from "@/lib/api/stamps/stamps.types";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router } from "expo-router";
 import React, { JSX, useRef } from "react";
@@ -13,7 +13,7 @@ export default function BusinessRewardsScreen() {
   const bottomSheetRef = useRef<TrueSheet>(null);
 
   const [sheetContent, setSheetContent] = React.useState<JSX.Element | null>(null);
-  const [stampDefinitions, setStampDefinitions] = React.useState<StampDefinition[]>([]);
+  const [stampDefinitions, setStampDefinitions] = React.useState<StampProgram[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
 
@@ -26,7 +26,7 @@ export default function BusinessRewardsScreen() {
     openBottomSheet();
   }, [sheetContent]);
 
-  const renderItem = ({ item }: { item: StampDefinition }) => (
+  const renderItem = ({ item }: { item: StampProgram }) => (
     <Pressable
       onPress={() => {
         setSheetContent(

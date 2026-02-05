@@ -1,4 +1,4 @@
-import { StampCard } from "@/types/stamps";
+import { StampCard } from "@/lib/api/stamps/stamps.types";
 import { Meta, StoryObj } from "@storybook/react-native";
 import { StampCardList } from ".";
 
