@@ -17,9 +17,10 @@ export function UserRewardBadge({
   const value = stringifyBadgePayload(payload);
 
   return (
-    <View className="w-full items-center justify-center">
+    <View className="w-full items-center justify-center ">
       <QRCode
         value={value}
+        logo={require('@/assets/images/aandeg-icon.png')}
         size={size}
       />
     </View>
