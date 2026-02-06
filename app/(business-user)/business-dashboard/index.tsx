@@ -85,12 +85,12 @@ export default function BusinessScreen() {
       />
 
       <SectionWithRows
-        title="Stamp Programs"
+        title="Stamps Programs"
         subtitle="View available stamp programs or issue a stamp"
         rows={[
           {
             icon: <FontAwesome5 name="stamp" size={28} color="#374151" />,
-            label: "Stamps programs",
+            label: "Stamps Programs",
             onPress: () => router.push("/(business-user)/business-dashboard/stamp-programs"),
           },
         ]}

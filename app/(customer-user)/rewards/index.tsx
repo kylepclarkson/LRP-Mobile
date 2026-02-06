@@ -81,7 +81,6 @@ export default function RewardsScreen() {
       {/* List */}
       {!loadingOfferRewards && offerRewards.length > 0 && (
         <View className="flex-1">
-          {/* <ListCard> */}
           <FlatList
             data={offerRewards}
             keyExtractor={(item) => item.id}
