@@ -74,7 +74,7 @@ export default function BusinessScreen() {
 
       <SectionWithRows
         title="Offers"
-        subtitle="View available offers"
+        subtitle="View available offers or generate an offer reward"
         rows={[
           {
             icon: <FontAwesome5 name="tags" size={28} color="#374151" />,
@@ -85,18 +85,13 @@ export default function BusinessScreen() {
       />
 
       <SectionWithRows
-        title="Available Rewards"
-        subtitle="Select a reward type to issue"
+        title="Stamp Programs"
+        subtitle="View available stamp programs or issue a stamp"
         rows={[
           {
             icon: <FontAwesome5 name="stamp" size={28} color="#374151" />,
-            label: "Stamps",
+            label: "Stamps programs",
             onPress: () => router.push("/(business-user)/business-dashboard/stamp-programs"),
-          },
-          {
-            icon: <FontAwesome5 name="coins" size={28} color="#374151" />,
-            label: "Points",
-            onPress: () => { },
           },
         ]}
       />
