@@ -38,14 +38,11 @@ export function StampsProvider(
     }
     try {
       setLoadingStampCards(true);
-      // TODO implement and user stamps.service.ts w/ query params
-      // const data = await getStampCards(queryParams);
       const data = await StampsService.getStampCards(queryParams);
       setStampCards(data);
       console.debug("Fetched stamp cards", JSON.stringify(data));
     } catch (err) {
       console.error("Error fetching stamp cards", err);
-      setErrorStampCards("Error fetching stamp cards");
     } finally {
       setLoadingStampCards(false);
     }
@@ -54,33 +51,6 @@ export function StampsProvider(
   useEffect(() => {
     refreshStampCards();
   }, [user]);
-
-
-  // --- TODO replace below with the above.
-  // const fetchStampCards = useCallback(async (queryParams?: string) => {
-  //   setLoadingStampCards(true);
-  //   try {
-  //     const res = await getStampCards(queryParams);
-  //     setStampCards(res);
-  //   } catch (err) {
-  //     setStampCards([]);
-  //     setErrorStampCards("Error fetching stamp cards");
-  //   } finally {
-  //     setLoadingStampCards(false);
-  //   }
-  // }, [user]);
-
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     setStampCards([]);
-  //     return;
-  //   }
-
-  //   fetchStampCards();
-
-  // }, [user, fetchStampCards]);
-  // --- ---
 
   return (
     <StampsContext.Provider value={{

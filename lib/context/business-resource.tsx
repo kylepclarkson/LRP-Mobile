@@ -8,8 +8,11 @@ import { StampProgram } from "../api/stamps/stamps.types";
 type BusinessResourceContextType = {
   stampPrograms: StampProgram[];
   loadingStampPrograms: boolean;
+  refreshStampPrograms: () => Promise<void>;
+
   catalogItems: CatalogItem[];
   loadingCatalogItems: boolean;
+  
   offerDefinitions: OfferDefinition[];
   loadingOfferDefinitions: boolean;
 }
@@ -107,8 +110,11 @@ export function BusinessResourceProvider({ children }: { children: React.ReactNo
     <BusinessResourceContext.Provider value={{
       stampPrograms,
       loadingStampPrograms,
+      refreshStampPrograms, 
+
       catalogItems,
       loadingCatalogItems,
+      
       offerDefinitions,
       loadingOfferDefinitions
     }}>

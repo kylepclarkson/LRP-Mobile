@@ -7,7 +7,7 @@ export const BusinessResourceUrls = {
     businessId: string | number,
     params?: Record<string, string | number | boolean | undefined>
   ) => {
-    const base = `businesses/${businessId}/stamp-definitions/`
+    const base = `businesses/${businessId}/stamp-programs/`
     if (!params) return base;
     const query = new URLSearchParams()
     Object.entries(params).forEach(([key, value]) => {

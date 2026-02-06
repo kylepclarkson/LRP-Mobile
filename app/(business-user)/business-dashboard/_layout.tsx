@@ -21,6 +21,7 @@ export default function BusinessLayout() {
 
       <Stack.Screen name="catalog" options={{ headerShown: false }} />
       <Stack.Screen name="offers" options={{ headerShown: false }} />
+      <Stack.Screen name="stamp-programs" options={{ headerShown: false }} />
     </Stack>
   )
 }
