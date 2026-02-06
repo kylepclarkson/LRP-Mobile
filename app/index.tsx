@@ -21,7 +21,7 @@ export default function Index() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1"
     >
-      <View className="flex-1 justify-center p-4 bg-primary">
+      <View className="flex-1 p-4 bg-primary pt-28">
         <View className="rounded-full bg-primary-content h-30 w-30 self-center p-1 mb-2">
           <Image
             source={require('@/assets/images/aandeg-icon.png')}
