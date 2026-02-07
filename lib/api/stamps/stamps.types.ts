@@ -31,8 +31,8 @@ export type StampProgram = {
   id: string
   title: string
   description: string
-  progressionText: string
-  redemptionText: string
+  triggerInstructions: string,
+  employeeInstructions: string,
   stampsRequired: number
   createdAt: Date
   state: StampProgramState
