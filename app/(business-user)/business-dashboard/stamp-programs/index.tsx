@@ -3,8 +3,7 @@ import { HeaderText, PressableListItem } from "@/design-system";
 import { StampProgram } from "@/lib/api/stamps/stamps.types";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, Text, View } from "react-native";
 
 
 function StampProgramListItem({ stampProgram }: { stampProgram: StampProgram }) {
@@ -13,7 +12,7 @@ function StampProgramListItem({ stampProgram }: { stampProgram: StampProgram }) 
       <View className="flex bg-gray-300 rounded-xl h-12 w-12 justify-center items-center">
         <FontAwesome6 name="gift" size={24} />
       </View>
-      <View className="flex ml-2">
+      <View className="flex-1 ml-2">
         <HeaderText level={3}>{stampProgram.title}</HeaderText>
         <HeaderText level={6}>{stampProgram.description}</HeaderText>
       </View>

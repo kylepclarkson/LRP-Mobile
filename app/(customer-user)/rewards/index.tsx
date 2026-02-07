@@ -34,6 +34,14 @@ function StatusPill({ offerReward }: StatusPillProps) {
   )
 }
 
+function EmptyOfferRewards() {
+  return (
+    <View className="mt-10 items-center">
+      <Text className="text-gray-600">No items yet</Text>
+    </View>
+  )
+}
+
 function RewardsListHeader() {
   return (
     <View className="ml-2 py-4">
@@ -71,20 +79,14 @@ export default function RewardsScreen() {
         </View>
       )}
 
-      {/* Empty state */}
-      {!loadingOfferRewards && offerRewards.length === 0 && (
-        <View className="mt-10 items-center">
-          <Text className="text-gray-600">No items yet</Text>
-        </View>
-      )}
-
       {/* List */}
-      {!loadingOfferRewards && offerRewards.length > 0 && (
+      {!loadingOfferRewards && (
         <View className="flex-1">
           <FlatList
             data={offerRewards}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={RewardsListHeader}
+            ListEmptyComponent={EmptyOfferRewards}
             refreshing={loadingOfferRewards}
             onRefresh={refreshOfferRewards}
             renderItem={({ item, index }) => (
