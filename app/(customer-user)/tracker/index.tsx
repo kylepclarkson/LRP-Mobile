@@ -14,6 +14,14 @@ function StampListHeader() {
   )
 }
 
+function EmptyStampList() {
+  return (
+    <View className="mt-10 items-center">
+      <Text className="text-lg text-gray-900">No stamp cards yet</Text>
+    </View>
+  )
+}
+
 /**
  * Displays the user's stamp cards. 
  * By default the stamp cards are filter to be those "in-progress".
@@ -46,7 +54,6 @@ export default function RewardTrackerScreen() {
         <StampProgress card={item} />
       </View>
     </Pressable>
-
   );
 
   return (
@@ -58,21 +65,15 @@ export default function RewardTrackerScreen() {
         </View>
       )}
 
-      {/* Empty state */}
-      {!loadingStampCards && stampCards.length === 0 && (
-        <View className="mt-10 items-center">
-          <Text className="text-lg text-gray-900">No stamp cards yet</Text>
-        </View>
-      )}
-
       {/* List */}
-      {!loadingStampCards && stampCards.length > 0 && (
+      {!loadingStampCards && (
         <View className="flex-1 px-4 pt-6">
           <FlatList
             data={stampCards}
             keyExtractor={(item) => item.id}
             refreshing={loadingStampCards}
             ListHeaderComponent={StampListHeader}
+            ListEmptyComponent={EmptyStampList}
             onRefresh={refreshStampCards}
             renderItem={renderStampCardItem}
             showsVerticalScrollIndicator={false}
