@@ -10,6 +10,8 @@ export default function StampProgramsLayout() {
           header: () => <PageHeader headerText={`Stamp Programs`} />
         }}
       />
+
+      <Stack.Screen name="[id]" options={{ headerShown: false }} />
     </Stack>
   )
 }

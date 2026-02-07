@@ -9,7 +9,7 @@ import { OfferTypeText } from "@/lib/api/rewards/rewards.types";
 import { useBusinessResourceContext } from "@/lib/context/business-resource";
 import { TrueSheet } from "@lodev09/react-native-true-sheet";
 import { router, useLocalSearchParams } from "expo-router";
-import { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 
@@ -58,7 +58,7 @@ export default function CreateOfferRewardScreen() {
       {form.isSubmitting ? (
         <LoadingOverlay />
       ) : (
-        <>
+        <React.Fragment>
           <HeaderText level={1} className="mb-1">Create reward</HeaderText>
           <View className="mb-6">
             <FormTextField label="Offer title" value={offerDefinition.title} editable={false} />
@@ -100,7 +100,7 @@ export default function CreateOfferRewardScreen() {
               />
             </View>
           )}
-        </>
+        </React.Fragment>
       )}
       <TrueSheet ref={sheetRef} detents={[0.8]}>
         {scannerOpen && (
